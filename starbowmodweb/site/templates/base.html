@@ -1,0 +1,24 @@
+{% load browserid %}
+<html>
+  <head>
+    {% browserid_css %}
+  </head>
+  <body>
+    {% browserid_info %}
+    <header>
+      <h1>My Site</h1>
+      <div class="authentication">
+        {% if user.is_authenticated %}
+          {% browserid_logout text='Logout' link_class='persona-button dark' %}
+        {% else %}
+          {% browserid_login text='Login with Mozzila' color='dark' %}
+        {% endif %}
+      </div>
+    </header>
+    <article>
+      <p>Welcome to my site!</p>
+    </article>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    {% browserid_js %}
+  </body>
+</html>

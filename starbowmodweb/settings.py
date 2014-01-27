@@ -10,11 +10,11 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 from config import *
 
+# Only used when DEBUG = False
 ALLOWED_HOSTS = ['162.243.125.126', '.starbowmod.com']
 
 
 # Application definition
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -22,6 +22,19 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django_browserid',
+    'starbowmodweb.site',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # required for admin
+    'django_browserid.auth.BrowserIDBackend',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django_browserid.context_processors.browserid',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -35,7 +48,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'starbowmodweb.urls'
 
-WSGI_APPLICATION = 'starbowmodweb.wsgi.application'
+WSGI_APPLICATION = 'starbowmodweb.apache.wsgi.application'
 
 
 # Internationalization
