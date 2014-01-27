@@ -6,8 +6,10 @@ admin.autodiscover()
 # Wrap our patterns in /site/ to match our deployment environment
 urlpatterns = patterns('',
     url(r'^site/', include(patterns('',
-        url(r'^browserid/', include('django_browserid.urls')),
         url(r'^admin/', include(admin.site.urls)),
+        url(r'^browserid/', include('django_browserid.urls')),
+
+        url(r'^user/', include('starbowmodweb.user.urls')),
         url(r'', include('starbowmodweb.site.urls')),
     )))
 )

@@ -24,6 +24,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'django_browserid',
+    'starbowmodweb.user',
     'starbowmodweb.site',
 )
 
@@ -62,3 +63,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 STATIC_URL = '/site/static/'
+
+# BrowserID Configuration
+LOGIN_REDIRECT_URL = '/site/user/home'
+LOGIN_REDIRECT_URL_FAILURE = '/site/'
+LOGOUT_REDIRECT_URL = '/site/'
