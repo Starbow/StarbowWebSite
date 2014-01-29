@@ -7,8 +7,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^site/', include(patterns('',
         url(r'^admin/', include(admin.site.urls)),
-        url(r'^browserid/', include('django_browserid.urls')),
-
         url(r'^user/', include('starbowmodweb.user.urls')),
         url(r'', include('starbowmodweb.site.urls')),
     )))

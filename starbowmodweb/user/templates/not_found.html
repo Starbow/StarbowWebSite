@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+
+{% block content %}
+No account found with that email. <a href="{% url 'user.views.user_register' %}">Click here to register</a>
+{% endblock %}

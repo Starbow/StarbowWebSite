@@ -34,6 +34,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
     'django.contrib.auth.context_processors.auth',
     'django_browserid.context_processors.browserid',
 )
@@ -65,6 +66,9 @@ USE_TZ = True
 STATIC_URL = '/site/static/'
 
 # BrowserID Configuration
+AUTH_USER_MODEL = 'user.User'
+BROWSERID_CREATE_USER = False
+LOGIN_URL = '/site/user/login_required'
 LOGIN_REDIRECT_URL = '/site/user/home'
-LOGIN_REDIRECT_URL_FAILURE = '/site/'
+LOGIN_REDIRECT_URL_FAILURE = '/site/user/not_found'
 LOGOUT_REDIRECT_URL = '/site/'

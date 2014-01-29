@@ -31,3 +31,7 @@ STATIC_ROOT = BASE_DIR+"/static/"
 
 # This is used by BROWSERID to verify login requests. Must match running domain
 SITE_URL = 'http://localhost:8000'
+
+# The path to the mybb bridge script
+MYBB_BRIDGE_PATH = '/var/www/forum/bridge.php'
+

@@ -1,0 +1,9 @@
+{% load browserid %}
+<div class="authentication">
+  {% if user.is_authenticated %}
+    {{ user.email}}
+    {% browserid_logout text='Logout' link_class='persona-button dark' %}
+  {% else %}
+    {% browserid_login text='Login with Mozzila' next=request.GET.next color='dark' %}
+  {% endif %}
+</div>
