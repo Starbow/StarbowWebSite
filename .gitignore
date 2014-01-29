@@ -1,4 +1,9 @@
+# Junk
+.DS_Store
+*.*~
 *.log
 *.pot
 *.pyc
+
+# config 
 starbowmodweb/config.py
