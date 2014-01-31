@@ -80,5 +80,5 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
 
-
-post_save.connect(create_user_profile, sender=settings.AUTH_USER_MODEL)
+# This is supposed to use settings.USER_AUTH_MODEL but it doesn't seem to work
+post_save.connect(create_user_profile, sender=User)
