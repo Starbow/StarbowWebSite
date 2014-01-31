@@ -4,6 +4,7 @@
 *.log
 *.pot
 *.pyc
+.sass-cache
 
 # config 
 starbowmodweb/config.py

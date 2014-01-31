@@ -1,0 +1,53 @@
+/*
+ * forms.scss
+ *
+ * Desc: styling for input tags, buttons, etc.
+ */
+
+input {
+  background-color: rgba($grayColor, 0.10);
+  border: 1px solid  $darkRedColor;
+  font-size: 12px;
+  padding: 5px;
+
+  @include transition(background-color, 0.25s);
+
+  &:focus {
+    background-color: $whiteColor;
+    outline-width: 0;
+
+    @include box-shadow(0, 0, 5px, $darkRedColor);
+  }
+
+  &[type=submit] {
+    background-color: $darkRedColor;
+    color: $whiteColor;
+    font-weight: bold;
+
+    &:hover {
+      background-color: rgba($darkRedColor, 0.80);
+      cursor: pointer;
+
+      @include box-shadow(0, 0, 5px, $darkRedColor);
+    }
+  }
+}
+
+.button {
+  background-color: $darkRedColor;
+  border: 1px solid  $darkRedColor;
+  color: $whiteColor;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 5px;
+  text-shadow: 0 0 2px $blackColor;
+
+  @include transition(background-color, 0.25s);
+
+  &:hover {
+    background-color: rgba($darkRedColor, 0.80);
+    cursor: pointer;
+
+    @include box-shadow(0, 0, 5px, $darkRedColor);
+  }
+}

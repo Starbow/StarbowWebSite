@@ -1,7 +1,7 @@
 {% load browserid %}
 <div class="authentication">
   {% if user.is_authenticated %}
-    {{ user.email}}
+    Welcome, <strong>{{ user.username }}</strong>!
     {% browserid_logout text='Logout' link_class='logout-link' %}
   {% else %}
     {% browserid_login text='Login' next=request.GET.next link_class='login-link' %}

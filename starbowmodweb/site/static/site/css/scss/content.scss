@@ -1,0 +1,86 @@
+/*
+ * header.scss
+ *
+ * Desc: styling for the page content
+ */
+
+.content {
+  padding: 10px;
+
+  .page {
+    margin: {
+      left: auto;
+      right: auto;
+      top: $headerHeight;
+    }
+    width: $pageWidth;
+
+    img {
+      max-width: $pageWidth;
+    }
+
+  }
+
+}
+
+.column {
+  border: {
+    top: 2px dotted $darkRedColor;
+  }
+  display: inline-block;
+  font-size: 12px;
+  margin: {
+    top: 2*$pagePadding;
+    right: $pagePadding - 3;
+  }
+  padding: {
+    top: $pagePadding;
+  }
+  text-align: justify;
+  vertical-align: top;
+  width: ($pageWidth - 3*$pagePadding)/3;
+
+  h2 {
+    color: $darkRedColor;
+    font-size: 24px;
+    text-align: left;
+  }
+}
+
+.story {
+  background-size: $pageWidth - 2*5px 300px;
+  border: 5px solid $darkRedColor;
+  height: 300px;
+  margin: {
+    bottom: 5px;
+  }
+  width: $pageWidth - 2*5px;
+
+  @include box-shadow(0, 0, 5px, $darkRedColor);
+
+  h1 {
+    background-color: rgba($redColor, 0.60);
+    color: $whiteColor;
+    padding: {
+      right: 30px;
+      top: 10px;
+      bottom: 10px;
+    }
+    position: relative;
+    text-align: right;
+    text-shadow: -3px -3px 0 $blackColor;
+    top: 200px;
+
+    @include transition(padding, 0.10s);
+  }
+
+  &:hover {
+    h1 {
+      background-color: rgba($redColor, 0.75);
+      cursor: pointer;
+      padding: {
+        right: 40px;
+      }
+    }
+  }
+}
