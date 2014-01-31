@@ -21,9 +21,9 @@
         {% include 'snippets/userpanel.html' %}
       </div>
     </div>
-    {% block content %}
     <div class="content">
       <div class="page">
+       {% block content %}
         <div class="story" style=background-image:url('{% static 'site/img/screenshot.png' %}')>
           <h1>Is this the real Life?</h1>
         </div>
@@ -87,8 +87,8 @@
           cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
           proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </div>
+        {% endblock %}
       </div>
     </div>
-    {% endblock %}
   </body>
 </html>
