@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
-You must log-in to view this page
+
+<div class="story" style="background-image:url('{% static 'site/img/generalimage.png' %}')")>
+  <h1>ERROR!</h1>
+</div>
+<p>You must login to view this page!</p>
+
 {% endblock %}

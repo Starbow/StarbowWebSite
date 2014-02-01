@@ -1,5 +1,8 @@
 {% load static %}
 {% load browserid %}
+
+{% spaceless %}
+
 <html>
   <head>
     {% block title %}<title>Starbow</title>{% endblock %}
@@ -24,7 +27,7 @@
     <div class="content">
       <div class="page">
        {% block content %}
-        <div class="story" style=background-image:url('{% static 'site/img/screenshot.png' %}')>
+        <div class="story" style="background-image:url('{% static 'site/img/generalimage.png' %}')")>
           <h1>Is this the real Life?</h1>
         </div>
         <div class="column">
@@ -92,3 +95,5 @@
     </div>
   </body>
 </html>
+
+{% endspaceless %}

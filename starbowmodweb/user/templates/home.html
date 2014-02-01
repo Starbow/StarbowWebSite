@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
+{% load static %}
 
 {% block content %}
-Welcome home {{ user.email }}
+
+<div class="story" style="background-image:url('{% static 'site/img/generalimage.png' %}')")>
+  <h1>Welcome, {{ user.username }}!</h1>
+</div>
+
 {% endblock %}

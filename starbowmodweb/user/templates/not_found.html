@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
-No account found with that email. <a href="{% url 'user.views.user_register' %}">Click here to register</a>
+
+<div class="story" style="background-image:url('{% static 'site/img/generalimage.png' %}')")>
+  <h1>ERROR!</h1>
+</div>
+<p>No account found with that email.</p>
+<p>
+  <a href="{% url 'user.views.user_register' %}">Click here to register!</a>
+</p>
+
 {% endblock %}

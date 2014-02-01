@@ -16,14 +16,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     username = models.CharField(_('username'), max_length=30,
         unique=True,
-        help_text=_('Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.'),
+        help_text=_('<strong>Required!</strong><br>Your username can be composed of letters, digits, and the symbols "@", ".", "+", "-", and "_".'),
         validators=[
             validators.RegexValidator(r'^[\w.@+-]+$', _('Enter a valid username.'), 'invalid')
         ])
 
     email = models.EmailField(_('email address'),
         unique=True,
-        help_text=_('Required.'),
+        help_text=_('<strong>Required!</strong>'),
         validators=[
             validators.validate_email
         ])
