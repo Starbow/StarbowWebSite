@@ -4,12 +4,38 @@
 
 {% block content %}
 
+<div class="story" style="background-image:url('{% static 'site/img/generalimage.png' %}')")>
+  <h1>Register for STARBOW!</h1>
+</div>
 <form method="POST">
-  <div class="story" style="background-image:url('{% static 'site/img/generalimage.png' %}')")>
-    <h1>Register for STARBOW!</h1>
-  </div>
   {% csrf_token %}
-  {{ form.as_p }}
+  {% autoescape off %}
+    {{ form.non_field_errors }}
+    <p>
+      <label for="{{ form.username.id_for_label }}">
+        <span class="form-input-help">
+          Your username will identify you on the website, ladder, wiki, and forums and cannot be
+          changed. Accepts letters, digits, and the symbols '@', '.', '+', '-', and '_'.
+        </span>
+        <br/>
+        {{ form.username.errors }}
+        <span>{{ form.username.label }}: </span>
+        {{ form.username }}&nbsp;<strong>Required</strong>
+      </label>
+    </p>
+    <p>
+      <label for="{{ form.email.id_for_label }}">
+        <span class="form-input-help">
+          Your email will be used to log you in on the website, wiki, and forum. Make sure that
+          you are able to access this email before creating your account.
+        </span>
+        <br/>
+        {{ form.email.errors }}
+        <span>{{ form.email.label }}:</span>
+        {{ form.email }}&nbsp;<strong>Required</strong>
+      </label>
+    </p>
+  {% endautoescape %}
   <input type="submit" value="Register!">
 </form>
 
