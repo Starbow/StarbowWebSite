@@ -21,6 +21,13 @@ DATABASES = {
         'NAME': 'starbow_website',
         'USER': 'root',
         'PASSWORD': '',
+    },
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '',
+        'NAME': 'mybb',
+        'USER': 'root',
+        'PASSWORD': '',
     }
 }
 
