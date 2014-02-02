@@ -63,12 +63,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-STATIC_URL = '/site/static/'
+STATIC_URL = '/static/'
 
 # BrowserID Configuration
 AUTH_USER_MODEL = 'user.User'
 BROWSERID_CREATE_USER = False
-LOGIN_URL = '/site/user/login_required'
-LOGIN_REDIRECT_URL = '/site/user/home'
-LOGIN_REDIRECT_URL_FAILURE = '/site/user/not_found'
-LOGOUT_REDIRECT_URL = '/site/'
+LOGIN_URL = '/user/login_required'
+LOGIN_REDIRECT_URL = '/user/home'
+LOGIN_REDIRECT_URL_FAILURE = '/user/not_found'
+LOGOUT_REDIRECT_URL = '/'
