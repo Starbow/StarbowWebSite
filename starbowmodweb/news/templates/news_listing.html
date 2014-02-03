@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load bbcode_filters %}
 
 {% block content %}
 {% for article in articles %}
     <h1>{{ article.subject }}</h1>
     <p>
     {% autoescape off %}
-    {{ article.html }}
+    {{ article.message|bbformat }}
     {% endautoescape %}
     </p>
     <hr/>
