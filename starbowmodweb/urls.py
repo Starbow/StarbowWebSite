@@ -8,5 +8,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^user/', include('starbowmodweb.user.urls')),
     url(r'^news/', include('starbowmodweb.news.urls')),
+    url(r'^ladder/', include('starbowmodweb.ladder.urls')),
     url(r'', include('starbowmodweb.site.urls')),
 )

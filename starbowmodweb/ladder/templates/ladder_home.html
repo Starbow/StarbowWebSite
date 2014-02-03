@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table>
+  <caption>Ladder Rankings</caption>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Username</th>
+      <th>Points</th>
+      <th>Wins</th>
+      <th>Losses</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for client in clients %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ client.username }}</td>
+        <td>{{ client.ladder_points }}</td>
+        <td>{{ client.wins }}</td>
+        <td>{{ client.losses }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

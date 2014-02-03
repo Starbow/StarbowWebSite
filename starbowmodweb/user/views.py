@@ -10,6 +10,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from starbowmodweb.user.forms import RegistrationForm
 from starbowmodweb.user.models import User
+from starbowmodweb.ladder.models import Client
 from django.conf import settings
 
 
@@ -28,6 +29,21 @@ def create_forum_account(user, password):
             profile.save()
 
 
+def create_ladder_account(user, authtoken):
+    client = Client()
+    client.user = user
+    client.username = user.username
+    client.authkey = authtoken
+    client.rating_mean = 25.0
+    client.rating_stddev = 25.0/3
+    client.ladder_points = 100
+    client.ladder_search_radius = 1
+    client.total_queue_time = 0
+    client.wins = 0
+    client.losses = 0
+    client.save()
+
+
 def user_register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -35,9 +51,10 @@ def user_register(request):
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
             password = binascii.b2a_hex(os.urandom(15))
+            authtoken = binascii.b2a_hex(os.urandom(15))
             user = User.objects.create_user(username, email, password)
             create_forum_account(user, password)
-
+            create_ladder_account(user, authtoken)
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
 
