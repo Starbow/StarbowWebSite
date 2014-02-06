@@ -2,4 +2,6 @@ django
 django-browserid
 mysql-python
 bbcode
+python-dateutil
+phpserialize
 

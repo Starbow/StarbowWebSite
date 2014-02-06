@@ -5,4 +5,5 @@ from django.views.generic import TemplateView
 urlpatterns = patterns('starbowmodweb.site.views',
     url(r'^$', 'home', name='home'),
     url(r'^about', TemplateView.as_view(template_name='about.html')),
+    url(r'^calendar', 'view_calendar'),
 )

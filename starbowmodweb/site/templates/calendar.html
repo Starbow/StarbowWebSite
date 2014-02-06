@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load bbcode_filters %}
+{% block content %}
+{% for event in events %}
+    <h1>{{ event.name }}</h1>
+    <p>{{ event.start|date:"D, F jS G:i" }} - {{ event.end|date:"D, F jS G:i" }}</p>
+    <p>{{event.description|bbformat }}<p>
+    <hr/>
+{% endfor %}
+{% endblock %}
