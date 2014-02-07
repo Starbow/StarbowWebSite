@@ -25,8 +25,17 @@ def bbcode_img(tag_name, value, options, parent, context):
     return ('<img src="{}" '+attrs+' />').format(value, *options.values())
 
 
+def bbcode_email(tag_name, value, options, parent, context):
+    return '<a href="mailto:{}">{}</a>'.format(value, value)
+
+
+def bbcode_font(tag_name, value, options, parent, context):
+    return '<span style="font-family: {}">{}</span>'.format(options[tag_name], value)
+
 bbcode_parser = bbcode.Parser()
 bbcode_parser.add_formatter("img", bbcode_img, replace_links=False)
+bbcode_parser.add_formatter("email", bbcode_email)
+bbcode_parser.add_formatter("font", bbcode_font)
 
 
 def bbformat(value):
