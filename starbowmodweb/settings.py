@@ -25,7 +25,6 @@ INSTALLED_APPS = (
 
     'django_browserid',
     'starbowmodweb.user',
-    'starbowmodweb.news',
     'starbowmodweb.ladder',
     'starbowmodweb.site',
 )
