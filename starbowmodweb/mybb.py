@@ -5,34 +5,48 @@ from datetime import datetime, timedelta
 from starbowmodweb import utils
 
 
-def get_threads(forum):
+def get_threads(forum_name, orderby="mybb_threads.dateline", limit=None, offset=None):
+    """ Returns a list of threads from the indicated forumId """
     query = '''
         SELECT *
-        FROM mybb_threads
-        JOIN mybb_posts
-        WHERE firstpost=mybb_posts.pid
-          AND mybb_threads.fid=%s
+        FROM mybb_threads, mybb_posts, mybb_forums
+        WHERE mybb_forums.name = %s
+          AND mybb_threads.fid = mybb_forums.fid
+          AND mybb_threads.firstpost = mybb_posts.pid
           AND mybb_threads.visible=1
+        ORDER BY '''+orderby+''' DESC
     '''
+    params = [forum_name]
+    if limit:
+        query += " LIMIT %s"
+        params.append(limit)
+    if offset:
+        query += " OFFSET %s"
+        params.append(offset)
+
     cursor = connections['mybb'].cursor()
-    cursor.execute(query, [3])
+    cursor.execute(query, params)
     return utils.dictfetchall(cursor)
 
 
-def get_events_in_range(start_range, end_range):
+def get_events_in_range(calendar_name, start_range, end_range):
     """ Returns an ordered list of events that fall within the specified time range.
 
         TODO: Adjust times based on encoded timezone
     """
     # Get all of the events that might fall in this time range from the mybb db
     query = '''
-        SELECT *
-        FROM mybb_events
-        WHERE (endtime = 0 AND starttime > UNIX_TIMESTAMP(%s))
-           OR endtime > UNIX_TIMESTAMP(%s)
+        SELECT mybb_events.*
+        FROM mybb_events, mybb_calendars
+        WHERE mybb_calendars.name = %s
+          AND mybb_events.cid = mybb_calendars.cid
+          AND (
+            (endtime = 0 AND starttime > UNIX_TIMESTAMP(%s))
+            OR endtime > UNIX_TIMESTAMP(%s)
+          )
     '''
     cursor = connections['mybb'].cursor()
-    cursor.execute(query, [start_range, start_range])
+    cursor.execute(query, [calendar_name, start_range, start_range])
 
     # Iterate over the event listings and expand any repeated or multiday events
     events = list()
