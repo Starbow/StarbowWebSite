@@ -10,6 +10,13 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import AbstractBaseUser, UserManager, PermissionsMixin
 from django.utils.translation import ugettext_lazy as _
 
+import os
+import binascii
+
+
+def generate_auth_token():
+    return binascii.b2a_hex(os.urandom(15))
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     """ We had to copy this from contrib.auth.models because we need email to be unique. """
@@ -27,6 +34,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         validators=[
             validators.validate_email
         ])
+
+    authtoken = models.CharField(_('auth token'), max_length=48,
+        unique=True,
+        help_text=_('The authentication token used to log into the client app'),
+        default=generate_auth_token)
 
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
 
@@ -71,7 +83,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, unique=True, related_name='profile')
-    authtoken = models.CharField(max_length=48)
     mybb_loginkey = models.CharField(max_length=100)
     mybb_uid = models.IntegerField(null=True)
 
@@ -83,6 +94,7 @@ admin.site.register(UserProfile)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
+
 
 # This is supposed to use settings.USER_AUTH_MODEL but it doesn't seem to work
 post_save.connect(create_user_profile, sender=User)
