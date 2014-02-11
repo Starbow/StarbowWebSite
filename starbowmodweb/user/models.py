@@ -3,7 +3,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.conf import settings
 
-
+from django.contrib import admin
 from django.utils import timezone
 from django.core import validators
 from django.core.mail import send_mail
@@ -74,6 +74,10 @@ class UserProfile(models.Model):
     authtoken = models.CharField(max_length=48)
     mybb_loginkey = models.CharField(max_length=100)
     mybb_uid = models.IntegerField(null=True)
+
+
+admin.site.register(User)
+admin.site.register(UserProfile)
 
 
 def create_user_profile(sender, instance, created, **kwargs):
