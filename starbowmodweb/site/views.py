@@ -7,7 +7,7 @@ def home(request):
     now = datetime.now()
     later = now+timedelta(seconds=30*86400)
     upcoming_events = mybb.get_events_in_range("Default Calendar", now, later)[:7]
-    recent_articles = mybb.get_threads("News and Announcements", count=7)
+    recent_articles = mybb.get_threads(forum_name="News and Announcements", count=7)
     return render(request, 'site_home.html', dict(
         upcoming_events=upcoming_events,
         recent_articles=recent_articles
@@ -15,7 +15,7 @@ def home(request):
 
 
 def view_news(request):
-    articles = mybb.get_threads("News and Announcements")
+    articles = mybb.get_threads(forum_name="News and Announcements")
     return render(request, 'news.html', dict(articles=articles))
 
 
