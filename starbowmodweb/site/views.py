@@ -7,15 +7,35 @@ def home(request):
     now = datetime.now()
     later = now+timedelta(seconds=30*86400)
     upcoming_events = mybb.get_events_in_range("Default Calendar", now, later)[:7]
-    recent_articles = mybb.get_threads("News and Announcements", limit=7)
+
+    recent_articles = mybb.get_threads(
+        forum_name="News and Announcements",
+        orderby="mybb_threads.dateline",
+        sort="DESC",
+        count=7,
+    )
+
+    top_discussions = mybb.get_threads(
+        thread_prefix="Discussion",
+        orderby="mybb_threads.lastpost",
+        sort="DESC",
+        count=7,
+    )
+
     return render(request, 'site_home.html', dict(
         upcoming_events=upcoming_events,
-        recent_articles=recent_articles
+        recent_articles=recent_articles,
+        top_discussions=top_discussions,
     ))
 
 
 def view_news(request):
-    articles = mybb.get_threads("New and Announcements")
+    articles = mybb.get_threads(
+        forum_name="New and Announcements",
+        orderby="mybb_threads.dateline",
+        sort="DESC",
+        count=10,
+    )
     return render(request, 'news.html', dict(articles=articles))
 
 

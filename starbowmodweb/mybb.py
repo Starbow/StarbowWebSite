@@ -4,26 +4,53 @@ from dateutil import rrule, relativedelta
 from datetime import datetime, timedelta
 from starbowmodweb import utils
 
+import logging
+logger = logging.getLogger(__name__)
 
-def get_threads(forum_name, orderby="mybb_threads.dateline", limit=None, offset=None):
+
+def get_threads(thread_prefix=None, forum_name=None, orderby=None, sort=None, offsetby=None, count=None):
     """ Returns a list of threads from the indicated forumId """
-    query = '''
-        SELECT *
-        FROM mybb_threads, mybb_posts, mybb_forums
-        WHERE mybb_forums.name = %s
-          AND mybb_threads.fid = mybb_forums.fid
-          AND mybb_threads.firstpost = mybb_posts.pid
-          AND mybb_threads.visible=1
-        ORDER BY '''+orderby+''' DESC
-    '''
-    params = [forum_name]
-    if limit:
-        query += " LIMIT %s"
-        params.append(limit)
-    if offset:
-        query += " OFFSET %s"
-        params.append(offset)
+    params = []
+    order, limit = "", ""
+    tables = ["mybb_threads", "mybb_posts"]
+    conditions = [
+        "mybb_threads.firstpost = mybb_posts.pid",
+        "mybb_threads.visible=1"
+    ]
 
+    if forum_name is not None:
+        tables.append("mybb_forums")
+        conditions.extend([
+            "mybb_threads.fid = mybb_forums.fid",
+            "mybb_forums.name = %s"
+        ])
+        params.append(forum_name)
+
+    if thread_prefix is not None:
+        tables.append("mybb_threadprefixes")
+        conditions.extend([
+            "mybb_threads.prefix = mybb_threadprefixes.pid",
+            "mybb_threadprefixes.prefix = %s"
+        ])
+        params.append(forum_name)
+
+    if orderby:
+        order = "ORDER BY {}".format(orderby)
+
+    if sort:
+        order += " {}".format(sort)
+
+    if count:
+        limit = "LIMIT %s"
+        params.append(count)
+
+    if offsetby:
+        limit += " OFFSET %s"
+        params.append(offsetby)
+
+    query_template = "SELECT * FROM {} WHERE {} {} {}"
+    query = query_template.format(', '.join(tables), ' AND '.join(conditions), order, limit)
+    logger.info("Query: "+query)
     cursor = connections['mybb'].cursor()
     cursor.execute(query, params)
     return utils.dictfetchall(cursor)
