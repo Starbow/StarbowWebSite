@@ -22,7 +22,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '',
     },
-    'default': {
+    'mybb': {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': '',
         'NAME': 'mybb',

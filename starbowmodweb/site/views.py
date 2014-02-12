@@ -15,7 +15,7 @@ def home(request):
 
 
 def view_news(request):
-    articles = mybb.get_threads("New and Announcements")
+    articles = mybb.get_threads("News and Announcements")
     return render(request, 'news.html', dict(articles=articles))
 
 
