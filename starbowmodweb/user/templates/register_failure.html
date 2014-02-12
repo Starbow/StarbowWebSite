@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="story" style="background-image:url('{% static 'site/img/generalimage.png' %}')")>
+  <h1>Registration Success!</h1>
+</div>
+Failed to register {{ email }} with username: {{ username }}.
+
+<pre>
+{{ messages }}
+</pre>
+
+{% endblock %}
