@@ -42,3 +42,23 @@ SITE_URL = 'http://localhost:8000'
 # The path to the mybb bridge script. Set to None if you don't have the forum installed
 MYBB_BRIDGE_PATH = '/var/www/forum/bridge.php'
 
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler'
+        },
+    },
+    'loggers': {
+        'django_browserid': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+        'starbowmodweb': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        }
+    },
+}
+
