@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <div class="story" style="background-image:url('{% static 'site/img/generalimage.png' %}')")>
-  <h1>Is this the real Life?</h1>
+  <h1>{{ latest_article.subject }}</h1>
 </div>
 <div class="column">
   <img src="{% static 'site/img/bowback.svg' %}" height="100px" class="left">
