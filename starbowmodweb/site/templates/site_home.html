@@ -5,21 +5,23 @@
   <h1>{{ latest_article.subject }}</h1>
 </div>
 <div class="column">
-  <img src="{% static 'site/img/bowback.svg' %}" height="100px" class="left">
+  <img src="{% static 'site/img/bowred.svg' %}" height="100px" class="left">
   <h2>Recent News and Updates</h2>
   {% for article in recent_articles %}
-    {{ article.subject }}<hr>
+    <p>{{ article.subject }}</p>
+    <hr>
   {% endfor %}
 </div>
 <div class="column">
-  <img src="{% static 'site/img/bowback.svg' %}" height="100px" class="left">
+  <img src="{% static 'site/img/bowred.svg' %}" height="100px" class="left">
   <h2>Upcoming Events</h2>
   {% for event in upcoming_events %}
-    {{ event.name }}<hr/>
+    <p>{{ event.name }}</p>
+    <hr>
   {% endfor %}
 </div>
 <div class="column">
-  <img src="{% static 'site/img/bowback.svg' %}" height="100px" class="left">
+  <img src="{% static 'site/img/bowred.svg' %}" height="100px" class="left">
   <h2>No escape from Reality.</h2>
   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
   tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -29,7 +31,7 @@
   proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </div>
 <div class="column">
-  <img src="{% static 'site/img/bowback.svg' %}" height="100px" class="left">
+  <img src="{% static 'site/img/bowred.svg' %}" height="100px" class="left">
   <h2>Is this just Fantasy?</h2>
   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
   tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -39,7 +41,7 @@
   proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </div>
 <div class="column">
-  <img src="{% static 'site/img/bowback.svg' %}" height="100px" class="left">
+  <img src="{% static 'site/img/bowred.svg' %}" height="100px" class="left">
   <h2>Caught in a landslide.</h2>
   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
   tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -49,7 +51,7 @@
   proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </div>
 <div class="column">
-  <img src="{% static 'site/img/bowback.svg' %}" height="100px" class="left">
+  <img src="{% static 'site/img/bowred.svg' %}" height="100px" class="left">
   <h2>No escape from Reality.</h2>
   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
   tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,

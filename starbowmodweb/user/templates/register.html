@@ -14,24 +14,26 @@
     <p>
       <label for="{{ form.username.id_for_label }}">
         <span class="form-input-help">
-          Your username will identify you on the website, ladder, wiki, and forums and cannot be
-          changed. Accepts letters, digits, and the symbols '@', '.', '+', '-', and '_'.
+          Your username will identify you on the website, ladder, wiki, and
+          forums and cannot be changed. Accepts letters, digits, and the
+          symbols '@', '.', '+', '-', and '_'.
         </span>
         <br/>
         {{ form.username.errors }}
-        <span>{{ form.username.label }}: </span>
+        <span class="form-label">{{ form.username.label }}: </span>
         {{ form.username }}&nbsp;<strong>Required</strong>
       </label>
     </p>
     <p>
       <label for="{{ form.email.id_for_label }}">
         <span class="form-input-help">
-          Your email will be used to log you in on the website, wiki, and forum. Make sure that
-          you are able to access this email before creating your account.
+          Your email will be used to log you in on the website, wiki,
+          and forum. Make sure that you are able to access this email before
+          creating your account.
         </span>
         <br/>
         {{ form.email.errors }}
-        <span>{{ form.email.label }}:</span>
+        <span class="form-label">{{ form.email.label }}:</span>
         {{ form.email }}&nbsp;<strong>Required</strong>
       </label>
     </p>

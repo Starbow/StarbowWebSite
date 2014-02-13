@@ -25,3 +25,10 @@ blockquote {
     left: 5px;
   }
 }
+
+hr {
+  background-color: $darkRedColor;
+  border: 0;
+  color: $darkRedColor;
+  height: 2px;
+}

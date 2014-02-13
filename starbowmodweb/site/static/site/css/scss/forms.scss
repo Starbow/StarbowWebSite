@@ -23,6 +23,7 @@ input {
     background-color: $darkRedColor;
     color: $whiteColor;
     font-family: $headerFont;
+    font-size: 16px;
     font-weight: bold;
 
     &:hover {
@@ -79,6 +80,12 @@ input {
 
 label {
   padding: {
+    right: 5px;
+  }
+}
+
+.form-label {
+  margin: {
     right: 5px;
   }
 }
