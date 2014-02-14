@@ -26,9 +26,9 @@ def bbcode_img(tag_name, value, options, parent, context):
 
 
 def bbcode_banner(tag_name, value, options, parent, context):
-    return """<div class="story" style="background-image:url('{}')")>'
-      '<h1>{}</h1>'
-    '</div>""".format(options[tag_name], value)
+    return """<div class="banner" style="background-image:url('{}')")>'
+      '<a href="{}"><h1>{}</h1></a>'
+    '</div>""".format(options[tag_name], context['url'], value)
 
 
 def bbcode_email(tag_name, value, options, parent, context):
@@ -42,6 +42,7 @@ def bbcode_font(tag_name, value, options, parent, context):
 def bbcode_hr(tag_name, value, options, parent, context):
     return '<hr/>'
 
+
 bbcode_parser = bbcode.Parser()
 bbcode_parser.add_formatter("img", bbcode_img, replace_links=False)
 bbcode_parser.add_formatter("email", bbcode_email)
@@ -50,12 +51,13 @@ bbcode_parser.add_formatter("banner", bbcode_banner, replace_links=False)
 bbcode_parser.add_formatter("hr", bbcode_hr, standalone=True)
 
 
-def bbheader(value):
-    return bbformat(value).split("<hr/>", 1)[0]
+def bbheader(value, context):
+    return bbformat(value, context).split("</div>", 1)[0]+"</div>"
 
 
-def bbformat(value):
-    return bbcode_parser.format(value)
+def bbformat(value, context):
+    return bbcode_parser.format(value, **context)
+
 
 register = template.Library()
 register.filter('bbformat', bbformat)

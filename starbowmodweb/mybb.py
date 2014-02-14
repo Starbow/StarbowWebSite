@@ -32,7 +32,7 @@ def get_threads(thread_prefix=None, forum_name=None, orderby=None, sort=None, of
             "mybb_threads.prefix = mybb_threadprefixes.pid",
             "mybb_threadprefixes.prefix = %s"
         ])
-        params.append(forum_name)
+        params.append(thread_prefix)
 
     if orderby:
         order = "ORDER BY {}".format(orderby)
@@ -52,8 +52,12 @@ def get_threads(thread_prefix=None, forum_name=None, orderby=None, sort=None, of
     query = query_template.format(', '.join(tables), ' AND '.join(conditions), order, limit)
     logger.info("Query: "+query)
     cursor = connections['mybb'].cursor()
+
     cursor.execute(query, params)
-    return utils.dictfetchall(cursor)
+    threads = utils.dictfetchall(cursor)
+    for thread in threads:
+        thread['url'] = "/forum/showthread.php?tid={}".format(thread['tid'])
+    return threads
 
 
 def get_events_in_range(calendar_name, start_range, end_range):
@@ -100,6 +104,8 @@ def get_events_in_range(calendar_name, start_range, end_range):
             event = result.copy()
             event['start'] = start
             event['end'] = end
+            event['url'] = "/forum/calendar.php?action=event&eid={}".format(event['eid'])
+            event['is_today'] = datetime.today().date() == start.date()
             events.append(event)
 
     # Sort chronologically before sending to the screen

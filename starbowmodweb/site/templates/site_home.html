@@ -2,26 +2,37 @@
 {% load static %}
 {% load bbformat %}
 {% block content %}
-{{ latest_article.message|bbheader|safe }}
+{{ latest_article.message|bbheader:latest_article|safe }}
 <div class="column">
-  <img src="{% static 'site/img/bowred.svg' %}" height="100px" class="left">
-  <h2>Recent News and Updates</h2>
+  <h2>News and Updates</h2>
+  <ul class="listing">
   {% for article in recent_articles %}
-    <p>{{ article.subject }}</p>
-    <hr>
+    <li><a href="{{ article.url }}">{{ article.subject }}</a></li>
   {% endfor %}
+  </ul>
 </div>
 <div class="column">
-  <img src="{% static 'site/img/bowred.svg' %}" height="100px" class="left">
+  <h2>Discussion</h2>
+  <ul class="listing">
+  {% for dicussion in recent_discussions %}
+    <li><a href="{{ dicussion.url }}">{{ dicussion.subject }}</a></li>
+  {% endfor %}
+  </ul>
+</div>
+<div class="column">
   <h2>Upcoming Events</h2>
+  <ul class="listing">
   {% for event in upcoming_events %}
-    <p>{{ event.name }}</p>
-    <hr>
+    {% if event.is_today %}
+      <li><a href="{{ event.url }}">{{ event.start|date:"g:i A" }} {{ event.name }}</a></li>
+    {% else %}
+      <li><a href="{{ event.url }}">{{ event.start|date:"Y-m-d" }} {{ event.name }}</a></li>
+    {% endif %}
   {% endfor %}
+  </ul>
 </div>
 <div class="column">
-  <img src="{% static 'site/img/bowred.svg' %}" height="100px" class="left">
-  <h2>No escape from Reality.</h2>
+  <h2>NA Ladder</h2>
   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
   tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
   quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -30,8 +41,7 @@
   proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </div>
 <div class="column">
-  <img src="{% static 'site/img/bowred.svg' %}" height="100px" class="left">
-  <h2>Is this just Fantasy?</h2>
+  <h2>EU Ladder</h2>
   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
   tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
   quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -40,18 +50,7 @@
   proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </div>
 <div class="column">
-  <img src="{% static 'site/img/bowred.svg' %}" height="100px" class="left">
-  <h2>Caught in a landslide.</h2>
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</div>
-<div class="column">
-  <img src="{% static 'site/img/bowred.svg' %}" height="100px" class="left">
-  <h2>No escape from Reality.</h2>
+  <h2>KR Ladder</h2>
   Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
   tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
   quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
