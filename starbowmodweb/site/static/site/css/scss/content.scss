@@ -21,31 +21,49 @@
   }
 }
 
+.listing {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
 .column {
-  border: {
-    top: 2px dotted $darkRedColor;
-  }
   display: inline-block;
-  font-size: 12px;
+  font-size: 16px;
   margin: {
-    top: 2*$pagePadding;
-    right: $pagePadding - 3;
-  }
-  padding: {
     top: $pagePadding;
+    right: $pagePadding - 3;
   }
   text-align: justify;
   vertical-align: top;
   width: ($pageWidth - 3*$pagePadding)/3;
 
   h2 {
+    padding: {
+      bottom: $pagePadding;
+    }
+    margin: {
+      bottom: 10px;
+    }
+    border: {
+      bottom: 2px solid $darkRedColor;
+    }
     color: $darkRedColor;
     font-size: 24px;
-    text-align: left;
+    text-align: center;
+  }
+
+  a {
+    color: $darkRedColor;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
   }
 }
 
-.story {
+.banner {
   background-size: $pageWidth - 2*5px 300px;
   border: 5px solid $darkRedColor;
   height: 300px;
@@ -55,6 +73,10 @@
   width: $pageWidth - 2*5px;
 
   @include box-shadow(0, 0, 5px, $darkRedColor);
+
+  a {
+    text-decoration: none;
+  }
 
   h1 {
     background-color: rgba($redColor, 0.60);
