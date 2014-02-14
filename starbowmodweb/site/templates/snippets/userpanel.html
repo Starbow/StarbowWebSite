@@ -2,7 +2,7 @@
 
 <div class="authentication">
   {% if user.is_authenticated %}
-    Welcome, <strong>{{ user.username }}</strong>!
+    Welcome, <a href="{% url 'user.views.user_home' %}"><strong>{{ user.username }}</strong></a>!
     {% browserid_logout text='Logout' link_class='logout-link' %}
   {% else %}
     <a href="{% url 'user.views.user_register' %}">Register</a>

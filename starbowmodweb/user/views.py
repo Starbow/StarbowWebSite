@@ -48,14 +48,14 @@ def user_register(request):
                         profile.mybb_uid = forum_data['data']['uid']
                         profile.mybb_loginkey = forum_data['data']['loginkey']
                         profile.save()
-                        return render(request, 'register_success.html', dict(
+                        return render(request, 'user/register_success.html', dict(
                             email=email,
                             username=username
                         ))
             except MyBBError as e:
                 # Alert the administrators
                 logger.error("MyBB account creation failure: {}".format(e))
-                return render(request, 'reqister_failure.html', dict(
+                return render(request, 'user/reqister_failure.html', dict(
                     email=email,
                     username=username,
                     messages=str(e),
@@ -64,9 +64,9 @@ def user_register(request):
     else:
         form = RegistrationForm()
 
-    return render(request, 'register.html', dict(form=form))
+    return render(request, 'user/register.html', dict(form=form))
 
 
 @login_required
 def user_home(request):
-    return render(request, 'home.html')
+    return render(request, 'user/home.html', dict(CLIENT_URLS=settings.CLIENT_URLS))

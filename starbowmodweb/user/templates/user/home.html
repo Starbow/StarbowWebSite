@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="story" style="background-image:url('{% static 'site/img/generalimage.png' %}')")>
+  <h1>Welcome, {{ user.username }}!</h1>
+</div>
+
+To start laddering, download the client using the links below:
+
+<ul>
+<li>Windows 7+ - <a href="{{ CLIENT_URLS.windows }}">{{ CLIENT_URLS.windows }}</a>
+<li>OS X - <a href="{{ CLIENT_URLS.osx }}">{{ CLIENT_URLS.osx }}</a>
+</ul>
+
+Your client authentication token is: <input size="30" value="{{ user.authtoken }}" />
+
+{% endblock %}

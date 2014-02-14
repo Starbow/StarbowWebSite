@@ -5,7 +5,9 @@
 {% block content %}
 
 <div class="story" style="background-image:url('{% static 'site/img/generalimage.png' %}')")>
-  <h1>Welcome, {{ user.username }}!</h1>
+  <h1>Registration Success!</h1>
 </div>
+Successful registration for {{ email }} with username: {{ username }}. You can now log in using the
+login button above.
 
 {% endblock %}
