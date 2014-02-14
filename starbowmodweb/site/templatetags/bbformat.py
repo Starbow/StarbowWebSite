@@ -56,7 +56,7 @@ bbcode_parser.add_formatter("banner", bbcode_banner, replace_links=False)
 bbcode_parser.add_formatter("hr", bbcode_hr, standalone=True)
 
 
-def bbheader(value, context):
+def bbheader(value, context=dict()):
     html = bbformat(value, context)
     if 'class="banner"' not in html:
         return bbcode_banner("banner", context['subject'], dict(), None, context)
@@ -64,7 +64,7 @@ def bbheader(value, context):
         return html.split("</div>", 1)[0]+"</div>"
 
 
-def bbformat(value, context):
+def bbformat(value, context=dict()):
     return bbcode_parser.format(value, **context)
 
 
