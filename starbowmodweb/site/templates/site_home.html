@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load bbformat %}
 {% block content %}
-<div class="story" style="background-image:url('{% static 'site/img/generalimage.png' %}')")>
-  <h1>{{ latest_article.subject }}</h1>
-</div>
+{{ latest_article.message|bbheader|safe }}
 <div class="column">
   <img src="{% static 'site/img/bowred.svg' %}" height="100px" class="left">
   <h2>Recent News and Updates</h2>

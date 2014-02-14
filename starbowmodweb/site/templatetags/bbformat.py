@@ -25,6 +25,12 @@ def bbcode_img(tag_name, value, options, parent, context):
     return ('<img src="{}" '+attrs+' />').format(value, *options.values())
 
 
+def bbcode_banner(tag_name, value, options, parent, context):
+    return """<div class="story" style="background-image:url('{}')")>'
+      '<h1>{}</h1>'
+    '</div>""".format(options[tag_name], value)
+
+
 def bbcode_email(tag_name, value, options, parent, context):
     return '<a href="mailto:{}">{}</a>'.format(value, value)
 
@@ -32,10 +38,20 @@ def bbcode_email(tag_name, value, options, parent, context):
 def bbcode_font(tag_name, value, options, parent, context):
     return '<span style="font-family: {}">{}</span>'.format(options[tag_name], value)
 
+
+def bbcode_hr(tag_name, value, options, parent, context):
+    return '<hr/>'
+
 bbcode_parser = bbcode.Parser()
 bbcode_parser.add_formatter("img", bbcode_img, replace_links=False)
 bbcode_parser.add_formatter("email", bbcode_email)
 bbcode_parser.add_formatter("font", bbcode_font)
+bbcode_parser.add_formatter("banner", bbcode_banner, replace_links=False)
+bbcode_parser.add_formatter("hr", bbcode_hr, standalone=True)
+
+
+def bbheader(value):
+    return bbformat(value).split("<hr/>", 1)[0]
 
 
 def bbformat(value):
@@ -43,3 +59,4 @@ def bbformat(value):
 
 register = template.Library()
 register.filter('bbformat', bbformat)
+register.filter('bbheader', bbheader)
