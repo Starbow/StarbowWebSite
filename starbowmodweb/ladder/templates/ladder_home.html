@@ -14,13 +14,13 @@
     </tr>
   </thead>
   <tbody>
-    {% for client in clients %}
+    {% for stats in ladder_stats %}
       <tr>
         <td>{{ forloop.counter }}</td>
-        <td>{{ client.username }}</td>
-        <td>{{ client.ladder_points }}</td>
-        <td>{{ client.wins }}</td>
-        <td>{{ client.losses }}</td>
+        <td>{{ stats.client.username }}</td>
+        <td>{{ stats.ladder_points }}</td>
+        <td>{{ stats.ladder_wins }}</td>
+        <td>{{ stats.ladder_losses }}</td>
       </tr>
     {% endfor %}
   </tbody>

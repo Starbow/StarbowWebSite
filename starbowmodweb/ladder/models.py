@@ -1,15 +1,131 @@
 from django.db import models
+from django.contrib import admin
+from starbowmodweb.user.models import User
+
+BATTLENET_REGION_UNKNOWN = 0
+BATTLENET_REGION_NA = 1
+BATTLENET_REGION_EU = 2
+BATTLENET_REGION_KR = 3
+BATTLENET_REGION_CN = 5
+BATTLENET_REGION_SEA = 6
+
+
+class Map(models.Model):
+    class Meta(object):
+        db_table = 'maps'
+
+    region = models.IntegerField(db_column='Region')
+    bnet_id = models.IntegerField(db_column='BattleNetID')
+    bnet_name = models.CharField(max_length=255, db_column='BattleNetName')
+    in_ranked_pool = models.BooleanField(db_column='InRankedPool')
 
 
 class Client(models.Model):
-    user = models.ForeignKey('user.User')
-    authkey = models.CharField(max_length=30, unique=True)
-    username = models.CharField(max_length=30)
+    class Meta(object):
+        db_table = 'clients'
+
+    id = models.ForeignKey(User, db_column='Id', primary_key=True)
+    username = models.CharField(max_length=255)
     rating_mean = models.FloatField()
     rating_stddev = models.FloatField()
     ladder_points = models.IntegerField()
+    ladder_search_region = models.IntegerField()
     ladder_search_radius = models.IntegerField()
-    total_queue_time = models.FloatField()
-    pending_mm_id = models.IntegerField(null=True)
-    wins = models.IntegerField()
-    losses = models.IntegerField()
+    matchmaking_pending_match_id = models.IntegerField(null=True)
+    matchmaking_pending_opponent_id = models.IntegerField(null=True)
+    matchmaking_pending_region = models.IntegerField(null=True)
+    ladder_wins = models.IntegerField()
+    ladder_losses = models.IntegerField()
+    ladder_forefeits = models.IntegerField()
+    ladder_walkovers = models.IntegerField()
+
+
+class ClientRegionStats(models.Model):
+    class Meta(object):
+        db_table = 'client_region_stats'
+
+    client = models.ForeignKey('Client')
+    region = models.IntegerField()
+    rating_mean = models.FloatField()
+    rating_stddev = models.FloatField()
+    ladder_points = models.IntegerField()
+    ladder_wins = models.IntegerField()
+    ladder_losses = models.IntegerField()
+    ladder_forefeits = models.IntegerField()
+    ladder_walkovers = models.IntegerField()
+
+
+class MatchmakerMatch(models.Model):
+    class Meta(object):
+        db_table = 'matchmaker_matches'
+
+    id = models.AutoField(primary_key=True, db_column='Id')
+    add_time = models.IntegerField(db_column='AddTime')
+    end_time = models.DateTimeField(db_column='EndTime')
+    quality = models.FloatField(db_column='Quality')
+    region = models.IntegerField(db_column='Region')
+    channel = models.CharField(max_length=255, db_column='Channel')
+    chat_room = models.CharField(max_length=255, db_column='ChatRoom')
+
+
+class MatchResultPlayer(models.Model):
+    class Meta(object):
+        db_table = 'match_result_players'
+
+    id = models.AutoField(primary_key=True, db_column='Id')
+    client = models.ForeignKey('Client', db_column='ClientId')
+    match = models.ForeignKey('MatchResult', db_column='MatchId')
+    character = models.ForeignKey('BattleNetCharacter', db_column='CharacterId')
+    points_before = models.IntegerField(db_column='PointsBefore')
+    points_after = models.IntegerField(db_column='PointsAfter')
+    point_difference = models.IntegerField(db_column='PointsDifference')
+    race = models.CharField(max_length=255, db_column='Race')
+    victory = models.IntegerField(db_column='Victory')
+
+
+class MatchResult(models.Model):
+    class Meta(object):
+        db_table = 'match_results'
+
+    id = models.AutoField(primary_key=True, db_column='Id')
+    matchmaker_match = models.ForeignKey('MatchmakerMatch', db_column='MatchmakerMatchId')
+    datetime = models.IntegerField(db_column='DateTime')
+
+
+class MatchmakerMatchParticipant(models.Model):
+    class Meta(object):
+        db_table = 'matchmaker_match_participants'
+
+    id = models.AutoField(primary_key=True, db_column='Id')
+    client = models.ForeignKey('Client', db_column='ClientId')
+    match = models.ForeignKey('MatchResult', db_column='MatchId')
+    points = models.IntegerField(db_column='Points')
+    rating_mean = models.FloatField(db_column='RatingMean')
+    rating_stddev = models.FloatField(db_column='RatingStdDev')
+    queue_time = models.FloatField(db_column='QueueTime')
+
+
+class BattleNetCharacter(models.Model):
+    class Meta(object):
+        db_table = 'battle_net_characters'
+
+    id = models.AutoField(primary_key=True, db_column='Id')
+    client = models.ForeignKey('Client', db_column='ClientId')
+    add_time = models.IntegerField(db_column='AddTime')
+    region = models.IntegerField(db_column='Region')
+    subregion = models.IntegerField(db_column='SubRegion')
+    toon_id = models.IntegerField(db_column='ProfileId')
+    toon_handle = models.CharField(max_length=255, db_column='CharacterName')
+    ingame_link = models.CharField(max_length=255, db_column='InGameProfileLink')
+    is_verified = models.BooleanField(db_column='IsVerified')
+    verification_portrait = models.IntegerField(db_column='VerificationRequestedPortrait')
+
+
+admin.site.register(Map)
+admin.site.register(Client)
+admin.site.register(ClientRegionStats)
+admin.site.register(MatchmakerMatch)
+admin.site.register(MatchmakerMatchParticipant)
+admin.site.register(MatchResultPlayer)
+admin.site.register(MatchResult)
+admin.site.register(BattleNetCharacter)

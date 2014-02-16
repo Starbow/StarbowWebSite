@@ -1,9 +1,8 @@
 from django.shortcuts import render
-from starbowmodweb.ladder.models import Client
+from starbowmodweb.ladder.helpers import get_leaderboard
+from starbowmodweb.ladder.models import BATTLENET_REGION_NA
 
 
 def show_ladder(request):
-    query = 'SELECT * FROM ladder_client WHERE wins != 0 OR losses != 0 ORDER BY ladder_points'
-    query = 'SELECT * FROM ladder_client'
-    clients = Client.objects.raw(query)
-    return render(request, 'ladder_home.html', dict(clients=clients))
+    ladder_na = get_leaderboard(region=BATTLENET_REGION_NA, orderby='ladder_points', sort="DESC", count=50)
+    return render(request, 'ladder_home.html', dict(ladder_stats=ladder_na))
