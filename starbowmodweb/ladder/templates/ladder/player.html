@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+Profile for {{ client.username }}
+<hr/>
+<h1>Linked Accounts</h1>
+<ul>
+{% for character in client.characters.all %}
+    <li><a href="{{ character.get_absolute_url }}">{{ character }}</a></li>
+{% endfor %}
+</ul>
+<hr/>
+<h1>Regional Stats</h1>
+<ul>
+{% for stats in client.stats.all %}
+    <li><a href="{{ stats.get_absolute_url }}">{{ stats }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

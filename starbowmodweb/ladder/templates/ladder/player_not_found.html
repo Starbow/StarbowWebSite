@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if client_id == user.pk %}
+Your ladder profile is not created until you sign in on the Eros client.<br/><br/>
+Download it <a href="{{ user.get_absolute_url }}">here</a>.
+{% else %}
+The player you have requested does not exist.
+{% endif %}
+
+{% endblock %}

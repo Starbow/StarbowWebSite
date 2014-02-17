@@ -17,4 +17,7 @@ To start laddering, download the client using the links below:
 
 Your client authentication token is: <input size="30" value="{{ user.authtoken }}" />
 
+<hr/>
+
+You can view your ladder account <a href="{% url 'starbowmodweb.ladder.views.show_player' user.pk %}">here</a>.
 {% endblock %}

@@ -9,8 +9,16 @@ def show_ladder(request):
 
 
 def show_player(request, client_id):
-    client = Client.objects.get(pk=client_id)
-    return render(request, 'ladder/player.html', dict(client=client))
+    client_id = int(client_id)
+    try:
+        client = Client.objects.select_related().get(pk=client_id)
+        return render(request, 'ladder/player.html', dict(client=client))
+    except Client.DoesNotExist:
+        return render(request, 'ladder/player_not_found.html', dict(client_id=client_id))
+
+
+def show_region_stats(request, client_id, region):
+    pass
 
 
 def show_map(request, map_id):
