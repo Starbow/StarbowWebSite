@@ -56,7 +56,7 @@ class Map(models.Model):
             self.bnet_name = self.bnet_name.strip()
 
     def get_absolute_url(self):
-        return reverse('ladder.views.show_map', kwargs=dict(map_id=str(self.id)))
+        return reverse('starbowmodweb.ladder.views.show_map', args=[self.pk])
 
     def __str__(self):
         ranked_str = "Ranked" if self.in_ranked_pool else "Unranked"
@@ -66,9 +66,11 @@ class Map(models.Model):
 class Client(models.Model):
     class Meta(object):
         db_table = 'clients'
+        verbose_name = "Client"
+        verbose_name_plural = "Clients"
 
     id = models.ForeignKey(User, db_column='Id', primary_key=True)
-    username = models.CharField(max_length=255)
+    username = models.CharField(max_length=255, unique=True)
     rating_mean = models.FloatField()
     rating_stddev = models.FloatField()
     ladder_points = models.IntegerField()
@@ -81,6 +83,12 @@ class Client(models.Model):
     ladder_losses = models.IntegerField()
     ladder_forefeits = models.IntegerField()
     ladder_walkovers = models.IntegerField()
+
+    def get_absolute_url(self):
+        return reverse('starbowmodweb.ladder.views.show_player', args=[self.pk])
+
+    def __str__(self):
+        return self.username
 
 
 class ClientRegionStats(models.Model):
