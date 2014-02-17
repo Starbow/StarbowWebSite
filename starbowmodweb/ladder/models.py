@@ -13,12 +13,16 @@ BATTLENET_REGION_SEA = 6
 
 
 REGION_CHOICES = (
-    (1, 'NA'),
+    (1, 'US'),
     (2, 'EU'),
     (3, 'KR'),
     (5, 'CN'),
     (6, 'SEA'),
 )
+
+
+def region2str(region_id):
+    return REGION_CHOICES[region_id - 1][1].lower()
 
 
 class Map(models.Model):
@@ -60,7 +64,7 @@ class Map(models.Model):
 
     def __str__(self):
         ranked_str = "Ranked" if self.in_ranked_pool else "Unranked"
-        return "{} - {} [{}]".format(REGION_CHOICES[self.region + 1][1], self.bnet_name, ranked_str)
+        return "{} - {} [{}]".format(region2str(self.region), self.bnet_name, ranked_str)
 
 
 class Client(models.Model):
@@ -89,6 +93,29 @@ class Client(models.Model):
 
     def __str__(self):
         return self.username
+
+
+class BattleNetCharacter(models.Model):
+    class Meta(object):
+        db_table = 'battle_net_characters'
+
+    id = models.AutoField(primary_key=True, db_column='Id')
+    client = models.ForeignKey('Client', db_column='ClientId')
+    add_time = models.IntegerField(db_column='AddTime')
+    region = models.IntegerField(db_column='Region', choices=REGION_CHOICES)
+    subregion = models.IntegerField(db_column='SubRegion')
+    toon_id = models.IntegerField(db_column='ProfileId')
+    toon_handle = models.CharField(max_length=255, db_column='CharacterName')
+    ingame_link = models.CharField(max_length=255, db_column='InGameProfileLink')
+    is_verified = models.BooleanField(db_column='IsVerified')
+    verification_portrait = models.IntegerField(db_column='VerificationRequestedPortrait')
+
+    def get_absolute_url(self):
+        url = "http://{}.battle.net/sc2/profile/{}/{}/{}"
+        return url.format(region2str(self.region), self.toon_id, self.subregion, self.toon_handle)
+
+    def __str__(self):
+        return "[{}] {} - {}".format(region2str(self.region), self.toon_handle, self.client.username)
 
 
 class ClientRegionStats(models.Model):
@@ -164,27 +191,11 @@ class MatchmakerMatchParticipant(models.Model):
     queue_time = models.FloatField(db_column='QueueTime')
 
 
-class BattleNetCharacter(models.Model):
-    class Meta(object):
-        db_table = 'battle_net_characters'
-
-    id = models.AutoField(primary_key=True, db_column='Id')
-    client = models.ForeignKey('Client', db_column='ClientId')
-    add_time = models.IntegerField(db_column='AddTime')
-    region = models.IntegerField(db_column='Region', choices=REGION_CHOICES)
-    subregion = models.IntegerField(db_column='SubRegion')
-    toon_id = models.IntegerField(db_column='ProfileId')
-    toon_handle = models.CharField(max_length=255, db_column='CharacterName')
-    ingame_link = models.CharField(max_length=255, db_column='InGameProfileLink')
-    is_verified = models.BooleanField(db_column='IsVerified')
-    verification_portrait = models.IntegerField(db_column='VerificationRequestedPortrait')
-
-
 admin.site.register(Map)
 admin.site.register(Client)
-admin.site.register(ClientRegionStats)
-admin.site.register(MatchmakerMatch)
-admin.site.register(MatchmakerMatchParticipant)
-admin.site.register(MatchResultPlayer)
-admin.site.register(MatchResult)
+# admin.site.register(ClientRegionStats)
+# admin.site.register(MatchmakerMatch)
+# admin.site.register(MatchmakerMatchParticipant)
+# admin.site.register(MatchResultPlayer)
+# admin.site.register(MatchResult)
 admin.site.register(BattleNetCharacter)
