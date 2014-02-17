@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib import admin
 from starbowmodweb.user.models import User
+from django.core.urlresolvers import reverse
+
 
 BATTLENET_REGION_UNKNOWN = 0
 BATTLENET_REGION_NA = 1
@@ -10,14 +12,55 @@ BATTLENET_REGION_CN = 5
 BATTLENET_REGION_SEA = 6
 
 
+REGION_CHOICES = (
+    (1, 'NA'),
+    (2, 'EU'),
+    (3, 'KR'),
+    (5, 'CN'),
+    (6, 'SEA'),
+)
+
+
 class Map(models.Model):
     class Meta(object):
         db_table = 'maps'
+        verbose_name = "Map"
+        verbose_name_plural = "Maps"
+        unique_together = ('region', 'bnet_name')
 
-    region = models.IntegerField(db_column='Region')
-    bnet_id = models.IntegerField(db_column='BattleNetID')
-    bnet_name = models.CharField(max_length=255, db_column='BattleNetName')
-    in_ranked_pool = models.BooleanField(db_column='InRankedPool')
+    region = models.IntegerField(
+        db_column='Region',
+        choices=REGION_CHOICES,
+        help_text="The region that this map is uploaded to. Each region needs a separate map entry",
+    )
+
+    bnet_id = models.IntegerField(
+        db_column='BattleNetID',
+        help_text="The XXXX in starcraft://map/XXXX; Used to construct a link to the map.",
+    )
+
+    bnet_name = models.CharField(
+        max_length=255,
+        db_column='BattleNetName',
+        help_text="The exact name of the map.",
+    )
+
+    in_ranked_pool = models.BooleanField(
+        db_column='InRankedPool',
+        help_text="True for maps that are currently part of the map pool on this region.",
+        default=True,
+    )
+
+    def clean(self):
+        if self.bnet_name is not None:
+            self.bnet_name = self.bnet_name.strip()
+
+    def get_absolute_url(self):
+        return reverse('ladder.views.show_map', kwargs=dict(map_id=str(self.id)))
+
+    def __str__(self):
+        ranked_str = "Ranked" if self.in_ranked_pool else "Unranked"
+        return "{} - {} [{}]".format(REGION_CHOICES[self.region + 1][1], self.bnet_name, ranked_str)
 
 
 class Client(models.Model):
@@ -43,9 +86,11 @@ class Client(models.Model):
 class ClientRegionStats(models.Model):
     class Meta(object):
         db_table = 'client_region_stats'
+        verbose_name = "Client Region Stats"
+        verbose_name_plural = "Client Region Stats"
 
     client = models.ForeignKey('Client')
-    region = models.IntegerField()
+    region = models.IntegerField(choices=REGION_CHOICES)
     rating_mean = models.FloatField()
     rating_stddev = models.FloatField()
     ladder_points = models.IntegerField()
@@ -63,12 +108,18 @@ class MatchmakerMatch(models.Model):
     add_time = models.IntegerField(db_column='AddTime')
     end_time = models.DateTimeField(db_column='EndTime')
     quality = models.FloatField(db_column='Quality')
-    region = models.IntegerField(db_column='Region')
+    region = models.IntegerField(db_column='Region', choices=REGION_CHOICES)
     channel = models.CharField(max_length=255, db_column='Channel')
     chat_room = models.CharField(max_length=255, db_column='ChatRoom')
 
 
 class MatchResultPlayer(models.Model):
+    RACES = (
+        (0, 'Protoss'),
+        (1, 'Terran'),
+        (2, 'Zerg'),
+    )
+
     class Meta(object):
         db_table = 'match_result_players'
 
@@ -79,7 +130,7 @@ class MatchResultPlayer(models.Model):
     points_before = models.IntegerField(db_column='PointsBefore')
     points_after = models.IntegerField(db_column='PointsAfter')
     point_difference = models.IntegerField(db_column='PointsDifference')
-    race = models.CharField(max_length=255, db_column='Race')
+    race = models.CharField(max_length=255, db_column='Race', choices=RACES)
     victory = models.IntegerField(db_column='Victory')
 
 
@@ -112,7 +163,7 @@ class BattleNetCharacter(models.Model):
     id = models.AutoField(primary_key=True, db_column='Id')
     client = models.ForeignKey('Client', db_column='ClientId')
     add_time = models.IntegerField(db_column='AddTime')
-    region = models.IntegerField(db_column='Region')
+    region = models.IntegerField(db_column='Region', choices=REGION_CHOICES)
     subregion = models.IntegerField(db_column='SubRegion')
     toon_id = models.IntegerField(db_column='ProfileId')
     toon_handle = models.CharField(max_length=255, db_column='CharacterName')
