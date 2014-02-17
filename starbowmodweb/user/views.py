@@ -55,7 +55,7 @@ def user_register(request):
             except MyBBError as e:
                 # Alert the administrators
                 logger.error("MyBB account creation failure: {}".format(e))
-                return render(request, 'user/reqister_failure.html', dict(
+                return render(request, 'user/register_failure.html', dict(
                     email=email,
                     username=username,
                     messages=str(e),
