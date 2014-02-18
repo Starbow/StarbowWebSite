@@ -34,10 +34,6 @@ input {
       @include box-shadow(0, 0, 5px, $darkRedColor);
     }
   }
-
-  &[type=text], &[type=email] {
-    width: 200px;
-  }
 }
 
 .button {
