@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
-
 from django.contrib import admin
+
 admin.autodiscover()
 
 # Wrap our patterns in /site/ to match our deployment environment

@@ -201,13 +201,3 @@ class MatchmakerMatchParticipant(models.Model):
     rating_mean = models.FloatField(db_column='RatingMean')
     rating_stddev = models.FloatField(db_column='RatingStdDev')
     queue_time = models.FloatField(db_column='QueueTime')
-
-
-admin.site.register(Map)
-admin.site.register(Client)
-# admin.site.register(ClientRegionStats)
-# admin.site.register(MatchmakerMatch)
-# admin.site.register(MatchmakerMatchParticipant)
-# admin.site.register(MatchResultPlayer)
-# admin.site.register(MatchResult)
-admin.site.register(BattleNetCharacter)
