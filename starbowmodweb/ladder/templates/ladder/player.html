@@ -14,7 +14,7 @@ Profile for {{ client.username }}
 <h1>Regional Stats</h1>
 <ul>
 {% for stats in client.stats.all %}
-    <li><a href="{{ stats.get_absolute_url }}">{{ stats }}</a></li>
+    <li>{{ stats }}</li>
 {% endfor %}
 </ul>
 </hr/>

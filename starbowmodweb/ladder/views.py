@@ -19,10 +19,6 @@ def show_player(request, client_id):
         return render(request, 'ladder/player_not_found.html', dict(client_id=client_id))
 
 
-def show_region_stats(request, client_id, region):
-    pass
-
-
 def show_map(request, map_id):
     map = Map.objects.get(pk=map_id)
     return render(request, 'ladder/map.html', dict(map=map))

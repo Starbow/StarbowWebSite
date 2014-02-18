@@ -137,8 +137,8 @@ class ClientRegionStats(models.Model):
     ladder_forefeits = models.IntegerField()
     ladder_walkovers = models.IntegerField()
 
-    def get_absolute_url(self):
-        return reverse('starbowmodweb.ladder.views.show_region_stats', args=[self.client.pk, self.region])
+    # def get_absolute_url(self):
+    #     return reverse('starbowmodweb.ladder.views.show_region_stats', args=[self.client.pk, self.region])
 
     def __str__(self):
         return "{}: {} - {}".format(region2str(self.region).upper(), self.ladder_wins, self.ladder_losses)
