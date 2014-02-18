@@ -17,4 +17,19 @@ Profile for {{ client.username }}
     <li><a href="{{ stats.get_absolute_url }}">{{ stats }}</a></li>
 {% endfor %}
 </ul>
+</hr/>
+<h1>Match History</h1>
+<table class="ladder-mini">
+<tr>
+    <td>R</td><td>Player 1</td><td>R</td><td>Player 2</td><td>Map</td>
+</tr>
+{% for match in matches.all %}
+    <tr>
+        {% for player in match.players.all %}
+            <td>{{ player.race|slice:":1" }}</td><td>{{ player.client.username }}</td>
+        {% endfor %}
+        <td>{{ match.map.bnet_name }}</td>
+    </tr>
+{% endfor %}
+</table>
 {% endblock %}

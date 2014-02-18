@@ -98,13 +98,16 @@ class Client(models.Model):
 class BattleNetCharacter(models.Model):
     class Meta(object):
         db_table = 'battle_net_characters'
+        verbose_name = "BNet Character"
+        verbose_name_plural = "BNet Characters"
 
     id = models.AutoField(primary_key=True, db_column='Id')
-    client = models.ForeignKey('Client', db_column='ClientId')
+    client = models.ForeignKey('Client', db_column='ClientId', related_name='characters')
     add_time = models.IntegerField(db_column='AddTime')
     region = models.IntegerField(db_column='Region', choices=REGION_CHOICES)
     subregion = models.IntegerField(db_column='SubRegion')
     toon_id = models.IntegerField(db_column='ProfileId')
+    code = models.IntegerField(db_column='CharacterCode')
     toon_handle = models.CharField(max_length=255, db_column='CharacterName')
     ingame_link = models.CharField(max_length=255, db_column='InGameProfileLink')
     is_verified = models.BooleanField(db_column='IsVerified')
@@ -115,7 +118,7 @@ class BattleNetCharacter(models.Model):
         return url.format(region2str(self.region), self.toon_id, self.subregion, self.toon_handle)
 
     def __str__(self):
-        return "[{}] {} - {}".format(region2str(self.region), self.toon_handle, self.client.username)
+        return "[{}] {}".format(region2str(self.region), self.toon_handle)
 
 
 class ClientRegionStats(models.Model):
@@ -124,7 +127,7 @@ class ClientRegionStats(models.Model):
         verbose_name = "Client Region Stats"
         verbose_name_plural = "Client Region Stats"
 
-    client = models.ForeignKey('Client')
+    client = models.ForeignKey('Client', related_name='stats')
     region = models.IntegerField(choices=REGION_CHOICES)
     rating_mean = models.FloatField()
     rating_stddev = models.FloatField()
@@ -134,12 +137,19 @@ class ClientRegionStats(models.Model):
     ladder_forefeits = models.IntegerField()
     ladder_walkovers = models.IntegerField()
 
+    def get_absolute_url(self):
+        return reverse('starbowmodweb.ladder.views.show_region_stats', args=[self.client.pk, self.region])
+
+    def __str__(self):
+        return "{}: {} - {}".format(region2str(self.region).upper(), self.ladder_wins, self.ladder_losses)
+
 
 class MatchmakerMatch(models.Model):
     class Meta(object):
         db_table = 'matchmaker_matches'
 
     id = models.AutoField(primary_key=True, db_column='Id')
+    map = models.ForeignKey('Map', db_column='MapId')
     add_time = models.IntegerField(db_column='AddTime')
     end_time = models.DateTimeField(db_column='EndTime')
     quality = models.FloatField(db_column='Quality')
@@ -159,8 +169,8 @@ class MatchResultPlayer(models.Model):
         db_table = 'match_result_players'
 
     id = models.AutoField(primary_key=True, db_column='Id')
-    client = models.ForeignKey('Client', db_column='ClientId')
-    match = models.ForeignKey('MatchResult', db_column='MatchId')
+    client = models.ForeignKey('Client', db_column='ClientId', related_name='results')
+    match = models.ForeignKey('MatchResult', db_column='MatchId', related_name='players')
     character = models.ForeignKey('BattleNetCharacter', db_column='CharacterId')
     points_before = models.IntegerField(db_column='PointsBefore')
     points_after = models.IntegerField(db_column='PointsAfter')
@@ -176,6 +186,8 @@ class MatchResult(models.Model):
     id = models.AutoField(primary_key=True, db_column='Id')
     matchmaker_match = models.ForeignKey('MatchmakerMatch', db_column='MatchmakerMatchId')
     datetime = models.IntegerField(db_column='DateTime')
+    region = models.IntegerField(db_column='Region', choices=REGION_CHOICES)
+    map = models.ForeignKey('Map', db_column='MapId')
 
 
 class MatchmakerMatchParticipant(models.Model):

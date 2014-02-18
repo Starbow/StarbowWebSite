@@ -39,7 +39,7 @@
   </tr>
   {% for stats in ladder_na %}
     <tr>
-      <td>{{ stats.client.username }}</td>
+      <td><a href="{% url 'ladder.views.show_player' stats.client.pk %}">{{ stats.client.username }}</a></td>
       <td style="text-align:right;">{{ stats.ladder_wins }}</td>
       <td style="text-align:right;">{{ stats.ladder_losses }}</td>
     </tr>
@@ -54,7 +54,7 @@
   </tr>
   {% for stats in ladder_eu %}
     <tr>
-      <td>{{ stats.client.username }}</td>
+      <td><a href="{% url 'ladder.views.show_player' stats.client.pk %}">{{ stats.client.username }}</a></td>
       <td style="text-align:right;">{{ stats.ladder_wins }}</td>
       <td style="text-align:right;">{{ stats.ladder_losses }}</td>
     </tr>
@@ -69,7 +69,7 @@
   </tr>
   {% for stats in ladder_kr %}
     <tr>
-      <td>{{ stats.client.username }}</td>
+      <td><a href="{% url 'ladder.views.show_player' stats.client.pk %}">{{ stats.client.username }}</a></td>
       <td style="text-align:right;">{{ stats.ladder_wins }}</td>
       <td style="text-align:right;">{{ stats.ladder_losses }}</td>
     </tr>

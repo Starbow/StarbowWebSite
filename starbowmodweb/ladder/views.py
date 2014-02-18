@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from starbowmodweb.ladder.helpers import get_leaderboard
-from starbowmodweb.ladder.models import Client, Map, BATTLENET_REGION_NA
+from starbowmodweb.ladder.models import Client, Map, MatchResult, BATTLENET_REGION_NA
 
 
 def show_ladder(request):
@@ -10,9 +10,10 @@ def show_ladder(request):
 
 def show_player(request, client_id):
     client_id = int(client_id)
+    matches = MatchResult.objects.select_related().filter(players__client_id=client_id)
     try:
         client = Client.objects.select_related().get(pk=client_id)
-        return render(request, 'ladder/player.html', dict(client=client))
+        return render(request, 'ladder/player.html', dict(client=client, matches=matches))
     except Client.DoesNotExist:
         return render(request, 'ladder/player_not_found.html', dict(client_id=client_id))
 
