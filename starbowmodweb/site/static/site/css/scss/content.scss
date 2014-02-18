@@ -22,7 +22,8 @@
 }
 
 .listing {
-  list-style-image: url("../img/bowred.svg");
+  // list-style-image: url("../img/bowred.svg");
+  list-style: none;
   font-size: 12px;
   margin: 0;
   padding: {
