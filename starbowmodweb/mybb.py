@@ -50,7 +50,6 @@ def get_threads(thread_prefix=None, forum_name=None, orderby=None, sort=None, of
 
     query_template = "SELECT * FROM {} WHERE {} {} {}"
     query = query_template.format(', '.join(tables), ' AND '.join(conditions), order, limit)
-    logger.info("Query: "+query)
     cursor = connections['mybb'].cursor()
 
     cursor.execute(query, params)
