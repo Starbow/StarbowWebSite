@@ -28,7 +28,7 @@ def home(request):
 
 
 def view_news(request):
-    articles = mybb.get_threads(forum_name="News and Announcements")
+    articles = mybb.get_threads(forum_name="News and Announcements", sort="DESC")
     return render(request, 'news.html', dict(articles=articles))
 
 
