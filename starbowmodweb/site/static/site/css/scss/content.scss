@@ -22,9 +22,12 @@
 }
 
 .listing {
-  list-style: none;
-  margin: 0px;
-  padding: 0px;
+  list-style-image: url("../img/bowred.svg");
+  font-size: 12px;
+  margin: 0;
+  padding: {
+    left: 15px;
+  };
 }
 
 .column {
@@ -105,8 +108,36 @@
 }
 
 .ladder-mini {
-  td{
+  border-collapse: collapse;
+  font-size: 12px;
+  width: 100%;
+
+  tr {
+    background-color: $redColor;
+    color: $whiteColor;
+
+    a {
+      color: white;
+    }
+
+    &:hover {
+      background-color: rgba($lightRedColor, 0.50);
+    }
+  }
+
+  tr:nth-child(even) {
+    background-color: $lightRedColor;
+
+    &:hover {
+      background-color: rgba($lightRedColor, 0.50);
+    }
+  }
+
+  th {
+    margin: 0;
+  }
+
+  td {
     padding:2px;
-    border: 1px solid black;
   }
 }

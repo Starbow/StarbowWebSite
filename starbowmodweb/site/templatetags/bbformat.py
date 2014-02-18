@@ -27,13 +27,13 @@ def bbcode_img(tag_name, value, options, parent, context):
 
 def bbcode_banner(tag_name, value, options, parent, context):
     if tag_name in options:
-        return """<div class="banner" style="background-image:url('{}')")>'
-          '<a href="{}"><h1>{}</h1></a>'
-        '</div>""".format(options[tag_name], context['url'], value)
+        return ('<div class="banner" style="background-image:url(\'{}\')")>'
+        '<a href="{}"><h1>{}</h1></a>'
+        '</div>').format(options[tag_name], context['url'], value)
     else:
-        return """<div class="banner" style="background-color:black")>'
-          '<a href="{}"><h1>{}</h1></a>'
-        '</div>""".format(context['url'], value)
+        return ('<div class="banner"'
+        'style="background-image:url(\'/static/site/img/generalimage.png\')"'
+        ')><a href="{}"><h1>{}</h1></a></div>').format(context['url'], value)
 
 
 def bbcode_email(tag_name, value, options, parent, context):
