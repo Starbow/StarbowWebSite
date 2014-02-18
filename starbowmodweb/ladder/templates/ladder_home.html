@@ -3,7 +3,7 @@
 {% block content %}
 
 <table class="ladder">
-  <caption>Ladder Rankings</caption>
+  <caption>Top 50 NA Ladder Rankings</caption>
   <thead>
     <tr>
       <th>Rank</th>
@@ -14,7 +14,31 @@
     </tr>
   </thead>
   <tbody>
-    {% for stats in ladder_stats %}
+    {% for stats in ladder_na %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ stats.client.username }}</td>
+        <td>{{ stats.ladder_points }}</td>
+        <td>{{ stats.ladder_wins }}</td>
+        <td>{{ stats.ladder_losses }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<table class="ladder">
+  <caption>Top 50 EU Ladder Rankings</caption>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Username</th>
+      <th>Points</th>
+      <th>Wins</th>
+      <th>Losses</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for stats in ladder_eu %}
       <tr>
         <td>{{ forloop.counter }}</td>
         <td>{{ stats.client.username }}</td>
