@@ -112,32 +112,96 @@
   font-size: 12px;
   width: 100%;
 
-  tr {
-    background-color: $redColor;
-    color: $whiteColor;
+  thead {
 
-    a {
-      color: white;
-    }
-
-    &:hover {
-      background-color: rgba($lightRedColor, 0.50);
+    th {
+      background-color: $redColor;
+      color: $whiteColor;
+      text-align: left;
+      padding: 5px;
     }
   }
 
-  tr:nth-child(even) {
-    background-color: $lightRedColor;
+  tbody {
+    tr {
+      background-color: $lightRedColor;
+      color: $whiteColor;
 
-    &:hover {
-      background-color: rgba($lightRedColor, 0.50);
+      a {
+        color: white;
+      }
+
+      &:hover {
+        background-color: rgba($lightRedColor, 0.50);
+      }
+    }
+
+    tr:nth-child(even) {
+      background-color: $redColor;
+
+      &:hover {
+        background-color: rgba($lightRedColor, 0.50);
+      }
+    }
+
+    td {
+      padding: {
+        left: 5px;
+        right: 5px;
+      }
+    }
+  }
+}
+
+
+.ladder {
+  border-collapse: collapse;
+  width: 100%;
+
+  caption {
+    color: $redColor;
+    font-family: $headerFont;
+    font-size: 32px;
+  }
+
+  thead {
+
+    th {
+      background-color: $redColor;
+      color: $whiteColor;
+      font-size: 14px;
+      text-align: left;
+      padding: 5px;
     }
   }
 
-  th {
-    margin: 0;
-  }
+  tbody {
+    tr {
+      background-color: $lightRedColor;
+      color: $whiteColor;
 
-  td {
-    padding:2px;
+      a {
+        color: white;
+      }
+
+      &:hover {
+        background-color: rgba($lightRedColor, 0.50);
+      }
+    }
+
+    tr:nth-child(even) {
+      background-color: $redColor;
+
+      &:hover {
+        background-color: rgba($lightRedColor, 0.50);
+      }
+    }
+
+    td {
+      padding: {
+        left: 5px;
+        right: 5px;
+      }
+    }
   }
 }

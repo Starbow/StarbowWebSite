@@ -34,46 +34,67 @@
 <div class="column">
   <h2>NA Ladder</h2>
   <table class="ladder-mini">
-  <tr>
-    <th>Username</th><th>Wins</th><th>Losses</th>
-  </tr>
-  {% for stats in ladder_na %}
-    <tr>
-      <td><a href="{% url 'ladder.views.show_player' stats.client.pk %}">{{ stats.client.username }}</a></td>
-      <td style="text-align:right;">{{ stats.ladder_wins }}</td>
-      <td style="text-align:right;">{{ stats.ladder_losses }}</td>
-    </tr>
-  {% endfor %}
+    <thead>
+      <tr>
+        <th>Username</th><th>Wins</th><th>Losses</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>test</td><td>test</td><td>test</td>
+      </tr>
+      <tr>
+        <td>test</td><td>test</td><td>test</td>
+      </tr>
+      <tr>
+        <td>test</td><td>test</td><td>test</td>
+      </tr>
+      {% for stats in ladder_na %}
+        <tr>
+          <td><a href="{% url 'ladder.views.show_player' stats.client.pk %}">{{ stats.client.username }}</a></td>
+          <td style="text-align:right;">{{ stats.ladder_wins }}</td>
+          <td style="text-align:right;">{{ stats.ladder_losses }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
   </table>
 </div>
 <div class="column">
   <h2>EU Ladder</h2>
   <table class="ladder-mini">
-  <tr>
-    <th>Username</th><th>Wins</th><th>Losses</th>
-  </tr>
-  {% for stats in ladder_eu %}
-    <tr>
-      <td><a href="{% url 'ladder.views.show_player' stats.client.pk %}">{{ stats.client.username }}</a></td>
-      <td style="text-align:right;">{{ stats.ladder_wins }}</td>
-      <td style="text-align:right;">{{ stats.ladder_losses }}</td>
-    </tr>
-  {% endfor %}
+    <thead>
+      <tr>
+        <th>Username</th><th>Wins</th><th>Losses</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for stats in ladder_eu %}
+        <tr>
+          <td><a href="{% url 'ladder.views.show_player' stats.client.pk %}">{{ stats.client.username }}</a></td>
+          <td style="text-align:right;">{{ stats.ladder_wins }}</td>
+          <td style="text-align:right;">{{ stats.ladder_losses }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
   </table>
 </div>
 <div class="column">
   <h2>KR Ladder</h2>
   <table class="ladder-mini">
-  <tr>
-    <th>Username</th><th>Wins</th><th>Losses</th>
-  </tr>
-  {% for stats in ladder_kr %}
-    <tr>
-      <td><a href="{% url 'ladder.views.show_player' stats.client.pk %}">{{ stats.client.username }}</a></td>
-      <td style="text-align:right;">{{ stats.ladder_wins }}</td>
-      <td style="text-align:right;">{{ stats.ladder_losses }}</td>
-    </tr>
-  {% endfor %}
+    <thead>
+      <tr>
+        <th>Username</th><th>Wins</th><th>Losses</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for stats in ladder_kr %}
+        <tr>
+          <td><a href="{% url 'ladder.views.show_player' stats.client.pk %}">{{ stats.client.username }}</a></td>
+          <td style="text-align:right;">{{ stats.ladder_wins }}</td>
+          <td style="text-align:right;">{{ stats.ladder_losses }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
   </table>
 </div>
 {% endblock %}
