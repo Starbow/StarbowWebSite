@@ -3,12 +3,14 @@ import json
 import binascii
 import subprocess
 
+from django.db import connections
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from starbowmodweb.user.forms import RegistrationForm
 from starbowmodweb.user.models import User
 from django.conf import settings
 from django.db import transaction
+from starbowmodweb import utils
 
 # import the logging library
 import logging
@@ -19,6 +21,21 @@ logger = logging.getLogger(__name__)
 
 class MyBBError(Exception):
     pass
+
+
+def sync_users():
+    cursor = connections['mybb'].cursor()
+    cursor.execute("SELECT uid, username, loginkey, email FROM mybb_users")
+    users = utils.dictfetchall(cursor)
+
+    for mybb_user in users:
+        try:
+            User.objects.get(email=mybb_user['email'])
+            print("Found {}".format(mybb_user['email']))
+        except User.DoesNotExist:
+            print("Creating {}".format(mybb_user['email']))
+            password = binascii.b2a_hex(os.urandom(15))
+            User.objects.create_user(mybb_user['username'], mybb_user['email'], password)
 
 
 def create_forum_account(user, password):
