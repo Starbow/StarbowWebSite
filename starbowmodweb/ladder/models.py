@@ -114,7 +114,7 @@ class BattleNetCharacter(models.Model):
     verification_portrait = models.IntegerField(db_column='VerificationRequestedPortrait')
 
     def get_absolute_url(self):
-        url = "http://{}.battle.net/sc2/profile/{}/{}/{}"
+        url = "http://{}.battle.net/sc2/profile/{}/{}/{}/"
         return url.format(region2str(self.region), self.toon_id, self.subregion, self.toon_handle)
 
     def __str__(self):
