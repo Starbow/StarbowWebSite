@@ -59,26 +59,6 @@
       </tr>
     </thead>
     <tbody>
-        <tr>
-          <td>test</td>
-          <td>test</td>
-          <td>test</td>
-        </tr>
-        <tr>
-          <td>test</td>
-          <td>test</td>
-          <td>test</td>
-        </tr>
-        <tr>
-          <td>test</td>
-          <td>test</td>
-          <td>test</td>
-        </tr>
-        <tr>
-          <td>test</td>
-          <td>test</td>
-          <td>test</td>
-        </tr>
       {% for stats in ladder_eu %}
         <tr>
           <td><a href="{% url 'ladder.views.show_player' stats.client.pk %}">{{ stats.client.username }}</a></td>
