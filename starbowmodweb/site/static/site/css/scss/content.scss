@@ -22,13 +22,18 @@
 }
 
 .listing {
-  // list-style-image: url("../img/bowred.svg");
-  list-style: none;
+  list-style-type: none;
   font-size: 12px;
   margin: 0;
-  padding: {
-    left: 15px;
-  };
+  padding: 0;
+
+  li {
+    background: url("../img/bowred.svg") no-repeat left 5px;
+    background-size: 8px 8px;
+    padding: {
+      left: 10px;
+    }
+  }
 }
 
 .column {
