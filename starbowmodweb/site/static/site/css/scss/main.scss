@@ -32,3 +32,12 @@ hr {
   color: $darkRedColor;
   height: 2px;
 }
+
+a {
+  color: $darkRedColor;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
