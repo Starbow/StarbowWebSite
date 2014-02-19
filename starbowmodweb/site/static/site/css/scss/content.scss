@@ -190,10 +190,10 @@
   tbody {
     tr {
       background-color: $whiteColor;
-      color: $blackColor;
+      color: $grayColor;
 
       a {
-        color: white;
+        color: $grayColor;
       }
 
       &:hover {
@@ -205,6 +205,10 @@
     tr:nth-child(even) {
       background-color: $redColor;
       color: $whiteColor;
+
+      a {
+        color: $whiteColor;
+      }
 
       &:hover {
         background-color: rgba($lightRedColor, 0.50);
