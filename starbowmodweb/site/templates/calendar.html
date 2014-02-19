@@ -4,7 +4,7 @@
 {% for event in events %}
     <h1>{{ event.name }}</h1>
     <p>{{ event.start|date:"D, F jS G:i" }} - {{ event.end|date:"D, F jS G:i" }}</p>
-    <p>{{event.description|bbformat }}<p>
+    <p>{{event.description|bbformat|safe }}<p>
     <hr/>
 {% endfor %}
 {% endblock %}
