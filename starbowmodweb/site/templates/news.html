@@ -3,12 +3,13 @@
 
 {% block content %}
 {% for article in articles %}
-    <h1>{{ article.subject }}</h1>
+    <h1><a href="{{ article.url }}">{{ article.subject }}</a></h1>
     <p>
     {% autoescape off %}
     {{ article.message|bbformat:article|safe }}
     {% endautoescape %}
     </p>
+    Join the discussion <a href="{{ article.url }}">on the forums</a>.
     <hr>
 {% endfor %}
 {% endblock %}
