@@ -1,52 +1,68 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
+{% block head %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="{% static 'site/js/tabs.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 
-<table class="ladder">
-  <caption>Top 50 NA Ladder Rankings</caption>
-  <thead>
-    <tr>
-      <th>Rank</th>
-      <th>Username</th>
-      <th>Points</th>
-      <th>Wins</th>
-      <th>Losses</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for stats in ladder_na %}
-      <tr>
-        <td>{{ forloop.counter }}</td>
-        <td>{{ stats.client.username }}</td>
-        <td>{{ stats.ladder_points }}</td>
-        <td>{{ stats.ladder_wins }}</td>
-        <td>{{ stats.ladder_losses }}</td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-<table class="ladder">
-  <caption>Top 50 EU Ladder Rankings</caption>
-  <thead>
-    <tr>
-      <th>Rank</th>
-      <th>Username</th>
-      <th>Points</th>
-      <th>Wins</th>
-      <th>Losses</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for stats in ladder_eu %}
-      <tr>
-        <td>{{ forloop.counter }}</td>
-        <td>{{ stats.client.username }}</td>
-        <td>{{ stats.ladder_points }}</td>
-        <td>{{ stats.ladder_wins }}</td>
-        <td>{{ stats.ladder_losses }}</td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="tabbed">
+  <div class="tabs">
+    <ul>
+      <li tab="na" class="active">Top 50 NA Ladder Players</li>
+      <li tab="eu">Top 50 EU Ladder Players</li>
+    </ul>
+  </div>
+  <div tab="na">
+    <table class="ladder">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Username</th>
+          <th>Points</th>
+          <th>Wins</th>
+          <th>Losses</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stats in ladder_na %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ stats.client.username }}</td>
+            <td>{{ stats.ladder_points }}</td>
+            <td>{{ stats.ladder_wins }}</td>
+            <td>{{ stats.ladder_losses }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div tab="eu">
+    <table class="ladder">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Username</th>
+          <th>Points</th>
+          <th>Wins</th>
+          <th>Losses</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stats in ladder_eu %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ stats.client.username }}</td>
+            <td>{{ stats.ladder_points }}</td>
+            <td>{{ stats.ladder_wins }}</td>
+            <td>{{ stats.ladder_losses }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}
