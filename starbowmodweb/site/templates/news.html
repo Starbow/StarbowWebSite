@@ -3,6 +3,7 @@
 
 {% block content %}
 {% for article in articles %}
+  <div class="article">
     <h1><a href="{{ article.url }}">{{ article.subject }}</a></h1>
     <p>
     {% autoescape off %}
@@ -11,5 +12,6 @@
     </p>
     Join the discussion <a href="{{ article.url }}">on the forums</a>.
     <hr>
+  </div>
 {% endfor %}
 {% endblock %}

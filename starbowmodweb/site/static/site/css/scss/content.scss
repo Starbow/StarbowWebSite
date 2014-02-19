@@ -171,7 +171,6 @@
   }
 }
 
-
 .ladder {
   border-collapse: collapse;
   width: 100%;
@@ -224,6 +223,14 @@
         left: 5px;
         right: 5px;
       }
+    }
+  }
+}
+
+.article {
+  h1 {
+    a {
+      color: $darkRedColor;
     }
   }
 }
