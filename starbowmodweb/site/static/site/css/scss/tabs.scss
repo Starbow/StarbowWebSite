@@ -5,7 +5,7 @@
  */
 
 .tabbed {
-  background-color: $grayColor;
+  background-color: $lightRedColor;
   color: $whiteColor;
 
   @include box-shadow(0, 0, 5px, $blackColor);
@@ -29,7 +29,8 @@
         }
 
         &:hover {
-          background-color: $lightRedColor;
+          background-color: $whiteColor;
+          color: $grayColor;
           cursor: pointer;
         }
       }

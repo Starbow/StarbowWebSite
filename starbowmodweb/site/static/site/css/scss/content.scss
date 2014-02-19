@@ -118,6 +118,8 @@
   font-size: 12px;
   width: 100%;
 
+  @include box-shadow(0, 0, 3px, $blackColor);
+
   thead {
 
     th {
@@ -130,8 +132,8 @@
 
   tbody {
     tr {
-      background-color: $lightRedColor;
-      color: $whiteColor;
+      background-color: $whiteColor;
+      color: $grayColor;
 
       a {
         color: white;
@@ -139,11 +141,13 @@
 
       &:hover {
         background-color: rgba($lightRedColor, 0.50);
+        color: $whiteColor;
       }
     }
 
     tr:nth-child(even) {
       background-color: $redColor;
+      color: $whiteColor;
 
       &:hover {
         background-color: rgba($lightRedColor, 0.50);
@@ -185,8 +189,8 @@
 
   tbody {
     tr {
-      background-color: $lightRedColor;
-      color: $whiteColor;
+      background-color: $whiteColor;
+      color: $blackColor;
 
       a {
         color: white;
@@ -194,11 +198,13 @@
 
       &:hover {
         background-color: rgba($lightRedColor, 0.50);
+        color: $whiteColor;
       }
     }
 
     tr:nth-child(even) {
       background-color: $redColor;
+      color: $whiteColor;
 
       &:hover {
         background-color: rgba($lightRedColor, 0.50);
