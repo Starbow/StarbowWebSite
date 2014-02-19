@@ -31,7 +31,7 @@
         {% for stats in ladder_na %}
           <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ stats.client.username }}</td>
+            <td><a href="{% url 'ladder.views.show_player' stats.client.pk %}">{{ stats.client.username }}</td>
             <td>{{ stats.ladder_points }}</td>
             <td>{{ stats.ladder_wins }}</td>
             <td>{{ stats.ladder_losses }}</td>
@@ -55,7 +55,7 @@
         {% for stats in ladder_eu %}
           <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ stats.client.username }}</td>
+            <td><a href="{% url 'ladder.views.show_player' stats.client.pk %}">{{ stats.client.username }}</a></td>
             <td>{{ stats.ladder_points }}</td>
             <td>{{ stats.ladder_wins }}</td>
             <td>{{ stats.ladder_losses }}</td>
