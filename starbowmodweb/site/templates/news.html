@@ -6,7 +6,7 @@
     <h1>{{ article.subject }}</h1>
     <p>
     {% autoescape off %}
-    {{ article.message|bbformat }}
+    {{ article.message|bbformat:article|safe }}
     {% endautoescape %}
     </p>
     <hr>
