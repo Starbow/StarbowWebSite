@@ -8,17 +8,11 @@
   <h1>Welcome, {{ user.username }}!</h1>
 </div>
 
-To start laddering, download the client using the links below:
+To start laddering, download the client using one of the links below:
 
 <ul>
-<li>Windows 7+ - <a href="{{ CLIENT_URLS.windows }}">{{ CLIENT_URLS.windows }}</a>
-<li>OS X - <a href="{{ CLIENT_URLS.osx }}">{{ CLIENT_URLS.osx }}</a>
-</ul>
-
-On Windows, you will also need to download Visual C++ Redistributable for Visual Studio 2012 Update 4. Make sure to download the x86 version:
-
-<ul>
-  <li><a href="http://www.microsoft.com/en-us/download/details.aspx?id=30679">http://www.microsoft.com/en-us/download/details.aspx?id=30679</a></li>
+<li><a href="{{ CLIENT_URLS.windows }}">Windows 7+</a>
+<li><a href="{{ CLIENT_URLS.osx }}">OS X</a>
 </ul>
 
 Your client authentication token is: <input id="authtoken" type="text" size="35" value="{{ user.authtoken }}" />
