@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib import admin
+from datetime import datetime
 from starbowmodweb.user.models import User
 from django.core.urlresolvers import reverse
 
@@ -201,3 +201,31 @@ class MatchmakerMatchParticipant(models.Model):
     rating_mean = models.FloatField(db_column='RatingMean')
     rating_stddev = models.FloatField(db_column='RatingStdDev')
     queue_time = models.FloatField(db_column='QueueTime')
+
+
+def get_crash_report_name(instance, filename):
+    date_str = datetime.now().strftime('D%Y%m%d.T%H%M%S')
+    return "crashreport/{}/{}/{}.{}.dmp".format(instance.client_version, instance.os, instance.user.username, date_str)
+
+
+class CrashReport(models.Model):
+    OS_CHOICES = (
+        ('windows', 'Windows'),
+        ('osx', 'OS X'),
+        ('linux', 'Linux (WINE)'),
+    )
+
+    CLIENT_VERSIONS = (
+        (1, 'Version 1'),
+        (2, 'Version 2'),
+    )
+
+    user = models.ForeignKey(User, related_name="crash_reports")
+    os = models.CharField(max_length=255, choices=OS_CHOICES, help_text="The operating system you were running.")
+    client_version = models.IntegerField(max_length=255, choices=CLIENT_VERSIONS, help_text="The version of the client you were running.")
+    description = models.TextField(help_text="(Optional) Please describe how the crash occured. Be specific as possible.", blank=True)
+    dump = models.FileField(upload_to=get_crash_report_name, help_text="The .dmp file will be next to your eros executable.<br/>You can delete the file after submitting it here. We will always be accessible to you on your user homepage.")
+    time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "Client v"+get_crash_report_name(self, "").split('/', 1)[1]

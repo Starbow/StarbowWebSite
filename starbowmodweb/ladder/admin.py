@@ -1,5 +1,5 @@
 from django.contrib import admin
-from starbowmodweb.ladder.models import Map, Client, BattleNetCharacter
+from starbowmodweb.ladder.models import Map, Client, BattleNetCharacter, CrashReport
 
 admin.site.register(Map)
 admin.site.register(Client)
@@ -9,3 +9,4 @@ admin.site.register(Client)
 # admin.site.register(MatchResultPlayer)
 # admin.site.register(MatchResult)
 admin.site.register(BattleNetCharacter)
+admin.site.register(CrashReport)

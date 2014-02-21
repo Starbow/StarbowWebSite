@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from starbowmodweb.ladder.forms import CrashReportForm, CrashReport
 from starbowmodweb.ladder.helpers import get_leaderboard
-from starbowmodweb.ladder.models import Client, Map, MatchResult, BATTLENET_REGION_NA, BATTLENET_REGION_EU
+from starbowmodweb.ladder.models import Client, MatchResult, BATTLENET_REGION_NA, BATTLENET_REGION_EU
 
 
 def show_ladders(request):
@@ -19,6 +21,15 @@ def show_player(request, client_id):
         return render(request, 'ladder/player_not_found.html', dict(client_id=client_id))
 
 
-def show_map(request, map_id):
-    map = Map.objects.get(pk=map_id)
-    return render(request, 'ladder/map.html', dict(map=map))
+@login_required
+def crash_report(request):
+    if request.method == 'POST':
+        report = CrashReport(user=request.user)
+        form = CrashReportForm(request.POST, request.FILES, instance=report)
+        if form.is_valid():
+            form.save()
+            return render(request, 'ladder/crash_report_success.html', dict(report=report))
+    else:
+        form = CrashReportForm()
+
+    return render(request, 'ladder/crash_report_submit.html', dict(form=form))
