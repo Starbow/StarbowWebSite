@@ -2,6 +2,7 @@ from django.db import models
 from datetime import datetime
 from starbowmodweb.user.models import User
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
 
 BATTLENET_REGION_UNKNOWN = 0
@@ -209,20 +210,9 @@ def get_crash_report_name(instance, filename):
 
 
 class CrashReport(models.Model):
-    OS_CHOICES = (
-        ('windows', 'Windows'),
-        ('osx', 'OS X'),
-        ('linux', 'Linux (WINE)'),
-    )
-
-    CLIENT_VERSIONS = (
-        (1, 'Version 1'),
-        (2, 'Version 2'),
-    )
-
     user = models.ForeignKey(User, related_name="crash_reports")
-    os = models.CharField(max_length=255, choices=OS_CHOICES, help_text="The operating system you were running.")
-    client_version = models.IntegerField(max_length=255, choices=CLIENT_VERSIONS, help_text="The version of the client you were running.")
+    os = models.CharField(max_length=255, choices=settings.OS_CHOICES, help_text="The operating system you were running.")
+    client_version = models.IntegerField(max_length=255, choices=settings.CLIENT_VERSIONS, help_text="The version of the client you were running.")
     description = models.TextField(help_text="(Optional) Please describe how the crash occured. Be specific as possible.", blank=True)
     dump = models.FileField(upload_to=get_crash_report_name, help_text="The .dmp file will be next to your eros executable.<br/>You can delete the file after submitting it here. We will always be accessible to you on your user homepage.")
     time = models.DateTimeField(auto_now_add=True)
