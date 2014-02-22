@@ -204,9 +204,14 @@ class MatchmakerMatchParticipant(models.Model):
     queue_time = models.FloatField(db_column='QueueTime')
 
 
-def get_crash_report_name(instance, filename):
-    date_str = datetime.now().strftime('D%Y%m%d.T%H%M%S')
-    return "crashreport/{}/{}/{}.{}.dmp".format(instance.client_version, instance.os, instance.user.username, date_str)
+def get_crash_report_name(instance, filename=""):
+    report_date = instance.time or datetime.now()
+    return "crashreport/{}/{}/{}.{}.dmp".format(
+        instance.client_version,
+        instance.os,
+        instance.user.username,
+        report_date.strftime('D%Y%m%d.T%H%M%S')
+    )
 
 
 class CrashReport(models.Model):
@@ -218,4 +223,4 @@ class CrashReport(models.Model):
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "Client v"+get_crash_report_name(self, "").split('/', 1)[1]
+        return "Client v"+get_crash_report_name(self).split('/', 1)[1]
