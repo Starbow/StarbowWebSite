@@ -4,31 +4,23 @@
 
 Profile for {{ client.username }}
 <hr/>
-<h1>Linked Accounts</h1>
-<ul>
-{% for character in client.characters.all %}
-    <li><a href="{{ character.get_absolute_url }}">{{ character }}</a></li>
-{% endfor %}
-</ul>
-<hr/>
 <h1>Regional Stats</h1>
 <ul>
 {% for stats in client.stats.all %}
     <li>{{ stats }}</li>
 {% endfor %}
 </ul>
-</hr/>
+<hr/>
 <h1>Match History</h1>
 <table class="ladder-mini">
-<tr>
-    <td>R</td><td>Player 1</td><td>R</td><td>Player 2</td><td>Map</td>
-</tr>
-{% for match in matches.all %}
+{% for match in matches %}
     <tr>
-        {% for player in match.players.all %}
-            <td>{{ player.race|slice:":1" }}</td><td>{{ player.client.username }}</td>
-        {% endfor %}
-        <td>{{ match.map.bnet_name }}</td>
+        <td style="width:105px;">{{ match.datetime|date:"Y-m-d H:i"}}</td>
+        <td style="width:45px;">{{ match.result }}</td>
+        <td style="width:35px;">{{ match.point_difference }}</td>
+        <td><img src="{{ match.player1.race_icon }}" width="16px" height="16px;"/>&nbsp;{{ match.player1.client.username }}</td>
+        <td><img src="{{ match.player2.race_icon }}" width="16px" height="16px;"/>&nbsp;{{ match.player2.client.username }}</td>
+        <td style="text-align: left;">{{ match.map_name }}</td>
     </tr>
 {% endfor %}
 </table>

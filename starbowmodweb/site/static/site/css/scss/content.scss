@@ -132,6 +132,7 @@
 
   tbody {
     tr {
+      border-bottom: 1px solid black;
       background-color: $whiteColor;
       color: $grayColor;
 
@@ -146,19 +147,6 @@
         a {
           color: $whiteColor;
         }
-      }
-    }
-
-    tr:nth-child(even) {
-      background-color: $redColor;
-      color: $whiteColor;
-
-      a {
-        color: $whiteColor;
-      }
-
-      &:hover {
-        background-color: $lightRedColor;
       }
     }
 

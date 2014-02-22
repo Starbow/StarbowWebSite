@@ -1,5 +1,6 @@
-from starbowmodweb.ladder.models import ClientRegionStats
+from starbowmodweb.ladder.models import ClientRegionStats, MatchResult, REGION_CHOICES
 from django.db.models import Q
+from datetime import datetime
 
 
 def get_leaderboard(region, offsetby=None, orderby=None, sort=None, count=None):
@@ -13,3 +14,42 @@ def get_leaderboard(region, offsetby=None, orderby=None, sort=None, count=None):
         leaders = leaders[:count]
 
     return leaders
+
+
+def get_matchhistory(client_id):
+    matches = list()
+    raw_matches = MatchResult.objects.select_related().filter(players__client_id=client_id).order_by('datetime').reverse()
+    for raw_match in raw_matches:
+        match = {
+            'datetime': datetime.fromtimestamp(raw_match.datetime),
+            'region': REGION_CHOICES[raw_match.region],
+            'map_name': raw_match.map.bnet_name.replace('Starbow - ', ''),
+        }
+        raw_players = raw_match.players
+        for raw_player in raw_players.all():
+            if raw_player.client.pk == client_id:
+                if raw_player.race.lower() == 'forefeit':
+                    match['result'] = 'Forfeit'
+                    raw_player.race = None
+                elif raw_player.race.lower() == 'walkover':
+                    match['result'] = 'Walkover'
+                    raw_player.race = None
+                elif raw_player.victory:
+                    match['result'] = 'Victory'
+                else:
+                    match['result'] = 'Defeat'
+
+                match['point_difference'] = raw_player.point_difference
+                if match['point_difference'] > 0:
+                    match['point_difference'] = "+{}".format(match['point_difference'])
+                match['player1'] = raw_player
+            else:
+                if raw_player.race.lower() in ('forefeit', 'walkover'):
+                    raw_player.race = None
+                match['player2'] = raw_player
+
+            if raw_player.race:
+                    raw_player.race_icon = '/static/ladder/img/'+raw_player.race.lower()+".png"
+
+        matches.append(match)
+    return matches

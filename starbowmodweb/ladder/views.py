@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from starbowmodweb.ladder.forms import CrashReportForm, CrashReport
-from starbowmodweb.ladder.helpers import get_leaderboard
-from starbowmodweb.ladder.models import Client, MatchResult, BATTLENET_REGION_NA, BATTLENET_REGION_EU
+from starbowmodweb.ladder.helpers import get_leaderboard, get_matchhistory
+from starbowmodweb.ladder.models import Client, BATTLENET_REGION_NA, BATTLENET_REGION_EU
 
 
 def show_ladders(request):
@@ -13,7 +13,7 @@ def show_ladders(request):
 
 def show_player(request, client_id):
     client_id = int(client_id)
-    matches = MatchResult.objects.select_related().filter(players__client_id=client_id)
+    matches = get_matchhistory(client_id)
     try:
         client = Client.objects.select_related().get(pk=client_id)
         return render(request, 'ladder/player.html', dict(client=client, matches=matches))
