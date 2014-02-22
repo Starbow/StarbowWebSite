@@ -1,4 +1,4 @@
-from starbowmodweb.ladder.models import ClientRegionStats, MatchResult, REGION_CHOICES
+from starbowmodweb.ladder.models import ClientRegionStats, MatchResult
 from django.db.models import Q
 from datetime import datetime
 
@@ -22,7 +22,7 @@ def get_matchhistory(client_id):
     for raw_match in raw_matches:
         match = {
             'datetime': datetime.fromtimestamp(raw_match.datetime),
-            'region': REGION_CHOICES[raw_match.region],
+            'region': raw_match.get_region_display(),
             'map_name': raw_match.map.bnet_name.replace('Starbow - ', ''),
         }
         raw_players = raw_match.players

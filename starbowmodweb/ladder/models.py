@@ -14,17 +14,12 @@ BATTLENET_REGION_SEA = 6
 
 
 REGION_CHOICES = (
-    (1, 'US'),
-    (2, 'EU'),
-    (3, 'KR'),
-    (5, 'CN'),
-    (6, 'SEA'),
+    (BATTLENET_REGION_NA, 'US'),
+    (BATTLENET_REGION_EU, 'EU'),
+    (BATTLENET_REGION_KR, 'KR'),
+    (BATTLENET_REGION_CN, 'CN'),
+    (BATTLENET_REGION_SEA, 'SEA'),
 )
-
-
-def region2str(region_id):
-    return REGION_CHOICES[region_id - 1][1].lower()
-
 
 class Map(models.Model):
     class Meta(object):
@@ -65,7 +60,7 @@ class Map(models.Model):
 
     def __str__(self):
         ranked_str = "Ranked" if self.in_ranked_pool else "Unranked"
-        return "{} - {} [{}]".format(region2str(self.region), self.bnet_name, ranked_str)
+        return "{} - {} [{}]".format(self.get_region_display(), self.bnet_name, ranked_str)
 
 
 class Client(models.Model):
@@ -116,10 +111,10 @@ class BattleNetCharacter(models.Model):
 
     def get_absolute_url(self):
         url = "http://{}.battle.net/sc2/profile/{}/{}/{}/"
-        return url.format(region2str(self.region), self.toon_id, self.subregion, self.toon_handle)
+        return url.format(self.get_region_display().lower(), self.toon_id, self.subregion, self.toon_handle)
 
     def __str__(self):
-        return "[{}] {}".format(region2str(self.region), self.toon_handle)
+        return "[{}] {}".format(self.get_region_display(), self.toon_handle)
 
 
 class ClientRegionStats(models.Model):
@@ -142,7 +137,7 @@ class ClientRegionStats(models.Model):
     #     return reverse('starbowmodweb.ladder.views.show_region_stats', args=[self.client.pk, self.region])
 
     def __str__(self):
-        return "{}: {} - {}".format(region2str(self.region).upper(), self.ladder_wins, self.ladder_losses)
+        return "{}: {} - {}".format(self.get_region_display(), self.ladder_wins, self.ladder_losses)
 
 
 class MatchmakerMatch(models.Model):
