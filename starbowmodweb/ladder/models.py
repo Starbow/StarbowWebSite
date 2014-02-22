@@ -98,7 +98,7 @@ class BattleNetCharacter(models.Model):
         verbose_name_plural = "BNet Characters"
 
     id = models.AutoField(primary_key=True, db_column='Id')
-    client = models.ForeignKey('Client', db_column='ClientId', related_name='characters')
+    client = models.ForeignKey('Client', db_column='ClientId', related_name='characters', null=True)
     add_time = models.IntegerField(db_column='AddTime')
     region = models.IntegerField(db_column='Region', choices=REGION_CHOICES)
     subregion = models.IntegerField(db_column='SubRegion')
@@ -145,7 +145,7 @@ class MatchmakerMatch(models.Model):
         db_table = 'matchmaker_matches'
 
     id = models.AutoField(primary_key=True, db_column='Id')
-    map = models.ForeignKey('Map', db_column='MapId')
+    map = models.ForeignKey('Map', db_column='MapId', null=True)
     add_time = models.IntegerField(db_column='AddTime')
     end_time = models.DateTimeField(db_column='EndTime')
     quality = models.FloatField(db_column='Quality')
@@ -165,9 +165,9 @@ class MatchResultPlayer(models.Model):
         db_table = 'match_result_players'
 
     id = models.AutoField(primary_key=True, db_column='Id')
-    client = models.ForeignKey('Client', db_column='ClientId', related_name='results')
-    match = models.ForeignKey('MatchResult', db_column='MatchId', related_name='players')
-    character = models.ForeignKey('BattleNetCharacter', db_column='CharacterId')
+    client = models.ForeignKey('Client', db_column='ClientId', related_name='results', null=True)
+    match = models.ForeignKey('MatchResult', db_column='MatchId', related_name='players', null=True)
+    character = models.ForeignKey('BattleNetCharacter', db_column='CharacterId', null=True)
     points_before = models.IntegerField(db_column='PointsBefore')
     points_after = models.IntegerField(db_column='PointsAfter')
     point_difference = models.IntegerField(db_column='PointsDifference')
@@ -180,10 +180,10 @@ class MatchResult(models.Model):
         db_table = 'match_results'
 
     id = models.AutoField(primary_key=True, db_column='Id')
-    matchmaker_match = models.ForeignKey('MatchmakerMatch', db_column='MatchmakerMatchId')
+    matchmaker_match = models.ForeignKey('MatchmakerMatch', db_column='MatchmakerMatchId', null=True)
     datetime = models.IntegerField(db_column='DateTime')
     region = models.IntegerField(db_column='Region', choices=REGION_CHOICES)
-    map = models.ForeignKey('Map', db_column='MapId')
+    map = models.ForeignKey('Map', db_column='MapId', null=True)
 
 
 class MatchmakerMatchParticipant(models.Model):
@@ -191,8 +191,8 @@ class MatchmakerMatchParticipant(models.Model):
         db_table = 'matchmaker_match_participants'
 
     id = models.AutoField(primary_key=True, db_column='Id')
-    client = models.ForeignKey('Client', db_column='ClientId')
-    match = models.ForeignKey('MatchResult', db_column='MatchId')
+    client = models.ForeignKey('Client', db_column='ClientId', null=True)
+    match = models.ForeignKey('MatchResult', db_column='MatchId', null=True)
     points = models.IntegerField(db_column='Points')
     rating_mean = models.FloatField(db_column='RatingMean')
     rating_stddev = models.FloatField(db_column='RatingStdDev')
@@ -210,7 +210,7 @@ def get_crash_report_name(instance, filename=""):
 
 
 class CrashReport(models.Model):
-    user = models.ForeignKey(User, related_name="crash_reports")
+    user = models.ForeignKey(User, related_name="crash_reports", null=True)
     os = models.CharField(max_length=255, choices=settings.OS_CHOICES, help_text="The operating system you were running.")
     client_version = models.IntegerField(max_length=255, choices=settings.CLIENT_VERSIONS, help_text="The version of the client you were running.")
     description = models.TextField(help_text="(Optional) Please describe how the crash occured. Be specific as possible.", blank=True)
