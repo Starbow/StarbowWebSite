@@ -15,7 +15,7 @@ Profile for {{ client.username }}
 <table class="ladder-mini">
 {% for match in matches %}
     <tr data-match-id="{{ match.id }}" data-matchmaker-match-id="{{ match.mm_id }}">
-        <td style="width:120px;">{% if match.region == "US" %}{{ match.datetime|timezone:"US/Pacific"|date:"Y-m-d H:i" }} PST{% elif match.region == "EU" %}{{ match.datetime|timezone:"Europe/Paris"|date:"Y-m-d H:i" }} CET{% elif match.region == "KR" %}{{ match.datetime|timezone:"Asia/Seoul"|date:"Y-m-d H:i" }} KST{% endif %}</td>
+        <td style="width:125px;">{% if match.region == "US" %}{{ match.datetime|timezone:"US/Pacific"|date:"Y-m-d H:i" }} PST{% elif match.region == "EU" %}{{ match.datetime|timezone:"Europe/Paris"|date:"Y-m-d H:i" }} CET{% elif match.region == "KR" %}{{ match.datetime|timezone:"Asia/Seoul"|date:"Y-m-d H:i" }} KST{% endif %}</td>
         <td style="width:45px;">{{ match.result }}</td>
         <td style="width:35px; text-align:right; ">{{ match.point_difference }}</td>
         <td><img src="{{ match.player1.race_icon }}" width="16px" height="16px;"/>&nbsp;<a href="{% url 'ladder.views.show_player' match.player1.client.pk %}">{{ match.player1.client.username }}</a></td>
