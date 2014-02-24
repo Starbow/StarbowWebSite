@@ -18,9 +18,11 @@ def get_leaderboard(region, offsetby=None, orderby=None, sort=None, count=None):
 
 def get_matchhistory(client_id):
     matches = list()
-    raw_matches = MatchResult.objects.select_related().filter(players__client_id=client_id).order_by('datetime').reverse()
+    raw_matches = MatchResult.objects.select_related('MatchmakerMatch', 'MatchResultPlayer', 'MatchResultPlayer__Client').filter(players__client_id=client_id).order_by('datetime').reverse()
     for raw_match in raw_matches:
         match = {
+            'id': raw_match.pk,
+            'mm_id': raw_match.matchmaker_match_id,
             'datetime': datetime.fromtimestamp(raw_match.datetime),
             'region': REGION_CHOICES[raw_match.region],
             'map_name': raw_match.map.bnet_name.replace('Starbow - ', ''),
@@ -28,12 +30,10 @@ def get_matchhistory(client_id):
         raw_players = raw_match.players
         for raw_player in raw_players.all():
             if raw_player.client.pk == client_id:
-                if raw_player.race.lower() == 'forefeit':
+                if raw_player.race.lower() == 'forfeit':
                     match['result'] = 'Forfeit'
-                    raw_player.race = None
                 elif raw_player.race.lower() == 'walkover':
                     match['result'] = 'Walkover'
-                    raw_player.race = None
                 elif raw_player.victory:
                     match['result'] = 'Victory'
                 else:
@@ -44,8 +44,6 @@ def get_matchhistory(client_id):
                     match['point_difference'] = "+{}".format(match['point_difference'])
                 match['player1'] = raw_player
             else:
-                if raw_player.race.lower() in ('forefeit', 'walkover'):
-                    raw_player.race = None
                 match['player2'] = raw_player
 
             if raw_player.race:
