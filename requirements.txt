@@ -4,4 +4,5 @@ mysql-python
 bbcode
 python-dateutil
 phpserialize
+pytz
 
