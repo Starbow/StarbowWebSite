@@ -192,7 +192,7 @@ class MatchmakerMatchParticipant(models.Model):
 
     id = models.AutoField(primary_key=True, db_column='Id')
     client = models.ForeignKey('Client', db_column='ClientId', null=True)
-    match = models.ForeignKey('MatchResult', db_column='MatchId', null=True)
+    matchmaker_match = models.ForeignKey('MatchmakerMatch', db_column='MatchId', null=True)
     points = models.IntegerField(db_column='Points')
     rating_mean = models.FloatField(db_column='RatingMean')
     rating_stddev = models.FloatField(db_column='RatingStdDev')
