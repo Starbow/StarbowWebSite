@@ -14,17 +14,12 @@ BATTLENET_REGION_SEA = 6
 
 
 REGION_CHOICES = (
-    (1, 'US'),
-    (2, 'EU'),
-    (3, 'KR'),
-    (5, 'CN'),
-    (6, 'SEA'),
+    (BATTLENET_REGION_NA, 'US'),
+    (BATTLENET_REGION_EU, 'EU'),
+    (BATTLENET_REGION_KR, 'KR'),
+    (BATTLENET_REGION_CN, 'CN'),
+    (BATTLENET_REGION_SEA, 'SEA'),
 )
-
-
-def region2str(region_id):
-    return REGION_CHOICES[region_id - 1][1].lower()
-
 
 class Map(models.Model):
     class Meta(object):
@@ -65,7 +60,7 @@ class Map(models.Model):
 
     def __str__(self):
         ranked_str = "Ranked" if self.in_ranked_pool else "Unranked"
-        return "{} - {} [{}]".format(region2str(self.region), self.bnet_name, ranked_str)
+        return "{} - {} [{}]".format(self.get_region_display(), self.bnet_name, ranked_str)
 
 
 class Client(models.Model):
@@ -103,7 +98,7 @@ class BattleNetCharacter(models.Model):
         verbose_name_plural = "BNet Characters"
 
     id = models.AutoField(primary_key=True, db_column='Id')
-    client = models.ForeignKey('Client', db_column='ClientId', related_name='characters')
+    client = models.ForeignKey('Client', db_column='ClientId', related_name='characters', null=True)
     add_time = models.IntegerField(db_column='AddTime')
     region = models.IntegerField(db_column='Region', choices=REGION_CHOICES)
     subregion = models.IntegerField(db_column='SubRegion')
@@ -116,10 +111,10 @@ class BattleNetCharacter(models.Model):
 
     def get_absolute_url(self):
         url = "http://{}.battle.net/sc2/profile/{}/{}/{}/"
-        return url.format(region2str(self.region), self.toon_id, self.subregion, self.toon_handle)
+        return url.format(self.get_region_display().lower(), self.toon_id, self.subregion, self.toon_handle)
 
     def __str__(self):
-        return "[{}] {}".format(region2str(self.region), self.toon_handle)
+        return "[{}] {}".format(self.get_region_display(), self.toon_handle)
 
 
 class ClientRegionStats(models.Model):
@@ -142,7 +137,7 @@ class ClientRegionStats(models.Model):
     #     return reverse('starbowmodweb.ladder.views.show_region_stats', args=[self.client.pk, self.region])
 
     def __str__(self):
-        return "{}: {} - {}".format(region2str(self.region).upper(), self.ladder_wins, self.ladder_losses)
+        return "{}: {} - {}".format(self.get_region_display(), self.ladder_wins, self.ladder_losses)
 
 
 class MatchmakerMatch(models.Model):
@@ -150,7 +145,7 @@ class MatchmakerMatch(models.Model):
         db_table = 'matchmaker_matches'
 
     id = models.AutoField(primary_key=True, db_column='Id')
-    map = models.ForeignKey('Map', db_column='MapId')
+    map = models.ForeignKey('Map', db_column='MapId', null=True)
     add_time = models.IntegerField(db_column='AddTime')
     end_time = models.DateTimeField(db_column='EndTime')
     quality = models.FloatField(db_column='Quality')
@@ -170,9 +165,9 @@ class MatchResultPlayer(models.Model):
         db_table = 'match_result_players'
 
     id = models.AutoField(primary_key=True, db_column='Id')
-    client = models.ForeignKey('Client', db_column='ClientId', related_name='results')
-    match = models.ForeignKey('MatchResult', db_column='MatchId', related_name='players')
-    character = models.ForeignKey('BattleNetCharacter', db_column='CharacterId')
+    client = models.ForeignKey('Client', db_column='ClientId', related_name='results', null=True)
+    match = models.ForeignKey('MatchResult', db_column='MatchId', related_name='players', null=True)
+    character = models.ForeignKey('BattleNetCharacter', db_column='CharacterId', null=True)
     points_before = models.IntegerField(db_column='PointsBefore')
     points_after = models.IntegerField(db_column='PointsAfter')
     point_difference = models.IntegerField(db_column='PointsDifference')
@@ -185,10 +180,10 @@ class MatchResult(models.Model):
         db_table = 'match_results'
 
     id = models.AutoField(primary_key=True, db_column='Id')
-    matchmaker_match = models.ForeignKey('MatchmakerMatch', db_column='MatchmakerMatchId')
+    matchmaker_match = models.ForeignKey('MatchmakerMatch', db_column='MatchmakerMatchId', null=True)
     datetime = models.IntegerField(db_column='DateTime')
     region = models.IntegerField(db_column='Region', choices=REGION_CHOICES)
-    map = models.ForeignKey('Map', db_column='MapId')
+    map = models.ForeignKey('Map', db_column='MapId', null=True)
 
 
 class MatchmakerMatchParticipant(models.Model):
@@ -196,8 +191,8 @@ class MatchmakerMatchParticipant(models.Model):
         db_table = 'matchmaker_match_participants'
 
     id = models.AutoField(primary_key=True, db_column='Id')
-    client = models.ForeignKey('Client', db_column='ClientId')
-    match = models.ForeignKey('MatchResult', db_column='MatchId')
+    client = models.ForeignKey('Client', db_column='ClientId', null=True)
+    matchmaker_match = models.ForeignKey('MatchmakerMatch', db_column='MatchId', null=True)
     points = models.IntegerField(db_column='Points')
     rating_mean = models.FloatField(db_column='RatingMean')
     rating_stddev = models.FloatField(db_column='RatingStdDev')
@@ -215,7 +210,7 @@ def get_crash_report_name(instance, filename=""):
 
 
 class CrashReport(models.Model):
-    user = models.ForeignKey(User, related_name="crash_reports")
+    user = models.ForeignKey(User, related_name="crash_reports", null=True)
     os = models.CharField(max_length=255, choices=settings.OS_CHOICES, help_text="The operating system you were running.")
     client_version = models.IntegerField(max_length=255, choices=settings.CLIENT_VERSIONS, help_text="The version of the client you were running.")
     description = models.TextField(help_text="(Optional) Please describe how the crash occured. Be specific as possible.", blank=True)
