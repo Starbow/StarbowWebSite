@@ -73,22 +73,7 @@
 </div>
 <div class="column">
   <h2>KR Ladder</h2>
-  <table class="ladder-mini">
-    <thead>
-      <tr>
-        <th>Username</th><th style="text-align:right;">Points</th><th style="text-align:right;">Wins</th><th style="text-align:right;">Losses</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for stats in ladder_kr %}
-        <tr>
-          <td><a href="{% url 'ladder.views.show_player' stats.client.pk %}">{{ stats.client.username }}</a></td>
-          <td style="text-align:right;">{{ stats.ladder_points }}</td>
-          <td style="text-align:right;">{{ stats.ladder_wins }}</td>
-          <td style="text-align:right;">{{ stats.ladder_losses }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <br/><br/>
+  <div style="text-align:center"><strong>Coming Soon!</strong></div>
 </div>
 {% endblock %}
