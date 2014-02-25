@@ -11,7 +11,8 @@ def home(request):
     upcoming_events = mybb.get_events_in_range("Default Calendar", now, later)[:7]
     latest_article = mybb.get_threads(forum_name="News and Announcements", count=1, orderby="mybb_threads.dateline", sort="DESC")[0]
     recent_articles = mybb.get_threads(forum_name="News and Announcements", count=7, offsetby=1, orderby="mybb_threads.dateline", sort="DESC")
-    recent_discussions = mybb.get_threads(thread_prefix="Discussion", count=7, orderby="mybb_threads.dateline", sort="DESC")
+    discussion_forums = ["Starbow General", "Starbow Strategy", "Starbow Balance", "Starbow Map Making", "Starbow Tournaments"]
+    recent_discussions = mybb.get_threads(forum_name=discussion_forums, count=7, orderby="mybb_threads.dateline", sort="DESC")
 
     ladder_na = get_leaderboard(region=BATTLENET_REGION_NA, orderby='ladder_points', sort="DESC", count=10)
     ladder_eu = get_leaderboard(region=BATTLENET_REGION_EU, orderby='ladder_points', sort="DESC", count=10)

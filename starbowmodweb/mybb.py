@@ -20,11 +20,14 @@ def get_threads(thread_prefix=None, forum_name=None, orderby=None, sort=None, of
 
     if forum_name is not None:
         tables.append("mybb_forums")
-        conditions.extend([
-            "mybb_threads.fid = mybb_forums.fid",
-            "mybb_forums.name = %s"
-        ])
-        params.append(forum_name)
+        conditions.append("mybb_threads.fid = mybb_forums.fid")
+        if isinstance(forum_name, basestring):
+            conditions.append("mybb_forums.name = %s")
+            params.append(forum_name)
+        else:
+            inClause = ", ".join(["%s"]*len(forum_name))
+            conditions.append("mybb_forums.name IN ("+inClause+")")
+            params.extend(forum_name)
 
     if thread_prefix is not None:
         tables.append("mybb_threadprefixes")
