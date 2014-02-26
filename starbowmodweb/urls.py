@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^user/', include('starbowmodweb.user.urls')),
     url(r'^ladder/', include('starbowmodweb.ladder.urls')),
     url(r'', include('starbowmodweb.site.urls')),
+    url(r'', include('django_browserid.urls'))
 )
 
 if settings.DEBUG:

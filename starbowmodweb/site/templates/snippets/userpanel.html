@@ -3,9 +3,9 @@
 <div class="authentication">
   {% if user.is_authenticated %}
     Welcome, <a href="{% url 'user.views.user_home' %}"><strong>{{ user.username }}</strong></a>
-    {% browserid_logout text='Logout' link_class='logout-link' %}
+    {% browserid_logout text='Logout' link_class='browserid-logout' %}
   {% else %}
     <a href="{% url 'user.views.user_register' %}">Register</a>
-    {% browserid_login text='Login' next=request.GET.next link_class='login-link' %}
+    {% browserid_login text='Login' next=request.GET.next link_class='browserid-login' %}
   {% endif %}
 </div>

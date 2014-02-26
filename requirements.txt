@@ -1,5 +1,5 @@
 django
-django-browserid
+-e git://github.com/mozilla/django-browserid.git@8a2d717d1e9cb83ef4e9ef86eff15f47f2d66751#egg=django-browserid
 mysql-python
 bbcode
 python-dateutil
