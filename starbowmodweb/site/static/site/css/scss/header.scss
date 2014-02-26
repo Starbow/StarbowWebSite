@@ -4,7 +4,14 @@
  * Desc: styling for the top header bar
  */
 
-.header {
+.navbar-fixed-top {
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 9999;
+}
+
+.navbar {
   background-color: rgba($darkRedColor, 0.95);
   color: $whiteColor;
   height: $headerHeight;
@@ -13,92 +20,57 @@
   padding: {
     left: 5px;
   }
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: 9999;
 
   @include box-shadow(0, 0, 5px, $blackColor);
   @include clearfix;
 
-  .left {
+  .navbar-logo {
+    float:left;
+    background-image: url('../img/bow.svg');
+    background-size: $headerHeight $headerHeight;
+    height: $headerHeight;
+    width: $headerHeight;
+  }
+
+  .ui-menu {
+    background-color: rgba($darkRedColor, 0.95);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      float: left;
+      .ui-menu {
+        position: fixed;
+      }
+    }
+  }
+
+  a {
+    color: $whiteColor;
+    display: inline-block;
+    font-size: 18px;
     font-family: $headerFont;
     line-height: $headerHeight;
+    height: $headerHeight;
+    padding: {
+      left: 10px;
+      right: 10px;
+    }
+    text-decoration: none;
+    text-shadow: 0 0 3px $darkerRedColor;
 
-    .icon {
-      background-image: url('../img/bow.svg');
-      background-size: $headerHeight $headerHeight;
-      height: $headerHeight;
-      width: $headerHeight;
+    @include transition(line-height, 0.05s);
+
+    &:hover {
+      background-color: $whiteColor;
+      color: $darkRedColor;
+      text-shadow: 0 0 1px rgba($darkerRedColor, 0.25);
+
+      @include box-shadow(0, 0, 5px, $darkerRedColor);
     }
   }
+}
 
-  .nav {
-    display: inline-block;
-    font-family: $headerFont;
-
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-
-      li {
-        float: left;
-
-        a {
-          color: $whiteColor;
-          display: inline-block;
-          font-size: 18px;
-          line-height: $headerHeight;
-          height: $headerHeight;
-          padding: {
-            left: 10px;
-            right: 10px;
-          }
-          text-decoration: none;
-          text-shadow: 0 0 3px $darkerRedColor;
-
-          @include transition(line-height, 0.05s);
-
-          &:hover {
-            background-color: $whiteColor;
-            color: $darkRedColor;
-            height: $headerHeight + 5px;
-            line-height: $headerHeight + 5px;
-            text-shadow: 0 0 1px rgba($darkerRedColor, 0.25);
-
-            @include box-shadow(0, 0, 5px, $darkerRedColor);
-          }
-        }
-      }
-    }
-  }
-
-  .right {
-    display: inline-block;
-    line-height: $headerHeight;
-
-    a {
-      color: $whiteColor;
-      display: inline-block;
-      font-family: $headerFont;
-      font-size: 18px;
-      line-height: $headerHeight;
-      height: $headerHeight;
-      padding: {
-        left: 10px;
-        right: 10px;
-      }
-      text-decoration: none;
-      text-shadow: 0 0 3px $darkerRedColor;
-
-      &:hover {
-        background-color: $whiteColor;
-        color: $darkRedColor;
-        text-shadow: 0 0 1px rgba($darkerRedColor, 0.25);
-
-        @include box-shadow(0, 0, 5px, $darkerRedColor);
-      }
-    }
-  }
+.authentication {
+  float: right;
 }

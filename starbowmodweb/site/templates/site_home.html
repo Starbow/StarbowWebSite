@@ -4,7 +4,7 @@
 {% block content %}
 {{ latest_article.message|bbheader:latest_article|safe }}
 <div class="column">
-  <h2>News and Updates</h2>
+  <h2><a href="{% url 'starbowmodweb.site.views.view_news' %}">News and Updates</a></h2>
   <ul class="listing">
   {% for article in recent_articles %}
     <li><a href="{{ article.url }}">{{ article.subject }}</a></li>
@@ -12,7 +12,7 @@
   </ul>
 </div>
 <div class="column">
-  <h2>Discussion</h2>
+  <h2><a href="/forum/forumdisplay.php?fid=1">Discussion</a></h2>
   <ul class="listing">
   {% for dicussion in recent_discussions %}
     <li><a href="{{ dicussion.url }}">{{ dicussion.subject }}</a></li>
@@ -20,7 +20,7 @@
   </ul>
 </div>
 <div class="column">
-  <h2>Upcoming Events</h2>
+  <h2><a href="{% url 'starbowmodweb.site.views.view_calendar' %}">Upcoming Events</a></h2>
   <ul class="listing">
   {% for event in upcoming_events %}
     {% if event.is_today %}
@@ -32,7 +32,7 @@
   </ul>
 </div>
 <div class="column">
-  <h2>NA Ladder</h2>
+  <h2><a href="{% url 'starbowmodweb.ladder.views.show_region' 'NA' %}">NA Ladder</a></h2>
   <table class="ladder-mini">
     <thead>
       <tr>
@@ -52,7 +52,7 @@
   </table>
 </div>
 <div class="column">
-  <h2>EU Ladder</h2>
+  <h2><a href="{% url 'starbowmodweb.ladder.views.show_region' 'EU' %}">EU Ladder</a></h2>
   <table class="ladder-mini">
     <thead>
       <tr>
@@ -72,7 +72,7 @@
   </table>
 </div>
 <div class="column">
-  <h2>KR Ladder</h2>
+  <h2><a href="{% url 'starbowmodweb.ladder.views.show_region' 'KR' %}">KR Ladder</a></h2>
   <table class="ladder-mini">
     <thead>
       <tr><th style="text-align:center">Coming Soon!</th></tr>

@@ -33,3 +33,7 @@ def crash_report(request):
         form = CrashReportForm()
 
     return render(request, 'ladder/crash_report_submit.html', dict(form=form))
+
+
+def show_region(request, region):
+    return render(request, 'ladder/region.html')

@@ -7,21 +7,50 @@
   <head>
     {% block title %}<title>Starbow</title>{% endblock %}
 
+
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'site/css/app.css' %}">
     {% browserid_css %}
 
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <!-- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> -->
+    <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     {% browserid_js %}
-     {% block head %}{% endblock %}
+    {% block head %}{% endblock %}
   </head>
   <body>
-    <div class="header">
-      <div class="left">
-        <div class="icon"></div>
-      </div>
-        {% include 'snippets/navigation.html' %}
-      <div class="right">
-        {% include 'snippets/userpanel.html' %}
+    <script>
+      $(function() {
+        $(".menu").menu({position: { my:"left top", at:"left-1 top+40"}});
+      });
+    </script>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-logo"></div>
+      <ul class="menu">
+        <li><a href="/">Starbow Home</a></li>
+        <li><a href="/news">News</a></li>
+        <li><a href="/about">About</a></li>
+        <li>
+          <a href="#">Ladders<i class="fa fa-angle-down"></i></a>
+          <ul>
+            <li><a href="{% url 'starbowmodweb.ladder.views.show_region' 'NA' %}">NA Ladder</a></li>
+            <li><a href="{% url 'starbowmodweb.ladder.views.show_region' 'EU' %}">EU Ladder</a></li>
+            <li><a href="{% url 'starbowmodweb.ladder.views.show_region' 'KR' %}">KR Ladder</a></li>
+          </ul>
+        </li>
+        <li><a href="/calendar">Calendar</a></li>
+        <li><a href="http://starbow.wikia.com/wiki/Starbow_Wiki">Wiki</a></li>
+        <li><a href="/forum">Forum</a></li>
+      </ul>
+      <div class="authentication">
+        {% if user.is_authenticated %}
+          Welcome, <a href="{% url 'user.views.user_home' %}"><strong>{{ user.username }}</strong></a>
+          {% browserid_logout text='Logout' link_class='browserid-logout' %}
+        {% else %}
+          <a href="{% url 'user.views.user_register' %}">Register</a>
+          {% browserid_login text='Login' next=request.GET.next link_class='browserid-login' %}
+        {% endif %}
       </div>
     </div>
     <div class="content">
