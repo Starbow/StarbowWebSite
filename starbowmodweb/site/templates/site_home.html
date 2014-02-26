@@ -24,7 +24,7 @@
   <ul class="listing">
   {% for event in upcoming_events %}
     {% if event.is_today %}
-      <li><a href="{{ event.url }}">{{ event.start|date:"g:i A" }} {{ event.name }}</a></li>
+      <li><a href="{{ event.url }}">{{ event.start|date:"g:i A" }} GMT - {{ event.name }}</a></li>
     {% else %}
       <li><a href="{{ event.url }}">{{ event.start|date:"Y-m-d" }} {{ event.name }}</a></li>
     {% endif %}
