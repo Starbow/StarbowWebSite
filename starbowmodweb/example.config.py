@@ -62,3 +62,28 @@ LOGGING = {
     },
 }
 
+CLIENT_URLS = dict(
+    osx='http://starbowmodweb/static/osx_client.zip',
+    windows='http://starbowmodweb/static/windows_client.zip',
+)
+
+OS_CHOICES = (
+    ('windows', 'Windows'),
+    ('osx', 'OS X'),
+    ('ubuntu', 'Ubuntu (Native)'),
+    ('wine', 'Linux (WINE)'),
+)
+
+CLIENT_VERSIONS = (
+    (3, 'Version 3'),
+    (2, 'Version 2'),
+    (1, 'Version 1'),
+)
+
+DISCUSSION_FORUMS = [
+    "Starbow General",
+    "Starbow Strategy",
+    "Starbow Balance",
+    "Starbow Map Making",
+    "Starbow Tournaments"
+]
