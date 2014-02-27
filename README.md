@@ -6,21 +6,26 @@ The app behind starbow.com
 
 ## Installation
 
-Copy `starbowmodweb/example.config.py` to `starbowmodweb/config.py` and follow configuration:
+Python 2 required. For Windows installation, it is recommended that you use the 32 bit Python build.
+
+Copy `starbowmodweb/example.config.py` to `starbowmodweb/config.py` and follow configuration instructions inside:
 
     cp starbowmodweb/example.config.py starbowmodweb/config.py
-
-First, create the SQL database, `starbow_website`:
-
-    mysql -u root
-    ...
-    mysql> CREATE DATABASE starbow_website;
 
 Run::
 
     pip install -r requirements.txt
+    mysql -u root -p -e "create database starbow_website;"
     python manage.py syncdb
     python manage.py runserver
+
+If you are not going to install the forum locally, you still need to create a database for it and load forum.sql into it:
+
+    mysql -u root -p -e "create database starbow_forum;"
+    mysql -u root -p starbow_forum < forum_schema.sql
+
+Make sure to set MYBB_BRIDGE_PATH = False.
+
 
 ## SASS
 
