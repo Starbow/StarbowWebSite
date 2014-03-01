@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<table id="ladder">
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th data-searchable="1">Username</th>
+      <th>Points</th>
+      <th>Wins</th>
+      <th>Losses</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+<script>
+!function($) {
+    var aoColumns = [];
+    $("#ladder").find('th').each(function() {
+        aoColumns.push({
+          bSearchable: Boolean(this.dataset.searchable),
+        });
+    });
+    $("#ladder").dataTable({
+        bProcessing: true,
+        bServerSide: true,
+        sAjaxSource: "/ladder/datatable",
+        fnServerParams: function ( aoData ) {
+          aoData.push(
+            { name: "region", value: {{ region }}},
+            { name: "dimensions", value: ''},
+            { name: "observations", value: 'rank,username,ladder_points,ladder_wins,ladder_losses'}
+          );
+        },
+        "aoColumns": aoColumns,
+    });
+}(jQuery);
+</script>
+{% endblock %}

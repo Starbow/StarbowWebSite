@@ -6,4 +6,5 @@ urlpatterns = patterns('starbowmodweb.ladder.views',
     url(r'player/([0-9]+)', 'show_player'),
     url(r'crashreport$', 'crash_report'),
     url(r'(NA|na|EU|eu|KR|kr)', 'show_region'),
+    url(r'datatable', 'datatable_leaderboard'),
 )

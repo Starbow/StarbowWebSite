@@ -14,12 +14,14 @@ BATTLENET_REGION_SEA = 6
 
 
 REGION_CHOICES = (
-    (BATTLENET_REGION_NA, 'US'),
+    (BATTLENET_REGION_NA, 'NA'),
     (BATTLENET_REGION_EU, 'EU'),
     (BATTLENET_REGION_KR, 'KR'),
     (BATTLENET_REGION_CN, 'CN'),
     (BATTLENET_REGION_SEA, 'SEA'),
 )
+REGION_LOOKUP = dict(zip(dict(REGION_CHOICES).values(), dict(REGION_CHOICES).keys()))
+
 
 class Map(models.Model):
     class Meta(object):
