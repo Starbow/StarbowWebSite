@@ -163,7 +163,8 @@ class LeaderboardDatatable(DatatableQuery):
     )
 
     def tables(self, params):
-        return "(SELECT (@rank:=@rank+1) as rank, client_region_stats.* FROM client_region_stats ORDER BY ladder_points DESC) as stats, clients"
+        params.append(int(self.args['region']))
+        return "(SELECT (@rank:=@rank+1) as rank, client_region_stats.* FROM client_region_stats WHERE region = %s ORDER BY ladder_points DESC) as stats, clients"
 
     def where(self, params):
         params.append(int(self.args['region']))
