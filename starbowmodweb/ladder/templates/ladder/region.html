@@ -1,26 +1,33 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<table id="ladder">
+<table id="ladder" class="ladder-mini">
   <thead>
     <tr>
       <th>Rank</th>
+      <th data-hidden="1">ClientId</th>
       <th data-searchable="1">Username</th>
       <th>Points</th>
       <th>Wins</th>
       <th>Losses</th>
+      <th>Walkovers</th>
+      <th>Forfeits</th>
     </tr>
   </thead>
   <tbody></tbody>
 </table>
 <script>
 !function($) {
-    var aoColumns = [];
-    $("#ladder").find('th').each(function() {
-        aoColumns.push({
-          bSearchable: Boolean(this.dataset.searchable),
-        });
-    });
+
+    function mRenderUsername(value, type, row) {
+        switch (type) {
+        case "filter":
+        case "type":
+        case "sort": return value;
+        case "display": return '<a href="/ladder/player/'+row[1]+'">'+value+"</a>";
+        }
+    }
+
     $("#ladder").dataTable({
         bProcessing: true,
         bServerSide: true,
@@ -29,10 +36,23 @@
           aoData.push(
             { name: "region", value: {{ region }}},
             { name: "dimensions", value: ''},
-            { name: "observations", value: 'rank,username,ladder_points,ladder_wins,ladder_losses'}
+            { name: "observations", value: 'rank,clientid,username,ladder_points,ladder_wins,ladder_losses,ladder_walkovers,ladder_forfeits'}
           );
         },
-        "aoColumns": aoColumns,
+        "aoColumns": [
+            { bSearchable: false },
+            { bSearchable: false, bVisible: false },
+            { bSearchable: true, mRender: mRenderUsername },
+            { bSearchable: false },
+            { bSearchable: false },
+            { bSearchable: false },
+            { bSearchable: false },
+            { bSearchable: false },
+        ],
+        "oLanguage": {
+            "sProcessing": "Searching",
+            "sInfo": "",
+        }
     }).fnSetFilteringDelay(500);
 }(jQuery);
 </script>

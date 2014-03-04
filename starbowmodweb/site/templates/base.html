@@ -9,7 +9,6 @@
 
 
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'site/css/app.css' %}">
     {% browserid_css %}
 
     <!-- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -18,10 +17,11 @@
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
     <!-- DataTables -->
-    <link rel="stylesheet" type="text/css" href="/static/vendor/jquery.datatables-1.9.4/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="/static/vendor/jquery.datatables-1.9.4/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" charset="utf8" src="/static/vendor/jquery.datatables-1.9.4/js/jquery.dataTables.plugins.js"></script>
 
+
+    <link rel="stylesheet" type="text/css" href="{% static 'site/css/app.css' %}">
     {% browserid_js %}
     {% block head %}{% endblock %}
   </head>

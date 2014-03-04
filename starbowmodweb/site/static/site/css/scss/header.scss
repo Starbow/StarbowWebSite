@@ -40,6 +40,9 @@
     li {
       float: left;
       .ui-menu {
+        li {
+          float: none;
+        }
         position: fixed;
       }
     }

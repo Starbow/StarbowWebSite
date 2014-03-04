@@ -121,7 +121,6 @@
   @include box-shadow(0, 0, 3px, $blackColor);
 
   thead {
-
     th {
       background-color: $redColor;
       color: $whiteColor;
@@ -142,67 +141,10 @@
 
       &:hover {
         background-color: $lightRedColor;
-        color: $whiteColor;
-
-        a {
-          color: $whiteColor;
-        }
-      }
-    }
-
-    td {
-      padding: {
-        left: 5px;
-        right: 5px;
-      }
-    }
-  }
-}
-
-.ladder {
-  border-collapse: collapse;
-  width: 100%;
-
-  thead {
-
-    th {
-      background-color: $redColor;
-      color: $whiteColor;
-      font-size: 14px;
-      text-align: left;
-      padding: 5px;
-    }
-  }
-
-  tbody {
-    tr {
-      background-color: $whiteColor;
-      color: $grayColor;
-
-      a {
         color: $grayColor;
-      }
-
-      &:hover {
-        background-color: $lightRedColor;
-        color: $whiteColor;
-
         a {
           color: $whiteColor;
         }
-      }
-    }
-
-    tr:nth-child(even) {
-      background-color: $redColor;
-      color: $whiteColor;
-
-      a {
-        color: $whiteColor;
-      }
-
-      &:hover {
-        background-color: $lightRedColor;
       }
     }
 
