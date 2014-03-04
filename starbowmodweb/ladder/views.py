@@ -6,6 +6,7 @@ from starbowmodweb.ladder.forms import CrashReportForm, CrashReport
 from starbowmodweb.ladder.helpers import get_leaderboard, get_matchhistory
 from starbowmodweb.ladder.models import Client, BATTLENET_REGION_NA, BATTLENET_REGION_EU, REGION_LOOKUP
 from starbowmodweb import utils
+import json
 
 
 def show_ladders(request):
@@ -69,7 +70,7 @@ class LeaderboardDatatable(utils.DatatableQuery):
 def datatable_leaderboard(request):
     cursor = db.connection.cursor()
     data = LeaderboardDatatable(request.GET).execute(cursor)
-    return HttpResponse(data, mimetype='application/json')
+    return HttpResponse(json.dumps(data), mimetype='application/json')
 
 
 def show_region(request, region):

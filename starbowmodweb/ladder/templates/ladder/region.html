@@ -31,13 +31,54 @@
     $("#ladder").dataTable({
         bProcessing: true,
         bServerSide: true,
+        sDom: '<"top"f<"clear">>rt<"clear"><"bottom"p>',
         sAjaxSource: "/ladder/datatable",
+        bLengthChange: false,
+        iDisplayLength: 50,
+        sPaginationType: "full_numbers",
+        fnRowCallback: function ( nRow, aData, iDisplayIndex ) {
+          if (aData[2].toLowerCase() == $("#ladder_filter input").val().toLowerCase()) {
+            $(nRow).addClass("matching-player");
+          }
+        },
+        fnServerData: function ( sSource, aoData, fnCallback, oSettings ) {
+          oSettings.jqXHR = $.ajax({
+            "async": false,
+            "dataType": 'json',
+            "type": "GET",
+            "url": sSource,
+            "data": aoData,
+            "success": fnCallback
+          });
+          json = eval('('+oSettings.jqXHR.responseText+')');
+          if (json['aaData'].length == 1) {
+            $.map(aoData, function(setting) {
+              if (setting['name'] == 'sSearch') {
+                setting['value'] = ''
+              }
+              else if (setting['name'] == 'iDisplayStart') {
+                setting['value'] = json['aaData'][0][0] - 10;
+              }
+            })
+            oSettings.jqXHR = $.ajax({
+              "async": false,
+              "dataType": 'json',
+              "type": "GET",
+              "url": sSource,
+              "data": aoData,
+              "success": fnCallback
+            });
+          }
+        },
         fnServerParams: function ( aoData ) {
           aoData.push(
             { name: "region", value: {{ region }}},
             { name: "dimensions", value: ''},
             { name: "observations", value: 'rank,clientid,username,ladder_points,ladder_wins,ladder_losses,ladder_walkovers,ladder_forfeits'}
           );
+        },
+        "oLanguage": {
+          sSearch: "Player Search",
         },
         "aoColumns": [
             { bSearchable: false },
@@ -51,7 +92,7 @@
         ],
         "oLanguage": {
             "sProcessing": "Searching",
-            "sInfo": "",
+            "sSearch": "Player Search",
         }
     }).fnSetFilteringDelay(500);
 }(jQuery);

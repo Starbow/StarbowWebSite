@@ -127,7 +127,7 @@ table.dataTable td.dataTables_empty {
     line-height: 22px;
 }
 .paging_full_numbers a:active {
-    outline: none
+    outline: none;
 }
 .paging_full_numbers a:hover {
     text-decoration: none;
@@ -143,20 +143,25 @@ table.dataTable td.dataTables_empty {
     margin: 0 3px;
     cursor: pointer;
     *cursor: hand;
-    color: #333 !important;
+    color: $grayColor !important;
+}
+
+.paging_full_numbers a.paginate_active {
+    color: $whiteColor !important;
 }
 
 .paging_full_numbers a.paginate_button {
-    background-color: #ddd;
+    background-color: $whiteColor;
 }
 
 .paging_full_numbers a.paginate_button:hover {
-    background-color: #ccc;
+    background-color: $lightRedColor;
     text-decoration: none !important;
 }
 
 .paging_full_numbers a.paginate_active {
-    background-color: #99B3FF;
+    background-color: $darkRedColor;
+    color: $whiteColor;
 }
 
 
@@ -206,4 +211,12 @@ table.dataTable thead td:active {
 .dataTables_scrollBody {
     *margin-top: -1px;
     -webkit-overflow-scrolling: touch;
+}
+
+
+/*
+ *  Top and bottom styling
+ */
+.dataTables_wrapper .top, .dataTables_wrapper .bottom {
+    padding:10px 0px;
 }

@@ -1,5 +1,3 @@
-import json
-
 
 def dictfetchall(cursor):
     """ Returns all rows from a cursor as a dict """
@@ -78,12 +76,12 @@ class DatatableQuery(object):
         counting_total = cursor.fetchone()[0]
 
         # Format the results for datatable's consumptions
-        return json.dumps(dict(
+        return dict(
             sEcho=int(self.args['sEcho']),
             iTotalRecords=counting_total,
             iTotalDisplayRecords=filtered_total,
             aaData=data
-        ))
+        )
 
     def filterby(self, params):
         filterRules = list()
