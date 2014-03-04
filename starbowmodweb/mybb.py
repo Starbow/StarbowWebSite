@@ -97,7 +97,7 @@ def get_events_in_range(calendar_name, start_range, end_range):
         duration = timedelta(seconds=seconds)
 
         # Load the repeat data and find all relevant event times
-        repeat_data = phpserialize.loads(result['repeats'])
+        repeat_data = phpserialize.loads(result['repeats']) if result['repeats'] else None
         times = get_event_times(start_time, min(end_time, end_range), duration, repeat_data)
 
         # For every time block in the requested range associated with this event
