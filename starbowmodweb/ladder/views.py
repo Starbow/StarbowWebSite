@@ -74,4 +74,4 @@ def datatable_leaderboard(request):
 
 
 def show_region(request, region):
-    return render(request, 'ladder/region.html', dict(region=REGION_LOOKUP[region.upper()]))
+    return render(request, 'ladder/region.html', dict(region_str=region.upper(), region=REGION_LOOKUP[region.upper()]))

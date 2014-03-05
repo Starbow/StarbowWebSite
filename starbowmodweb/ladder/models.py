@@ -13,13 +13,13 @@ BATTLENET_REGION_CN = 5
 BATTLENET_REGION_SEA = 6
 
 
-REGION_CHOICES = (
+REGION_CHOICES = dict([
     (BATTLENET_REGION_NA, 'NA'),
     (BATTLENET_REGION_EU, 'EU'),
     (BATTLENET_REGION_KR, 'KR'),
     (BATTLENET_REGION_CN, 'CN'),
     (BATTLENET_REGION_SEA, 'SEA'),
-)
+])
 REGION_LOOKUP = dict(zip(dict(REGION_CHOICES).values(), dict(REGION_CHOICES).keys()))
 
 
@@ -32,7 +32,7 @@ class Map(models.Model):
 
     region = models.IntegerField(
         db_column='Region',
-        choices=REGION_CHOICES,
+        choices=REGION_CHOICES.items(),
         help_text="The region that this map is uploaded to. Each region needs a separate map entry",
     )
 
@@ -102,7 +102,7 @@ class BattleNetCharacter(models.Model):
     id = models.AutoField(primary_key=True, db_column='Id')
     client = models.ForeignKey('Client', db_column='ClientId', related_name='characters', null=True)
     add_time = models.IntegerField(db_column='AddTime')
-    region = models.IntegerField(db_column='Region', choices=REGION_CHOICES)
+    region = models.IntegerField(db_column='Region', choices=REGION_CHOICES.items())
     subregion = models.IntegerField(db_column='SubRegion')
     toon_id = models.IntegerField(db_column='ProfileId')
     code = models.IntegerField(db_column='CharacterCode')
@@ -126,7 +126,7 @@ class ClientRegionStats(models.Model):
         verbose_name_plural = "Client Region Stats"
 
     client = models.ForeignKey('Client', related_name='stats')
-    region = models.IntegerField(choices=REGION_CHOICES)
+    region = models.IntegerField(choices=REGION_CHOICES.items())
     rating_mean = models.FloatField()
     rating_stddev = models.FloatField()
     ladder_points = models.IntegerField()
@@ -151,7 +151,7 @@ class MatchmakerMatch(models.Model):
     add_time = models.IntegerField(db_column='AddTime')
     end_time = models.DateTimeField(db_column='EndTime')
     quality = models.FloatField(db_column='Quality')
-    region = models.IntegerField(db_column='Region', choices=REGION_CHOICES)
+    region = models.IntegerField(db_column='Region', choices=REGION_CHOICES.items())
     channel = models.CharField(max_length=255, db_column='Channel')
     chat_room = models.CharField(max_length=255, db_column='ChatRoom')
 
@@ -184,7 +184,7 @@ class MatchResult(models.Model):
     id = models.AutoField(primary_key=True, db_column='Id')
     matchmaker_match = models.ForeignKey('MatchmakerMatch', db_column='MatchmakerMatchId', null=True)
     datetime = models.IntegerField(db_column='DateTime')
-    region = models.IntegerField(db_column='Region', choices=REGION_CHOICES)
+    region = models.IntegerField(db_column='Region', choices=REGION_CHOICES.items())
     map = models.ForeignKey('Map', db_column='MapId', null=True)
 
 
