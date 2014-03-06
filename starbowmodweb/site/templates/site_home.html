@@ -2,7 +2,52 @@
 {% load static %}
 {% load bbformat %}
 {% block content %}
-{{ latest_article.message|bbheader:latest_article|safe }}
+<div class="jcarousel">
+  <ul>
+    {% for article in recent_articles %}
+    <li>{{ article.message|bbheader:article|safe }}</li>
+    {% endfor %}
+  </ul>
+  <p class="jcarousel-pagination">
+</div>
+<script>
+(function($) {
+    $(function() {
+        $('.jcarousel').jcarousel();
+
+        $('.jcarousel-control-prev')
+            .on('jcarouselcontrol:active', function() {
+                $(this).removeClass('inactive');
+            })
+            .on('jcarouselcontrol:inactive', function() {
+                $(this).addClass('inactive');
+            })
+            .jcarouselControl({
+                target: '-=1'
+            });
+
+        $('.jcarousel-control-next')
+            .on('jcarouselcontrol:active', function() {
+                $(this).removeClass('inactive');
+            })
+            .on('jcarouselcontrol:inactive', function() {
+                $(this).addClass('inactive');
+            })
+            .jcarouselControl({
+                target: '+=1'
+            });
+
+        $('.jcarousel-pagination')
+            .on('jcarouselpagination:active', 'a', function() {
+                $(this).addClass('active');
+            })
+            .on('jcarouselpagination:inactive', 'a', function() {
+                $(this).removeClass('active');
+            })
+            .jcarouselPagination();
+    });
+})(jQuery);
+</script>
 <div class="column">
   <h2><a href="{% url 'starbowmodweb.site.views.view_news' %}">News and Updates</a></h2>
   <ul class="listing">
