@@ -45,4 +45,4 @@ def about_page(request, name):
     name = name.lower() or 'overview'
     if name not in settings.ABOUT_PAGES:
         raise Http404
-    return render(request, 'thread_page.html', dict(thread=mybb.get_thread(settings.ABOUT_PAGES[name])))
+    return render(request, 'thread_page.html', dict(thread=mybb.get_thread(settings.ABOUT_PAGES[name][1])))

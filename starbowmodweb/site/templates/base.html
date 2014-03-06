@@ -39,8 +39,8 @@
         <li>
           <a href="/about">About<i class="fa fa-angle-down"></i></a>
           <ul>
-            {% for page in ABOUT_PAGES.keys %}
-            <li><a href="{% url 'starbowmodweb.site.views.about_page' page %}">{{ page }} </a></li>
+            {% for page, info in ABOUT_PAGES.items %}
+            <li><a href="{% url 'starbowmodweb.site.views.about_page' page %}">{{ info.0 }}</a></li>
             {% endfor %}
           </ul>
         </li>
