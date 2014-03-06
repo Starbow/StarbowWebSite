@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
 from django.conf import settings
 from datetime import datetime, timedelta
@@ -38,3 +39,10 @@ def view_calendar(request):
     later = now+timedelta(seconds=30*86400)
     events = mybb.get_events_in_range("Default Calendar", now, later)
     return render(request, 'calendar.html', dict(events=events))
+
+
+def about_page(request, name):
+    name = name.lower() or 'overview'
+    if name not in settings.ABOUT_PAGES:
+        raise Http404
+    return render(request, 'thread_page.html', dict(thread=mybb.get_thread(settings.ABOUT_PAGES[name])))

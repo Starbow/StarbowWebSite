@@ -8,6 +8,15 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+def get_thread(thread_id):
+    cursor = connections['mybb'].cursor()
+    cursor.execute("SELECT * FROM mybb_threads, mybb_posts WHERE mybb_threads.firstpost = mybb_posts.pid AND mybb_threads.tid=%s", [thread_id])
+    thread = utils.dictfetchall(cursor)[0]
+    thread['edittime'] = datetime.fromtimestamp(thread['edittime'])
+    thread['url'] = "/forum/showthread.php?tid={}".format(thread['tid'])
+    return thread
+
+
 def get_threads(thread_prefix=None, forum_name=None, orderby=None, sort=None, offsetby=None, count=None):
     """ Returns a list of threads from the indicated forumId """
     params = []

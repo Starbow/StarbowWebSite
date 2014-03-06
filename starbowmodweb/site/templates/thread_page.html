@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load bbformat %}
+
+{% block content %}
+<h1>{{thread.subject}}</h1>
+<p>
+{{thread.message|bbformat:thread|safe}}
+</p>
+Last Updated on {{ thread.edittime }} by {{ thread.username }}
+{% endblock %}

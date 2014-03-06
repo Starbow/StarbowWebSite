@@ -36,7 +36,14 @@
       <ul class="menu">
         <li><a href="/">Starbow Home</a></li>
         <li><a href="/news">News</a></li>
-        <li><a href="/about">About</a></li>
+        <li>
+          <a href="/about">About<i class="fa fa-angle-down"></i></a>
+          <ul>
+            {% for page in ABOUT_PAGES.keys %}
+            <li><a href="{% url 'starbowmodweb.site.views.about_page' page %}">{{ page }} </a></li>
+            {% endfor %}
+          </ul>
+        </li>
         <li>
           <a href="#">Ladders<i class="fa fa-angle-down"></i></a>
           <ul>

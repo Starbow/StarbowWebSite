@@ -38,6 +38,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.contrib.auth.context_processors.auth',
     'django_browserid.context_processors.browserid',
+    'starbowmodweb.context_processors.starbowmodweb',
 )
 
 MIDDLEWARE_CLASSES = (
