@@ -36,7 +36,7 @@
     min-width: 14px;
 
     background: $whiteColor;
-    color: $lightRedColor;
+    color: $whiteColor;
     border-radius: 14px;
     padding: 3px;
     text-align: center;
@@ -48,7 +48,7 @@
 
 .jcarousel-pagination a.active {
     background: $darkRedColor;
-    color: $whiteColor;
+    color: $darkRedColor;
     opacity: 1;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.75);
 }
