@@ -49,22 +49,6 @@
 })(jQuery);
 </script>
 <div class="column">
-  <h2><a href="{% url 'starbowmodweb.site.views.view_news' %}">News and Updates</a></h2>
-  <ul class="listing">
-  {% for article in recent_articles %}
-    <li><a href="{{ article.url }}">{{ article.subject }}</a></li>
-  {% endfor %}
-  </ul>
-</div>
-<div class="column">
-  <h2><a href="/forum/forumdisplay.php?fid=1">Discussion</a></h2>
-  <ul class="listing">
-  {% for dicussion in recent_discussions %}
-    <li><a href="{{ dicussion.url }}">{{ dicussion.subject }}</a></li>
-  {% endfor %}
-  </ul>
-</div>
-<div class="column">
   <h2><a href="{% url 'starbowmodweb.site.views.view_calendar' %}">Upcoming Events</a></h2>
   <ul class="listing">
   {% for event in upcoming_events %}
@@ -74,6 +58,20 @@
       <li><a href="{{ event.url }}">{{ event.start|date:"Y-m-d" }} {{ event.name }}</a></li>
     {% endif %}
   {% endfor %}
+  </ul>
+</div>
+<div class="column">
+  <h2><a href="/forum/forumdisplay.php?fid=1">Discussions</a></h2>
+  <ul class="listing">
+  {% for dicussion in recent_discussions %}
+    <li><a href="{{ dicussion.url }}">{{ dicussion.subject }}</a></li>
+  {% endfor %}
+  </ul>
+</div>
+<div class="column">
+  <h2><a href="/steams">Live Streams</a></h2>
+  <ul class="listing">
+    <li>Nothing to see here...</li>
   </ul>
 </div>
 <div class="column">
