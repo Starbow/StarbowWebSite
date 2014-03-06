@@ -32,7 +32,7 @@ def bbcode_banner(tag_name, value, options, parent, context):
         '</div>').format(options[tag_name], context['url'], value)
     else:
         return ('<div class="banner"'
-        'style="background-image:url(\'/static/site/img/generalimage.png\')"'
+        'style="background-color:black;"'
         ')><a href="{}"><h1>{}</h1></a></div>').format(context['url'], value)
 
 
