@@ -149,7 +149,7 @@ class MatchmakerMatch(models.Model):
     id = models.AutoField(primary_key=True, db_column='Id')
     map = models.ForeignKey('Map', db_column='MapId', null=True)
     add_time = models.IntegerField(db_column='AddTime')
-    end_time = models.DateTimeField(db_column='EndTime')
+    end_time = models.IntegerField(db_column='EndTime')
     quality = models.FloatField(db_column='Quality')
     region = models.IntegerField(db_column='Region', choices=REGION_CHOICES.items())
     channel = models.CharField(max_length=255, db_column='Channel')
