@@ -22,11 +22,17 @@
 
     function mRenderUsername(value, type, row) {
         switch (type) {
-        case "filter":
-        case "type":
-        case "sort": return value;
-        case "display": return '<a href="/ladder/player/'+row[1]+'">'+value+"</a>";
+          case "display": return '<a href="/ladder/player/'+row[1]+'">'+value+"</a>";
+          default: return value;
         }
+    }
+
+    function mRenderDivision(value, type, row) {
+      var divisions = ['E','D','C','B','A'];
+      switch(type) {
+        case "display": return divisions[value];
+        default: return value;
+      }
     }
 
     $("#ladder").dataTable({
@@ -49,7 +55,7 @@
         },
         "aaSorting": [[0, "desc"], [1, "asc"]],
         "aoColumns": [
-            { bSearchable: false },
+            { bSearchable: false, mRender: mRenderDivision },
             { bSearchable: false },
             { bSearchable: false, bVisible: false },
             { bSearchable: true, mRender: mRenderUsername },
