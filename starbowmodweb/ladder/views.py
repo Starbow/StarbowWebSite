@@ -38,6 +38,7 @@ class LeaderboardDatatable(utils.DatatableQuery):
     COLUMN_LOOKUP = dict(
         username='username',
         rank='rank',
+        division='division',
         clientid="clients.id as clientid",
         ladder_points='stats.ladder_points',
         ladder_wins='(stats.ladder_wins-stats.ladder_walkovers) as ladder_wins',
@@ -48,11 +49,11 @@ class LeaderboardDatatable(utils.DatatableQuery):
 
     def tables(self, params):
         params.append(int(self.args['region']))
-        return """(SELECT (@rank:=@rank+1) as rank, client_region_stats.*
+        return """(SELECT (@rank:=@rank+1) as rank, ROUND(rating_mean/10) as division, client_region_stats.*
                    FROM client_region_stats
                    WHERE region = %s
-                     AND (ladder_wins + ladder_losses) > 0
-                   ORDER BY ladder_points DESC) as stats, clients"""
+                     AND (ladder_wins + ladder_losses) > 4
+                   ORDER BY division DESC, ladder_points DESC) as stats, clients"""
 
     def where(self, params):
         return "stats.client_id = clients.id"

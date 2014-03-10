@@ -6,6 +6,7 @@
 <table id="ladder" class="ladder-mini">
   <thead>
     <tr>
+      <th>division</th>
       <th>Rank</th>
       <th data-hidden="1">ClientId</th>
       <th data-searchable="1">Username</th>
@@ -40,13 +41,15 @@
           aoData.push(
             { name: "region", value: {{ region }}},
             { name: "dimensions", value: ''},
-            { name: "observations", value: 'rank,clientid,username,ladder_points,ladder_wins,ladder_losses'}
+            { name: "observations", value: 'division,rank,clientid,username,ladder_points,ladder_wins,ladder_losses'}
           );
         },
         "oLanguage": {
           sSearch: "Player Search",
         },
+        "aaSorting": [[0, "desc"], [1, "asc"]],
         "aoColumns": [
+            { bSearchable: false },
             { bSearchable: false },
             { bSearchable: false, bVisible: false },
             { bSearchable: true, mRender: mRenderUsername },
