@@ -17,6 +17,14 @@
   </thead>
   <tbody></tbody>
 </table>
+<style>
+#ladder .division-a {
+  background-color: pink;
+}
+#ladder .division-a {
+  background-color: pink;
+}
+</style>
 <script>
 !function($) {
 
@@ -35,6 +43,7 @@
       }
     }
 
+    var lastDivision = 0;
     $("#ladder").dataTable({
         bProcessing: true,
         bServerSide: true,
@@ -49,6 +58,15 @@
             { name: "dimensions", value: ''},
             { name: "observations", value: 'division,rank,clientid,username,ladder_points,ladder_wins,ladder_losses'}
           );
+        },
+        fnRowCallback: function ( nRow, aData, iDisplayIndex ) {
+          switch(aData[0]){
+            case 4: $(nRow).addClass('division-a'); break;
+            case 3: $(nRow).addClass('division-b'); break;
+            case 2: $(nRow).addClass('division-c'); break;
+            case 1: $(nRow).addClass('division-d'); break;
+            case 0: $(nRow).addClass('division-e'); break;
+          }
         },
         "oLanguage": {
           sSearch: "Player Search",
