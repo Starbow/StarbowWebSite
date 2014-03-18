@@ -37,8 +37,8 @@ def view_news(request):
 
 
 def view_calendar(request):
-    now = datetime.now()
-    later = now+timedelta(seconds=30*86400)
+    now = datetime.utcnow()
+    later = now + timedelta(seconds=30*86400)
     events = mybb.get_events_in_range("Default Calendar", now, later)
     return render(request, 'calendar.html', dict(events=events))
 
