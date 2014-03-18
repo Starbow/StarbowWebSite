@@ -3,16 +3,10 @@ from django import db
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from starbowmodweb.ladder.forms import CrashReportForm, CrashReport
-from starbowmodweb.ladder.helpers import get_leaderboard, get_matchhistory
-from starbowmodweb.ladder.models import Client, BATTLENET_REGION_NA, BATTLENET_REGION_EU, REGION_LOOKUP
+from starbowmodweb.ladder.helpers import get_matchhistory
+from starbowmodweb.ladder.models import Client, REGION_LOOKUP
 from starbowmodweb import utils
 import json
-
-
-def show_ladders(request):
-    ladder_na = get_leaderboard(region=BATTLENET_REGION_NA, orderby='ladder_points', sort="DESC", count=50)
-    ladder_eu = get_leaderboard(region=BATTLENET_REGION_EU, orderby='ladder_points', sort="DESC", count=50)
-    return render(request, 'ladder_home.html', dict(ladder_na=ladder_na, ladder_eu=ladder_eu))
 
 
 def show_player(request, client_id):
