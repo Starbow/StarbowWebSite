@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div style="float:right; font-size:1.25em;"><strong>{{ region_stats.players }}</strong> players have played <strong>{{ region_stats.matches }}</strong> matches in the last 7 days.</div>
 <h1>{{ region_str }} Ladder</h1>
 <table id="ladder" class="ladder-mini">
   <thead>
@@ -30,7 +31,7 @@
     $("#ladder").dataTable({
         bProcessing: true,
         bServerSide: true,
-        sDom: '<"top"f<"clear">>rt<"clear"><"bottom"p>',
+        sDom: '<"top left"f<"clear">>rt<"clear"><"bottom"p>',
         sAjaxSource: "/ladder/datatable",
         bLengthChange: false,
         iDisplayLength: 50,

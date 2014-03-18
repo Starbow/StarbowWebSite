@@ -6,6 +6,7 @@ from starbowmodweb.ladder.forms import CrashReportForm, CrashReport
 from starbowmodweb.ladder.helpers import get_matchhistory
 from starbowmodweb.ladder.models import Client, REGION_LOOKUP
 from starbowmodweb import utils
+from datetime import datetime, timedelta
 import json
 
 
@@ -68,4 +69,22 @@ def datatable_leaderboard(request):
 
 
 def show_region(request, region):
-    return render(request, 'ladder/region.html', dict(region_str=region.upper(), region=REGION_LOOKUP[region.upper()]))
+    region_id = REGION_LOOKUP[region.upper()]
+    start_date = datetime.utcnow()-timedelta(seconds=7*86400)
+
+    cursor = db.connection.cursor()
+    region_stats_query = """
+        select sum(race='zerg')/count(*) as zerg,
+               sum(race='protoss')/count(*) as protoss,
+               sum(race='terran')/count(*) as terran,
+               count(distinct matchid) as matches,
+               count(distinct clientid) as players
+        from match_result_players, match_results
+        where match_results.id=matchid
+          AND region=%s
+          AND FROM_UNIXTIME(datetime) > %s
+    """
+    cursor.execute(region_stats_query, [region_id, start_date])
+    region_stats = utils.dictfetchall(cursor)[0]
+    print(region_stats)
+    return render(request, 'ladder/region.html', dict(region_str=region.upper(), region=REGION_LOOKUP[region.upper()], region_stats=region_stats))
