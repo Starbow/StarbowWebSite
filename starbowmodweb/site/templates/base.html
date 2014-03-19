@@ -32,10 +32,17 @@
       });
     </script>
     <div class="navbar navbar-fixed-top">
-      <div class="navbar-logo"></div>
+      <a href="/" class="navbar-logo"></a>
       <ul class="menu">
-        <li><a href="/">Starbow Home</a></li>
-        <li><a href="/news">News</a></li>
+        <li><a href="/forum">Forum</a></li>
+        <li>
+          <a href="/news">News<i class="fa fa-angle-down"></i></a>
+          <ul>
+            {% for article in recent_articles %}
+            <li><a href="{{ article.url }}">{{ article.subject }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
         <li>
           <a href="/about">About<i class="fa fa-angle-down"></i></a>
           <ul>
@@ -52,9 +59,15 @@
             <li><a href="{% url 'starbowmodweb.ladder.views.show_region' 'KR' %}">KR Ladder</a></li>
           </ul>
         </li>
-        <li><a href="/calendar">Calendar</a></li>
+        <li>
+          <a href="/events">Events<i class="fa fa-angle-down"></i></a>
+          <ul>
+            {% for event in upcoming_events %}
+            <li><a href="{{ event.url }}">{{ event.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
         <li><a href="http://starbow.wikia.com/wiki/Starbow_Wiki">Wiki</a></li>
-        <li><a href="/forum">Forum</a></li>
       </ul>
       <div class="authentication">
         {% if user.is_authenticated %}

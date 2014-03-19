@@ -8,18 +8,11 @@ from starbowmodweb.ladder.models import BATTLENET_REGION_NA, BATTLENET_REGION_EU
 
 
 def home(request):
-    now = datetime.now()
-    later = now+timedelta(seconds=30*86400)
-    upcoming_events = mybb.get_events_in_range("Default Calendar", now, later)[:7]
-    recent_articles = mybb.get_threads(forum_name="News and Announcements", count=7, orderby="mybb_threads.dateline", sort="DESC")
     recent_discussions = mybb.get_threads(forum_name=settings.DISCUSSION_FORUMS, count=7, orderby="mybb_threads.dateline", sort="DESC")
-
     ladder_na = get_leaderboard(region=BATTLENET_REGION_NA, orderby='ladder_points', sort="DESC", count=10)
     ladder_eu = get_leaderboard(region=BATTLENET_REGION_EU, orderby='ladder_points', sort="DESC", count=10)
     ladder_kr = get_leaderboard(region=BATTLENET_REGION_KR, orderby='ladder_points', sort="DESC", count=10)
     return render(request, 'site_home.html', dict(
-        upcoming_events=upcoming_events,
-        recent_articles=recent_articles,
         recent_discussions=recent_discussions,
         ladder_na=ladder_na,
         ladder_eu=ladder_eu,
@@ -36,11 +29,11 @@ def view_news(request):
     return render(request, 'news.html', dict(articles=articles))
 
 
-def view_calendar(request):
+def view_events(request):
     now = datetime.utcnow()
     later = now + timedelta(seconds=30*86400)
     events = mybb.get_events_in_range("Default Calendar", now, later)
-    return render(request, 'calendar.html', dict(events=events))
+    return render(request, 'events.html', dict(events=events))
 
 
 def about_page(request, name):

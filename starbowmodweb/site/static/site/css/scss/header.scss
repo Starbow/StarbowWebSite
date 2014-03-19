@@ -24,12 +24,17 @@
   @include box-shadow(0, 0, 5px, $blackColor);
   @include clearfix;
 
-  .navbar-logo {
+  a.navbar-logo {
     float:left;
     background-image: url('../img/bow.svg');
     background-size: $headerHeight $headerHeight;
     height: $headerHeight;
-    width: $headerHeight;
+    width: 20px;
+
+    &:hover {
+      background-color: $darkRedColor;
+      @include box-shadow(0, 0, 0, $darkerRedColor);
+    }
   }
 
   .ui-menu {

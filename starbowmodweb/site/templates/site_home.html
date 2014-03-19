@@ -51,7 +51,7 @@
 })(jQuery);
 </script>
 <div class="column">
-  <h2><a href="{% url 'starbowmodweb.site.views.view_calendar' %}">Upcoming Events</a></h2>
+  <h2><a href="{% url 'starbowmodweb.site.views.view_events' %}">Upcoming Events</a></h2>
   <ul class="listing">
   {% for event in upcoming_events %}
     {% if event.is_today %}
