@@ -35,14 +35,6 @@
         }
     }
 
-    function mRenderDivision(value, type, row) {
-      var divisions = ['E','D','C','B','A'];
-      switch(type) {
-        case "display": return divisions[value];
-        default: return value;
-      }
-    }
-
     var lastDivision = 0;
     $("#ladder").dataTable({
         bProcessing: true,
@@ -71,9 +63,9 @@
         "oLanguage": {
           sSearch: "Player Search",
         },
-        "aaSorting": [[0, "desc"], [1, "asc"]],
+        "aaSorting": [[0, "asc"], [1, "asc"]],
         "aoColumns": [
-            { bSearchable: false, mRender: mRenderDivision },
+            { bSearchable: false },
             { bSearchable: false },
             { bSearchable: false, bVisible: false },
             { bSearchable: true, mRender: mRenderUsername },

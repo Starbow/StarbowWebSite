@@ -49,11 +49,14 @@ class LeaderboardDatatable(utils.DatatableQuery):
 
     def tables(self, params):
         params.append(int(self.args['region']))
-        return """(SELECT (@rank:=@rank+1) as rank, ROUND(rating_mean/10) as division, client_region_stats.*
-                   FROM client_region_stats
-                   WHERE region = %s
-                     AND (ladder_wins + ladder_losses) > 4
-                   ORDER BY division DESC, ladder_points DESC) as stats, clients"""
+        return """(SELECT (@rank:=@rank+1) as rank, tmp.* FROM (
+                       SELECT divisions.name as division, client_region_stats.*
+                       FROM client_region_stats, divisions
+                       WHERE region = %s
+                         AND division_id = divisions.id
+                         AND placement_matches_remaining = 0
+                       ORDER BY divisions.ladder_group DESC, ladder_points DESC) as tmp
+                   ) as stats, clients"""
 
     def where(self, params):
         return "stats.client_id = clients.id"
