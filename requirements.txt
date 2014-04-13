@@ -5,4 +5,4 @@ bbcode
 python-dateutil
 phpserialize
 pytz
-
+south
