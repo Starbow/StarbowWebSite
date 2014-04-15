@@ -9,9 +9,9 @@ from starbowmodweb.ladder.models import BATTLENET_REGION_NA, BATTLENET_REGION_EU
 
 def home(request):
     recent_discussions = mybb.get_threads(forum_name=settings.DISCUSSION_FORUMS, count=7, orderby="mybb_threads.dateline", sort="DESC")
-    ladder_na = get_leaderboard(region=BATTLENET_REGION_NA, orderby='ladder_points', sort="DESC", count=10)
-    ladder_eu = get_leaderboard(region=BATTLENET_REGION_EU, orderby='ladder_points', sort="DESC", count=10)
-    ladder_kr = get_leaderboard(region=BATTLENET_REGION_KR, orderby='ladder_points', sort="DESC", count=10)
+    ladder_na = get_leaderboard(region=BATTLENET_REGION_NA, orderby=['division__ladder_group', 'ladder_points'], sort="DESC", count=10)
+    ladder_eu = get_leaderboard(region=BATTLENET_REGION_EU, orderby=['division__ladder_group', 'ladder_points'], sort="DESC", count=10)
+    ladder_kr = get_leaderboard(region=BATTLENET_REGION_KR, orderby=['division__ladder_group', 'ladder_points'], sort="DESC", count=10)
     return render(request, 'site_home.html', dict(
         recent_discussions=recent_discussions,
         ladder_na=ladder_na,
