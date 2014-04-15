@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="float:right; font-size:1.25em;"><strong>{{ global_stats.players }}</strong> players have played <strong>{{ global_stats.matches }}</strong> matches in the last 7 days.</div>
+<h1>Global Ladder</h1>
+<table id="ladder" class="ladder-mini">
+  <thead>
+    <tr>
+      <th>division</th>
+      <th>Rank</th>
+      <th data-hidden="1">ClientId</th>
+      <th data-searchable="1">Username</th>
+      <th>Points</th>
+      <th>Wins</th>
+      <th>Losses</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+<style>
+#ladder .division-a {
+  background-color: pink;
+}
+#ladder .division-a {
+  background-color: pink;
+}
+</style>
+<script>
+!function($) {
+
+    function mRenderUsername(value, type, row) {
+        switch (type) {
+          case "display": return '<a href="/ladder/player/'+row[2]+'">'+value+"</a>";
+          default: return value;
+        }
+    }
+
+    var lastDivision = 0;
+    $("#ladder").dataTable({
+        bProcessing: true,
+        bServerSide: true,
+        sDom: '<"top left"f<"clear">>rt<"clear"><"bottom"p>',
+        sAjaxSource: "/ladder/datatable",
+        bLengthChange: false,
+        iDisplayLength: 50,
+        sPaginationType: "full_numbers",
+        fnServerParams: function ( aoData ) {
+          aoData.push(
+            { name: "dimensions", value: ''},
+            { name: "observations", value: 'division,rank,clientid,username,ladder_points,ladder_wins,ladder_losses'}
+          );
+        },
+        fnRowCallback: function ( nRow, aData, iDisplayIndex ) {
+          switch(aData[0]){
+            case 4: $(nRow).addClass('division-a'); break;
+            case 3: $(nRow).addClass('division-b'); break;
+            case 2: $(nRow).addClass('division-c'); break;
+            case 1: $(nRow).addClass('division-d'); break;
+            case 0: $(nRow).addClass('division-e'); break;
+          }
+        },
+        "oLanguage": {
+          sSearch: "Player Search",
+        },
+        "aaSorting": [[0, "asc"], [1, "asc"]],
+        "aoColumns": [
+            { bSearchable: false },
+            { bSearchable: false },
+            { bSearchable: false, bVisible: false },
+            { bSearchable: true, mRender: mRenderUsername },
+            { bSearchable: false },
+            { bSearchable: false },
+            { bSearchable: false },
+        ],
+        "oLanguage": {
+            "sProcessing": "Searching",
+            "sSearch": "Player Search",
+        }
+    }).fnSetFilteringDelay(500);
+}(jQuery);
+</script>
+{% endblock %}
