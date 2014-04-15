@@ -36,7 +36,7 @@ def crash_report(request):
 
 class LeaderboardDatatable(utils.DatatableQuery):
     COLUMN_LOOKUP = dict(
-        username='stats.username',
+        username='clients.username',
         rank='rank',
         division='division',
         clientid="clients.id as clientid",
