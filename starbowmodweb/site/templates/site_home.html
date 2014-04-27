@@ -74,8 +74,18 @@
   <h2><a href="/streams">Live Streams</a></h2>
   <table class="ladder-mini">
     <thead>
-      <tr><th style="text-align:center">Coming Soon<sup>TM</sup>!</th></tr>
+      <tr>
+          <th>Channel</th><th style="text-align:right;">Viewers</th>
+      </tr>
     </thead>
+    <tbody>
+      {% for stream in online_streams %}
+        <tr>
+          <td><a href="{{ stream.get_url }}">{{ stream.user.username }}</a></td>
+          <td style="text-align:right;">{{ stream.viewers }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
   </table>
 </div>
 <div class="column">

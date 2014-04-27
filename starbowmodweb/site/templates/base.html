@@ -19,7 +19,19 @@
     <!-- DataTables -->
     <script type="text/javascript" charset="utf8" src="/static/vendor/jquery.datatables-1.9.4/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" charset="utf8" src="/static/vendor/jquery.datatables-1.9.4/js/jquery.dataTables.plugins.js"></script>
-
+    <!-- Expander -->
+    <script type="text/javascript" charset="utf8" src="/static/vendor/jquery.expander-1.4.7/jquery.expander.js"></script>
+    <script type="text/javascript" charset="utf8">
+    $(document).ready(function() {
+      $('.expandable').expander({
+        preserveWords: false,
+        widow: 0,
+        slicePoint: 80,
+        expandText: '[+]',
+        userCollapseText: '[-]'
+      });
+    });
+    </script>
 
     <link rel="stylesheet" type="text/css" href="{% static 'site/css/app.css' %}">
     {% browserid_js %}

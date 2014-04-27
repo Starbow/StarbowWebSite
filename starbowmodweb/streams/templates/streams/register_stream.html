@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if messages %}
+<div>
+    {% for msg in messages %}
+    <p>{{ msg }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+<h1>{% if edit %}Edit{% else %}Add{% endif %} Your Starbow Stream!</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    <table>
+    {% for field in form %}
+        <tr>
+            <td style="vertical-align: top;">{{ field.label_tag }}</td>
+            <td>{{ field }}</td>
+            <td>{{ field.errors }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    <input type="submit" name="edit" value="{% if edit %}Edit{% else %}Add{% endif %} Stream" />
+    {% if edit %}
+    <input type="submit" name="delete" value="Delete Stream" />
+    {% endif %}
+</form>
+
+{% endblock %}

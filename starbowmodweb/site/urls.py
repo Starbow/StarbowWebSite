@@ -8,5 +8,4 @@ urlpatterns = patterns('starbowmodweb.site.views',
     url(r'^calendar', RedirectView.as_view(url='events', permanent=True)),
     url(r'^events', 'view_events'),
     url(r'^news', 'view_news'),
-    url(r'^streams', 'view_streams'),
 )

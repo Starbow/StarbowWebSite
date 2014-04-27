@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Online Streams</h1>
+<table id="online-streams" class="ladder-mini">
+  <thead>
+    <tr>
+      <th>Channel</th>
+      <th>Description</th>
+      <th>Viewers</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for stream in online_streams %}
+    <tr>
+        <td><a href="{{ stream.get_url }}">{{ stream.user.username }}</a></td>
+        <td class="expandable">{{ stream.description|linebreaksbr }}</td>
+        <td>{{ stream.viewers }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h1>Offline Streams</h1>
+<table id="offline-streams" class="ladder-mini">
+  <thead>
+    <tr>
+      <th>Channel</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for stream in offline_streams %}
+    <tr>
+        <td><a href="{{ stream.get_url }}">{{ stream.user.username }}</a></td>
+        <td class="expandable">{{ stream.description|linebreaksbr }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
