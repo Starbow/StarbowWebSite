@@ -12,6 +12,7 @@ class AddStreamForm(forms.ModelForm):
                                                 required=True,
                                                 empty_label=None,
                                                 label='Platform')
+    description = forms.CharField(widget=forms.TextInput(attrs={'size': '80'}))
 
     class Meta:
         model = StreamInfo

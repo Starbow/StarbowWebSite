@@ -36,8 +36,9 @@ def crash_report(request):
 
 class LeaderboardDatatable(utils.DatatableQuery):
     COLUMN_LOOKUP = dict(
-        username='username',
+        username='clients.username',
         rank='rank',
+        division='division',
         clientid="clients.id as clientid",
         ladder_points='stats.ladder_points',
         ladder_wins='(stats.ladder_wins-stats.ladder_walkovers) as ladder_wins',
@@ -47,12 +48,24 @@ class LeaderboardDatatable(utils.DatatableQuery):
     )
 
     def tables(self, params):
-        params.append(int(self.args['region']))
-        return """(SELECT (@rank:=@rank+1) as rank, client_region_stats.*
-                   FROM client_region_stats
-                   WHERE region = %s
-                     AND (ladder_wins + ladder_losses) > 0
-                   ORDER BY ladder_points DESC) as stats, clients"""
+        if 'region' in self.args:
+            params.append(int(self.args['region']))
+            return """(SELECT (@rank:=@rank+1) as rank, tmp.* FROM (
+                           SELECT divisions.name as division, client_region_stats.*
+                           FROM client_region_stats, divisions
+                           WHERE region = %s
+                             AND division_id = divisions.id
+                             AND placement_matches_remaining = 0
+                           ORDER BY divisions.ladder_group DESC, ladder_points DESC) as tmp
+                       ) as stats, clients"""
+        else:
+            return """(SELECT (@rank:=@rank+1) as rank, tmp.* FROM (
+                           SELECT divisions.name as division, clients.id as client_id, clients.*
+                           FROM clients, divisions
+                           WHERE division_id = divisions.id
+                             AND placement_matches_remaining = 0
+                           ORDER BY divisions.ladder_group DESC, ladder_points DESC) as tmp
+                       ) as stats, clients"""
 
     def where(self, params):
         return "stats.client_id = clients.id"
@@ -66,6 +79,25 @@ def datatable_leaderboard(request):
     cursor = db.connection.cursor()
     data = LeaderboardDatatable(request.GET).execute(cursor)
     return HttpResponse(json.dumps(data), mimetype='application/json')
+
+
+def show_global(request):
+    start_date = datetime.utcnow()-timedelta(seconds=7*86400)
+    cursor = db.connection.cursor()
+    global_stats_query = """
+        select sum(race='zerg')/count(*) as zerg,
+               sum(race='protoss')/count(*) as protoss,
+               sum(race='terran')/count(*) as terran,
+               count(distinct matchid) as matches,
+               count(distinct clientid) as players
+        from match_result_players, match_results
+        where match_results.id=matchid
+          AND FROM_UNIXTIME(datetime) > %s
+    """
+    cursor.execute(global_stats_query, [start_date])
+    global_stats = utils.dictfetchall(cursor)[0]
+    return render(request, 'ladder/global.html', dict(global_stats=global_stats))
+
 
 
 def show_region(request, region):
@@ -86,5 +118,4 @@ def show_region(request, region):
     """
     cursor.execute(region_stats_query, [region_id, start_date])
     region_stats = utils.dictfetchall(cursor)[0]
-    print(region_stats)
     return render(request, 'ladder/region.html', dict(region_str=region.upper(), region=REGION_LOOKUP[region.upper()], region_stats=region_stats))

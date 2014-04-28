@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div style="float:right; font-size:1.25em;"><strong>{{ region_stats.players }}</strong> players have played <strong>{{ region_stats.matches }}</strong> matches in the last 7 days.</div>
-<h1>{{ region_str }} Ladder</h1>
+<div style="float:right; font-size:1.25em;"><strong>{{ global_stats.players }}</strong> players have played <strong>{{ global_stats.matches }}</strong> matches in the last 7 days.</div>
+<h1>Global Ladder</h1>
 <table id="ladder" class="ladder-mini">
   <thead>
     <tr>
@@ -46,7 +46,6 @@
         sPaginationType: "full_numbers",
         fnServerParams: function ( aoData ) {
           aoData.push(
-            { name: "region", value: {{ region }}},
             { name: "dimensions", value: ''},
             { name: "observations", value: 'division,rank,clientid,username,ladder_points,ladder_wins,ladder_losses'}
           );

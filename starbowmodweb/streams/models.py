@@ -24,7 +24,7 @@ class StreamInfo(models.Model):
     user = models.OneToOneField(User)
     channel_name = models.CharField(max_length=25)
     streaming_platform = models.ForeignKey(StreamingPlatform)
-    description = models.TextField(blank=True)
+    description = models.CharField(max_length=80, blank=True)
     viewers = models.IntegerField(default=0)
     online = models.BooleanField(default=False)
 

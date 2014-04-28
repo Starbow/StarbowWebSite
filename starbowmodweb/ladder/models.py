@@ -53,6 +53,27 @@ class Map(models.Model):
         default=True,
     )
 
+    description = models.CharField(
+        db_column='Description',
+        max_length=255,
+        help_text="The description of the map to show up in the client.",
+        default=""
+    )
+
+    info_url = models.CharField(
+        db_column='InfoUrl',
+        max_length=255,
+        help_text="A link to more information about the map.",
+        default=""
+    )
+
+    preview_url = models.CharField(
+        db_column='PreviewUrl',
+        max_length=255,
+        help_text="A like to the minimap preview.",
+        default="",
+    )
+
     def clean(self):
         if self.bnet_name is not None:
             self.bnet_name = self.bnet_name.strip()
@@ -65,6 +86,21 @@ class Map(models.Model):
         return "{} - {} [{}]".format(self.get_region_display(), self.bnet_name, ranked_str)
 
 
+class Division(models.Model):
+    class Meta(object):
+        db_table = 'divisions'
+        verbose_name = 'Division'
+        verbose_name_plural = 'Divisions'
+
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    promotion_threshold = models.FloatField()
+    demotion_threshold = models.FloatField()
+    icon_url = models.CharField(max_length=255)
+    small_icon_url = models.CharField(max_length=255)
+    ladder_group = models.IntegerField()
+
+
 class Client(models.Model):
     class Meta(object):
         db_table = 'clients'
@@ -75,6 +111,8 @@ class Client(models.Model):
     username = models.CharField(max_length=255, unique=True)
     rating_mean = models.FloatField()
     rating_stddev = models.FloatField()
+    division = models.ForeignKey(Division, db_column='division_id', null=True)
+    placement_matches_remaining = models.IntegerField(default=0)
     ladder_points = models.IntegerField()
     ladder_search_region = models.IntegerField()
     ladder_search_radius = models.IntegerField()
@@ -129,6 +167,8 @@ class ClientRegionStats(models.Model):
     region = models.IntegerField(choices=REGION_CHOICES.items())
     rating_mean = models.FloatField()
     rating_stddev = models.FloatField()
+    division = models.ForeignKey(Division, db_column='division_id', null=True)
+    placement_matches_remaining = models.IntegerField(default=0)
     ladder_points = models.IntegerField()
     ladder_wins = models.IntegerField()
     ladder_losses = models.IntegerField()

@@ -19,19 +19,7 @@
     <!-- DataTables -->
     <script type="text/javascript" charset="utf8" src="/static/vendor/jquery.datatables-1.9.4/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" charset="utf8" src="/static/vendor/jquery.datatables-1.9.4/js/jquery.dataTables.plugins.js"></script>
-    <!-- Expander -->
-    <script type="text/javascript" charset="utf8" src="/static/vendor/jquery.expander-1.4.7/jquery.expander.js"></script>
-    <script type="text/javascript" charset="utf8">
-    $(document).ready(function() {
-      $('.expandable').expander({
-        preserveWords: false,
-        widow: 0,
-        slicePoint: 80,
-        expandText: '[+]',
-        userCollapseText: '[-]'
-      });
-    });
-    </script>
+
 
     <link rel="stylesheet" type="text/css" href="{% static 'site/css/app.css' %}">
     {% browserid_js %}
@@ -69,6 +57,7 @@
             <li><a href="{% url 'starbowmodweb.ladder.views.show_region' 'NA' %}">NA Ladder</a></li>
             <li><a href="{% url 'starbowmodweb.ladder.views.show_region' 'EU' %}">EU Ladder</a></li>
             <li><a href="{% url 'starbowmodweb.ladder.views.show_region' 'KR' %}">KR Ladder</a></li>
+            <li><a href="{% url 'starbowmodweb.ladder.views.show_global' %}">Global Ladder</a></li>
           </ul>
         </li>
         <li>
