@@ -77,6 +77,3 @@ LOGIN_URL = '/user/login_required'
 LOGIN_REDIRECT_URL = '/user/home'
 LOGIN_REDIRECT_URL_FAILURE = '/user/not_found'
 LOGOUT_REDIRECT_URL = '/'
-
-# Stream configuration
-STREAM_LOOKUP_MULTI_THREAD = False

@@ -81,7 +81,7 @@
     <tbody>
       {% for stream in online_streams %}
         <tr>
-          <td><a href="{{ stream.get_url }}">{{ stream.user.username }}</a></td>
+          <td><a href="{{ stream.get_url }}">{{ stream.get_channel_name }}</a></td>
           <td style="text-align:right;">{{ stream.viewers }}</td>
         </tr>
       {% endfor %}

@@ -2,7 +2,6 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from starbowmodweb.streams.models import StreamInfo
-from starbowmodweb.streams.getstreamstatus import update_stream_cache
 from starbowmodweb.streams.forms import AddStreamForm
 
 @login_required
@@ -36,7 +35,6 @@ def edit_stream(request):
 
 
 def list_streams(request):
-    update_stream_cache()
     online_streams = StreamInfo.objects.filter(online=True).order_by('-viewers')
     offline_streams = StreamInfo.objects.filter(online=False)
     return render_to_response('streams/list_streams.html', {'online_streams': online_streams,

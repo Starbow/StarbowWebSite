@@ -13,7 +13,7 @@
   <tbody>
   {% for stream in online_streams %}
     <tr>
-        <td><a href="{{ stream.get_url }}">{{ stream.user.username }}</a></td>
+        <td><a href="{{ stream.get_url }}">{{ stream.get_channel_name }}</a></td>
         <td><p class="expandable">{{ stream.description }}</p></td>
         <td>{{ stream.viewers }}</td>
     </tr>
@@ -32,7 +32,7 @@
   <tbody>
   {% for stream in offline_streams %}
     <tr>
-        <td><a href="{{ stream.get_url }}">{{ stream.user.username }}</a></td>
+        <td><a href="{{ stream.get_url }}">{{ stream.get_channel_name }}</a></td>
         <td><p class="expandable">{{ stream.description }}</p></td>
     </tr>
   {% endfor %}

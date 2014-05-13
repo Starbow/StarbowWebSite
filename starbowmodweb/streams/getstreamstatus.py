@@ -1,10 +1,8 @@
-import thread
 import json
 import httplib
 from django.core.exceptions import ObjectDoesNotExist
 from urllib import urlencode
 from starbowmodweb.streams.models import *
-from starbowmodweb.settings import STREAM_LOOKUP_MULTI_THREAD
 from starbowmodweb.config import TWITCH_CLIENT_ID
 
 
@@ -14,18 +12,14 @@ TWITCH_QRY_LIMIT = 100
 
 def update_stream_cache():
     try:
-        platform = StreamingPlatform.objects.select_for_update().get(name='Twitch')
+        platform = StreamingPlatform.objects.get(name='Twitch')
         channels = StreamInfo.objects.filter(streaming_platform=platform)
-        if platform.needs_update():
-            if STREAM_LOOKUP_MULTI_THREAD:
-                # start a new thread to update Twitch streams
-                thread.start_new_thread(update_twitch_stream_cache, (channels,))
-            else:
-                update_twitch_stream_cache(channels)
 
-            # update last update
-            platform.update_time()
-            platform.save()
+        update_twitch_stream_cache(channels)
+
+        # update last update
+        platform.update_time()
+        platform.save()
     except ObjectDoesNotExist:
         pass
 
@@ -61,6 +55,7 @@ def update_twitch_stream_cache(channels):
         else:
             # stream is not in reply -> offline
             stream.online = False
+            stream.viewers = 0
 
         stream.save()
 
