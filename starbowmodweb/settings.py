@@ -27,6 +27,7 @@ INSTALLED_APPS = (
     'starbowmodweb.user',
     'starbowmodweb.ladder',
     'starbowmodweb.site',
+    'starbowmodweb.streams',
     'south'
 )
 

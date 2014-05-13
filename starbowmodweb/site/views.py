@@ -5,23 +5,24 @@ from datetime import datetime, timedelta
 from starbowmodweb import mybb
 from starbowmodweb.ladder.helpers import get_leaderboard
 from starbowmodweb.ladder.models import BATTLENET_REGION_NA, BATTLENET_REGION_EU, BATTLENET_REGION_KR
+from starbowmodweb.streams.models import StreamInfo
 
 
 def home(request):
     recent_discussions = mybb.get_threads(forum_name=settings.DISCUSSION_FORUMS, count=7, orderby="mybb_threads.dateline", sort="DESC")
+
     ladder_na = get_leaderboard(region=BATTLENET_REGION_NA, orderby=['division__ladder_group', 'ladder_points'], sort="DESC", count=10)
     ladder_eu = get_leaderboard(region=BATTLENET_REGION_EU, orderby=['division__ladder_group', 'ladder_points'], sort="DESC", count=10)
     ladder_kr = get_leaderboard(region=BATTLENET_REGION_KR, orderby=['division__ladder_group', 'ladder_points'], sort="DESC", count=10)
+    online_streams = StreamInfo.objects.filter(online=True).order_by('-viewers')[:7]
+
     return render(request, 'site_home.html', dict(
         recent_discussions=recent_discussions,
         ladder_na=ladder_na,
         ladder_eu=ladder_eu,
         ladder_kr=ladder_kr,
+        online_streams=online_streams,
     ))
-
-
-def view_streams(request):
-    return render(request, 'streams.html')
 
 
 def view_news(request):
