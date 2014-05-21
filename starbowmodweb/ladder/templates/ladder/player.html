@@ -19,8 +19,18 @@ Profile for {{ client.username }}
         <td style="width:125px;">{% if match.region == "NA" %}{{ match.datetime|timezone:"US/Pacific"|date:"Y-m-d H:i" }} PST{% elif match.region == "EU" %}{{ match.datetime|timezone:"Europe/Paris"|date:"Y-m-d H:i" }} CET{% elif match.region == "KR" %}{{ match.datetime|timezone:"Asia/Seoul"|date:"Y-m-d H:i" }} KST{% endif %}</td>
         <td style="width:45px;">{{ match.result }}</td>
         <td style="width:35px; text-align:right; ">{{ match.point_difference }}</td>
-        <td><img src="{{ match.player1.race_icon }}" width="16px" height="16px;"/>&nbsp;<a href="{% url 'ladder.views.show_player' match.player1.client.pk %}">{{ match.player1.client.username }}</a></td>
-        <td><img src="{{ match.player2.race_icon }}" width="16px" height="16px;"/>&nbsp;<a href="{% url 'ladder.views.show_player' match.player2.client.pk %}">{{ match.player2.client.username }}</a></td>
+        <td>
+            {% if match.player1 %}
+            <img src="{{ match.player1.race_icon }}" width="16px" height="16px;"/>&nbsp;
+            <a href="{% url 'ladder.views.show_player' match.player1.client.pk %}">{{ match.player1.client.username }}</a>
+            {% endif %}
+        </td>
+        <td>
+            {% if match.player2 %}
+            <img src="{{ match.player2.race_icon }}" width="16px" height="16px;"/>&nbsp;
+            <a href="{% url 'ladder.views.show_player' match.player2.client.pk %}">{{ match.player2.client.username }}</a>
+            {% endif %}
+        </td>
         <td style="text-align: left;">{{ match.map_name }}</td>
     </tr>
 {% endfor %}
