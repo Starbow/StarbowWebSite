@@ -91,7 +91,7 @@ class DatatableQuery(object):
         if searchString != "":
             for i, columnName in enumerate(self.columns):
                 if self.args.get('bSearchable_{}'.format(i), False) == 'true':
-                    filterRules.append("{} LIKE %s".format(columnName))
+                    filterRules.append("{} LIKE %s".format(self.COLUMN_LOOKUP[columnName]))
                     params.append('%{}%'.format(searchString))
             if filterRules:
                 filterRules = ['({})'.format(' OR '.join(filterRules))]
@@ -101,7 +101,7 @@ class DatatableQuery(object):
             searchable = self.args.get('bSearchable_'.format(i), False) == 'true'
             searchString = self.args.get('sSearch_{}'.format(i), "")
             if searchable and searchString != "":
-                filterRules.append("{} LIKE %s".format(columnName))
+                filterRules.append("{} LIKE %s".format(self.COLUMN_LOOKUP[columnName]))
                 params.append('%{}%'.format(searchString))
 
         # return 1=1 by default so that where AND filterby is valid no matter what
