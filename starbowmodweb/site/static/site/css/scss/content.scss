@@ -117,8 +117,9 @@
   border-collapse: collapse;
   font-size: 12px;
   width: 100%;
+  border: 1px solid #777;
 
-  @include box-shadow(0, 0, 3px, $blackColor);
+  /* @include box-shadow(0, 0, 3px, $blackColor); */
 
   thead {
     th {
