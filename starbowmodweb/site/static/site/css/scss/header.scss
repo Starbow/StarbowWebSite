@@ -21,7 +21,7 @@
     left: 5px;
   }
 
-  @include box-shadow(0, 0, 5px, $blackColor);
+  /* @include box-shadow(0, 0, 5px, $blackColor); */
   @include clearfix;
 
   a.navbar-logo {
