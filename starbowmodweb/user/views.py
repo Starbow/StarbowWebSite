@@ -4,6 +4,7 @@ import binascii
 import subprocess
 
 from django.db import connections
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from starbowmodweb.user.forms import RegistrationForm
@@ -87,3 +88,18 @@ def user_register(request):
 @login_required
 def user_home(request):
     return render(request, 'user/home.html', dict(CLIENT_URLS=settings.CLIENT_URLS))
+
+def api_user_info(request):
+    if request.user.is_authenticated():
+        data = {
+            'id': request.user.id,
+            'username': request.user.username,
+            'token': request.user.authtoken,
+            'success': True
+        }
+    else:
+        data = {
+            'success': False
+        }
+    response = HttpResponse(json.dumps(data), mimetype='application/json')
+    return response
