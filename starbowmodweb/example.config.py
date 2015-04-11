@@ -82,8 +82,19 @@ CLIENT_VERSIONS = (
 
 DISCUSSION_FORUMS = [
     "Starbow General",
-    "Starbow Strategy",
+    "General Strategy",
+    "Zerg Strategy",
+    "Protoss Strategy",
+    "Terran Strategy",
     "Starbow Balance",
     "Starbow Map Making",
     "Starbow Tournaments"
 ]
+
+ABOUT_PAGES = {
+    'overview': ('Overview', 186),
+    'howtoplay': ('How to Play', 187),
+    'credits': ('Credits', 118),
+}
+
+TWITCH_CLIENT_ID = ''
