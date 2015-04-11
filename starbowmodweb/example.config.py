@@ -37,7 +37,7 @@ MEDIA_ROOT = BASE_DIR+"/media/"
 STATIC_ROOT = BASE_DIR+"/static/"
 
 # This is used by BROWSERID to verify login requests. Must match running domain
-BROWSERID_AUDIENCES = 'http://localhost:8000'
+BROWSERID_AUDIENCES = ['http://localhost:8000', 'http://localhost']
 
 # The path to the mybb bridge script. Set to None if you don't have the forum installed
 MYBB_BRIDGE_PATH = '/var/www/forum/bridge.php'
