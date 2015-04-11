@@ -8,34 +8,14 @@
   <h1>Welcome, {{ user.username }}!</h1>
 </div>
 
+<h3>Playing the ladder</h3>
+
+To start laddering, visit the <a href="//eros.starbowmod.com/">Eros Matchmaking System</a>.
+
+<hr/>
+
 <h3>Your Ladder Profile</h3>
 You can view your ladder account <a href="{% url 'starbowmodweb.ladder.views.show_player' user.pk %}">here</a>.
 
-<hr/>
 
-<h3>Installing the Client</h3>
-
-To start laddering, download the client using one of the links below:
-
-<ul>
-<li><a href="{{ CLIENT_URLS.windows }}">Windows</a></li>
-<li><a href="{{ CLIENT_URLS.osx }}">OS X</a></li>
-</ul>
-
-The client will ask for an authorization token. Yours is: <input id="authtoken" type="text" size="35" value="{{ user.authtoken }}" />
-
-<hr/>
-
-<h3>Did your client crash?</h3>
-Look for a .dmp file next to the client executable in your eros folder and submit your crash report <a href="{% url 'starbowmodweb.ladder.views.crash_report' %}">here</a>.
-
-{% if user.crash_reports.all %}
-    <hr/>
-    <h3>Submitted Crash Reports</h3>
-    <ul>
-    {% for report in user.crash_reports.all %}
-        <li><a href="{{ report.dump.url }}">{{ report.os|title }} Client v{{ report.client_version }} on {{ report.time|date:"N j, Y"}}</a></li>
-    {% endfor %}
-    </ul>
-{% endif %}
 {% endblock %}
