@@ -45,4 +45,6 @@ def about_page(request, name):
 
 def thread_page(request, name, id):
     name = name.lower()
-    return render(request, 'thread_page.html', dict(thread=id))
+    if name not in settings.THREAD_PAGES:
+        raise Http404
+    return render(request, 'thread_page.html', dict(thread=mybb.get_thread(settings.THREAD_PAGES[name][1])))
