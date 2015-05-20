@@ -69,7 +69,7 @@
           </ul>
         </li>
         <li><a href="http://starbow.wikia.com/wiki/Starbow_Wiki">Wiki</a></li>
-        <li><a href="{% url 'starbowmodweb.site.views.about_page' 'geimbangbeop' %}">게임 방법</a></li>
+        <li><a href="{% url 'starbowmodweb.site.views.thread_page' 'geimbangbeop' 876 %}">게임 방법</a></li>
       </ul>
       <div class="authentication">
         {% if user.is_authenticated %}
