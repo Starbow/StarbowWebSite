@@ -39,12 +39,10 @@ def view_events(request):
 
 def about_page(request, name):
     name = name.lower() or 'overview'
-    if name not in settings.ABOUT_PAGES:
+    if name in settings.ABOUT_PAGES:
+        return render(request, 'thread_page.html', dict(thread=mybb.get_thread(settings.ABOUT_PAGES[name][1])))
+    elif name in settings.ABOUT_PAGES_KR:
+        return render(request, 'thread_page.html', dict(thread=mybb.get_thread(settings.ABOUT_PAGES_KR[name][1])))
+    else:
         raise Http404
-    return render(request, 'thread_page.html', dict(thread=mybb.get_thread(settings.ABOUT_PAGES[name][1])))
-
-def thread_page(request, name):
-    name = name.lower()
-    if name not in settings.THREAD_PAGES:
-        raise Http404
-    return render(request, 'thread_page.html', dict(thread=mybb.get_thread(settings.THREAD_PAGES[name][1])))
+    
