@@ -1,7 +1,9 @@
 from django.contrib import admin
 from starbowmodweb.ladder.models import Map, Client, BattleNetCharacter, CrashReport
 
-admin.site.register(Map)
+from modeladmins import MapModelAdmin
+
+admin.site.register(Map, MapModelAdmin)
 admin.site.register(Client)
 # admin.site.register(ClientRegionStats)
 # admin.site.register(MatchmakerMatch)
